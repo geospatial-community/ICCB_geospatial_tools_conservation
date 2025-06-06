@@ -1,0 +1,6 @@
+---
+title: "Session 3"
+author: "Charlotte Patterson, Scott Forrest"
+---
+
+Landing page for Session 3.

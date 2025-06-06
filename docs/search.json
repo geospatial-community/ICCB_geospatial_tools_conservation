@@ -2,15 +2,57 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "ICCB_website",
+    "title": "ICCB - Open Source Geospatial Tools for Conservation under Climate Change",
     "section": "",
-    "text": "This is a Quarto website. test\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "This repo contains the materials for the ICCB workshop titled “Open Source Geospatial Tools for Conservation under Climate Change”, and can be viewed as the Quarto/GitHub pages site at https://geospatial-community.github.io/ICCB_geospatial_tools_conservation/."
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site - ICCB\n\n1 + 1\n\n[1] 2"
+    "text": "Maybe some info about contributors?\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "index.html#sessions",
+    "href": "index.html#sessions",
+    "title": "ICCB - Open Source Geospatial Tools for Conservation under Climate Change",
+    "section": "Sessions",
+    "text": "Sessions\n\nIntro to to geospatial data and tools\nDownscaled climate projections\nKoala species distribution modeling\nSpatial conservation planning\nMaking maps with QGIS\n\n\n\n\nWorkshop session outline"
+  },
+  {
+    "objectID": "Session 1/session_1_home.html",
+    "href": "Session 1/session_1_home.html",
+    "title": "Session 1",
+    "section": "",
+    "text": "Landing page for Session 1.\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "Session 2/session_2_home.html",
+    "href": "Session 2/session_2_home.html",
+    "title": "Session 2",
+    "section": "",
+    "text": "Landing page for Session 2.\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "Session 3/session_3_home.html",
+    "href": "Session 3/session_3_home.html",
+    "title": "Session 3",
+    "section": "",
+    "text": "Landing page for Session 3.\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "Session 4/session_4_home.html",
+    "href": "Session 4/session_4_home.html",
+    "title": "Session 4",
+    "section": "",
+    "text": "Landing page for Session 4.\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "Session 5/session_5_home.html",
+    "href": "Session 5/session_5_home.html",
+    "title": "Session 5",
+    "section": "",
+    "text": "Landing page for Session 5.\n\n\n\n Back to top"
   }
 ]
