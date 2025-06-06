@@ -28,38 +28,41 @@ website:
         text: Session 5
       - about.qmd
       
-    sidebar:
-
-      - title: "Session 1"
-        style: floating
-        contents: 
-          # - Session 1/session_1_home.qmd
-          - Session 1/session_1_code.qmd
-          
-      - title: "Session 2"
-        style: floating
-        contents: 
-          - Session 2/session_2_home.qmd
-          
-      - title: "Session 3"
-        style: floating
-        contents: 
-          - Session 3/session_3_home.qmd
-          - Session 3/ICCB_Species_data.qmd
-          - Session 3/ICCB_Environmental_data.qmd
-          - Session 3/ICCB_Modelling_and_validation.qmd
-          
-      - title: "Session 4"
-        style: floating
-        contents: 
-          - Session 4/session_4_home.qmd
-          
-      - title: "Session 5"
-        style: floating
-        contents: 
-          - Session 5/session_5_home.qmd
-      
     right:
+    - icon: github
+      href: https://github.com/geospatial-community/ICCB_geospatial_tools_conservation
+
+    
+  sidebar:
+    
+    - title: "Session 1"
+      contents: 
+        # - Session 1/session_1_home.qmd
+        - Session 1/session_1_code.qmd
+        
+    - title: "Session 2"
+      contents: 
+        - Session 2/session_2_home.qmd
+        
+    - title: "Session 3"
+      contents: 
+        - Session 3/session_3_home.qmd
+        - Session 3/ICCB_Species_data.qmd
+        - Session 3/ICCB_Environmental_data.qmd
+        - Session 3/ICCB_Modelling_and_validation.qmd
+        
+    - title: "Session 4"
+      contents: 
+        - Session 4/session_4_home.qmd
+        
+    - title: "Session 5"
+      contents: 
+        - Session 5/session_5_home.qmd
+    
+    
+  page-footer:
+    background: light
+    center:
       - icon: github
         href: https://github.com/geospatial-community/ICCB_geospatial_tools_conservation
 
