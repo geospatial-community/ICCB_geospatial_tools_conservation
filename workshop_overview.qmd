@@ -1,0 +1,10 @@
+---
+title: "Workshop overview"
+author: "Mitch Rudge and Catherine Kim"
+---
+
+Overview of the workshop
+
+- How it will run
+- Accessing the repo
+- etc... 

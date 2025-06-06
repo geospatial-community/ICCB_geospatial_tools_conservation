@@ -14,7 +14,9 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: Session 1/session_1_home.qmd
+      - href: workshop_overview.qmd
+        text: Overview
+      - href: Session 1/session_1_code.qmd
         text: Session 1
       - href: Session 2/session_2_home.qmd
         text: Session 2
@@ -31,7 +33,7 @@ website:
       - title: "Session 1"
         style: floating
         contents: 
-          - Session 1/session_1_home.qmd
+          # - Session 1/session_1_home.qmd
           - Session 1/session_1_code.qmd
           
       - title: "Session 2"
