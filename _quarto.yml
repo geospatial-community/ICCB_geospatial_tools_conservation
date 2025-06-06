@@ -16,6 +16,7 @@ website:
         text: Home
       - href: workshop_overview.qmd
         text: Overview
+      # - href: Session 1/session_1_home.qmd
       - href: Session 1/session_1_code.qmd
         text: Session 1
       - href: Session 2/session_2_home.qmd
