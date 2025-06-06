@@ -1,0 +1,272 @@
+---
+title: "ICCB Environmental data download"
+author: "Scott Forrest and Charlotte Patterson"
+date: "`r Sys.Date()`"
+execute: 
+  cache: false
+# bibliography: references.bib
+toc: true
+number-sections: false
+format: 
+  html:
+    self-contained: true
+    code-fold: show
+    code-tools: true
+    df-print: paged
+    code-line-numbers: true
+    code-overflow: scroll
+    fig-format: png
+    fig-dpi: 300
+  pdf:
+    geometry: 
+      - top=30mm
+      - left=30mm
+editor:
+  source
+abstract: |
+  In this script we are downloading current and future environmental data (as rasters) to use in species distribution models (SDMs) for koalas (Phascolarctos cinereus) in the South-East Queensland (SEQ) region. 
+---
+
+## Import packages
+
+```{r}
+
+library(terra)
+library(dplyr)
+library(sf)
+library(ggplot2)
+
+```
+
+## Load South East Queensland (SEQ) boundary
+
+We start by defining our study area, which is the South East Queensland (SEQ) region. We will use the Local Government Areas (LGA) shapefile to define the extent of SEQ.
+
+https://qldspatial.information.qld.gov.au/catalogue/custom/detail.page?fid={3F3DBD69-647B-4833-B0A5-CC43D5E70699}
+
+```{r}
+
+# Load the study area shapefile
+LGA <- st_read("Data/Environmental_variables/Local_Government_Areas.shp")
+
+# Check the coordinate reference system (CRS)
+st_crs(LGA)
+
+# Convert to WGS84
+LGA <- LGA %>% st_transform(3112)
+
+# Select local govt. areas for South East Queensland
+LGA_SEQ <- LGA %>% 
+  filter(lga %in% c("Brisbane City", 
+                    "Moreton Bay City", 
+                    "Logan City", 
+                    "Ipswich City", 
+                    "Redland City", 
+                    "Scenic Rim Regional", 
+                    "Somerset Regional", 
+                    "Lockyer Valley Regional", 
+                    "Gold Coast City", 
+                    "Sunshine Coast Regional", 
+                    "Toowoomba Regional", 
+                    "Noosa Shire"))
+
+ggplot() +
+  geom_sf(data = LGA, color = "black") +
+  geom_sf(data = LGA_SEQ, fill = "purple3", alpha = 0.5, color = "black", size = 0.2) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(title = "Local Government Areas Queensland (SEQ in purple)")
+  
+
+ggplot() +
+  geom_sf(data = LGA_SEQ, fill = "purple3", alpha = 0.5, color = "black", size = 0.2) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(title = "Local Government Areas South East Queensland (SEQ)")
+
+```
+## Merge into a single polygon
+
+```{r}
+
+# Merge the SEQ LGAs into one polygon
+SEQ_extent <- st_union(LGA_SEQ)
+
+ggplot() +
+  geom_sf(data = SEQ_extent, fill = "purple3", alpha = 0.5, color = "black", size = 0.2) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  ggtitle("South-East Queensland Spatial Extent") + 
+  theme_bw() 
+
+```
+## Save SEQ extent for other scripts
+
+```{r}
+
+# Convert our SEQ extent to a SpatExtent object by converting to a SpatVector
+SEQ_extent.vect <- terra::vect(SEQ_extent)
+
+writeVector(SEQ_extent.vect, "Data/Environmental_variables/SEQ_extent.shp", overwrite = T)
+
+```
+
+## Load current environmental data
+
+Layers were made available to us by the EcoCommons team and were created by Toombs and Ma (2025):
+
+Toombs, N., and Ma S., 2025, A High-Resolution Dataset of 19 Bioclimatic Indices over Australia, Climate Projections and Services – Queensland Treasury, Brisbane, Queensland. [https://longpaddock.qld.gov.au/qld-future-climate/data-info/tern/]
+
+
+```{r}
+
+files <- list.files("Data/Environmental_variables/Current_climate_QLD", 
+             pattern = ".tif$", 
+             full.names = TRUE)
+
+# Load all bioclim rasters
+current_bioclim <- lapply(files, terra::rast) 
+
+# Make into one raster stack
+current_bioclim <- rast(current_bioclim)
+
+plot(current_bioclim)
+
+# Examine the resolution
+current_bioclim
+
+# Check the CRS
+crs(current_bioclim)
+
+# Update CRS 
+current_bioclim <- terra::project(current_bioclim, "EPSG:3112")
+
+# Our resolution is now ~5km by 5km
+current_bioclim
+
+```
+## Mask to SEQ extent
+
+```{r}
+
+current_bioclim <- terra::mask(current_bioclim, SEQ_extent.vect)
+
+# You can see that this has masked the area but the extent is still the same
+plot(current_bioclim[[1]])
+
+current_bioclim <- terra::crop(current_bioclim, SEQ_extent.vect)
+
+plot(current_bioclim)
+
+# Save the current environmental covariates
+writeRaster(current_bioclim, 
+            filename = "Data/Environmental_variables/current_bioclim.tif",
+            overwrite = T)
+
+```
+## Load future environmental data
+
+Here we load outputs from a moderate-high emissions shared socio-economic path scenario (SSP 3.70) for the year 2090 (2080 - 2099).
+
+```{r}
+
+files <- list.files("Data/Environmental_variables/Future_climate_SSP370_2090", 
+             pattern = ".tif$", 
+             full.names = TRUE)
+
+# Load all bioclim rasters
+future_bioclim <- lapply(files, terra::rast) 
+
+# Make into one raster stack
+future_bioclim <- rast(future_bioclim)
+
+plot(future_bioclim)
+
+# Examine the resolution
+future_bioclim
+
+# Check the CRS
+crs(future_bioclim)
+
+# Update CRS 
+future_bioclim <- terra::project(future_bioclim, "EPSG:3112")
+
+# Our resolution is now ~5km by 5km
+future_bioclim
+
+```
+## Mask to SEQ extent
+
+```{r}
+
+future_bioclim <- terra::subst(from = 0, to = NA, future_bioclim) # Set all values of 0 to NA
+
+future_bioclim <- terra::mask(future_bioclim, SEQ_extent.vect)
+
+# You can see that this has masked the area but the extent is still the same
+plot(future_bioclim[[1]])
+
+future_bioclim <- terra::crop(future_bioclim, SEQ_extent.vect)
+
+plot(future_bioclim[[1]])
+
+# Save the future environmental covariates
+writeRaster(future_bioclim, 
+            filename = "Data/Environmental_variables/future_bioclim.2090.SSP370.tif",
+            overwrite = T)
+
+```
+
+## Load future environmental data 2
+
+Here we load outputs from a low emissions shared socio-economic path scenario (SSP 1.26) for the year 2090 (2080 - 2099).
+
+```{r}
+
+files <- list.files("Data/Environmental_variables/Future_climate_SSP126_2090", 
+             pattern = ".tif$", 
+             full.names = TRUE)
+
+# Load all bioclim rasters
+future_bioclim <- lapply(files, terra::rast) 
+
+# Make into one raster stack
+future_bioclim <- rast(future_bioclim)
+
+plot(future_bioclim)
+
+# Examine the resolution
+future_bioclim
+
+# Check the CRS
+crs(future_bioclim)
+
+# Update CRS 
+future_bioclim <- terra::project(future_bioclim, "EPSG:3112")
+
+# Our resolution is now ~5km by 5km
+future_bioclim
+
+```
+## Mask to SEQ extent
+
+```{r}
+
+future_bioclim <- terra::subst(from = 0, to = NA, future_bioclim) # Set all values of 0 to NA
+
+future_bioclim <- terra::mask(future_bioclim, SEQ_extent.vect)
+
+# You can see that this has masked the area but the extent is still the same
+plot(future_bioclim[[1]])
+
+future_bioclim <- terra::crop(future_bioclim, SEQ_extent.vect)
+
+plot(future_bioclim)
+
+# Save the future environmental covariates
+writeRaster(future_bioclim, 
+            filename = "Data/Environmental_variables/future_bioclim.2090.SSP126.tif",
+            overwrite = T)
+
+```
+

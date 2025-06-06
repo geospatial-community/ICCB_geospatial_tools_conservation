@@ -1,0 +1,564 @@
+
+
+
+
+  
+
+
+
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+	
+	
+	<html lang="en">
+<head>
+</head>
+<body>
+	<div id="gptMainWrap">
+		<div id="gptBody">
+			
+			<table id="cmPlPgdPageBody" class="pageBody" cellpadding="0" cellspacing="0" summary="This table is for design purposes only.">
+<tbody>
+<tr>
+<td><span id="cmPlPgpPageBody">
+					
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  var gptMapConfig = new GptMapConfig();
+  gptMapConfig.mapServiceURL = "https://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer";
+  gptMapConfig.mapServiceType = "dynamic";
+  gptMapConfig.geometryServiceURL = "https://gisservices.information.qld.gov.au/arcgis/rest/services/Geometry/GeometryServer";
+  gptMapConfig.locatorURL = "https://gisservices.information.qld.gov.au/arcgis/rest/services/Location/QldAddressComposite/GeocodeServer";
+  gptMapConfig.locatorSingleFieldParameter = "SingleLine";
+  gptMapConfig.locatorGraphicURL = "/catalogue/catalog/images/pushpin_red.gif";
+  gptMapConfig.mapVisibleLayers = "[]";
+</script>
+
+
+<form id="mdDetails" name="mdDetails" method="post" action="/catalogue/custom/viewMetadataDetails.page;jsessionid=241998DD3A23F20D840055C5D27A0C4E" class="mdDetails" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="mdDetails" value="mdDetails" />
+
+
+<script type="text/javascript">
+
+function MddMap() {
+  var _gptMap = null;
+  var _gptInpEnv = null;
+  
+  this.initialize = function initialize() {
+    var config = gptMapConfig;
+    config.mapElementId = "interactiveMap";
+    config.mapToolbarId = "mdDetails:mapToolbar";
+        
+    var elForm = mddFindForm();
+    if ((elForm != null) && (typeof(mdeEnvelopeIds) != 'undefined') && (mdeEnvelopeIds != null)) {
+      var sPfx = elForm.id+":";
+      config.inputEnvelopeXMinId = sPfx+mdeEnvelopeIds[0];
+      config.inputEnvelopeYMinId = sPfx+mdeEnvelopeIds[1];
+      config.inputEnvelopeXMaxId = sPfx+mdeEnvelopeIds[2];
+      config.inputEnvelopeYMaxId = sPfx+mdeEnvelopeIds[3];
+      var el = document.getElementById(config.inputEnvelopeXMinId);
+      if (el != null) el.value = el.innerHTML;
+      el = document.getElementById(config.inputEnvelopeYMinId);
+      if (el != null) el.value = el.innerHTML;
+      el = document.getElementById(config.inputEnvelopeXMaxId);
+      if (el != null) el.value = el.innerHTML;
+      el = document.getElementById(config.inputEnvelopeYMaxId);
+      if (el != null) el.value = el.innerHTML;
+    }
+      
+    _gptMap = new GptMap();
+    dojo.connect(_gptMap,"onMapLoaded",this,"onMapLoaded");
+
+    _gptInpEnv = new GptInputEnvelope();
+    _gptInpEnv.initialize(config,_gptMap);
+
+    _gptMap.initialize(config);
+  }
+
+  this.onMapLoaded = function() {
+      if (_gptInpEnv != null) {
+        _gptInpEnv.highlightInputEnvelope();
+        setTimeout(dojo.hitch(_gptInpEnv,"zoomToInputEnvelope"),1000);
+        _gptMap.getAgsMap().disableMapNavigation();
+        _gptMap.getAgsMap().disablePan();
+        _gptMap.getAgsMap().disableClickRecenter();
+        _gptMap.getAgsMap().disableDoubleClickZoom();
+        _gptMap.getAgsMap().disableRubberBandZoom();
+        _gptMap.getAgsMap().disableScrollWheelZoom();
+        _gptMap.getAgsMap().disableShiftDoubleClickZoom();
+        _gptMap.getAgsMap().hidePanArrows();
+        _gptMap.getAgsMap().hideZoomSlider();
+      }
+  }
+  
+  this.reposition = function reposition() {
+    if (_gptMap != null) _gptMap.reposition();
+  }
+};
+
+
+function mddFindForm(sBaseName) {
+  var elForm = null;
+  var aForms = document.getElementsByTagName("form");
+  if (aForms != null) {
+    if (sBaseName == null) sBaseName = "mdDetails";
+    for (var i=0;i<aForms.length;i++) {
+      var el = aForms[i];
+      if (el && el.id && (el.id.indexOf(sBaseName) != -1)) {
+        elForm = el;
+        break;
+      }
+    }
+  }
+  return elForm;
+};
+
+
+var mddMap = new MddMap();;
+if (typeof(dojo) != 'undefined') {
+  dojo.addOnLoad(mddMapInit);
+}
+
+function mddMapInit() {
+  var toolbar = dojo.byId("mdDetails:mapToolbar");
+  if (toolbar!=null) toolbar.style.display="none";
+  var elMap = document.getElementById("interactiveMap");
+  if (elMap != null) mddMap.initialize();
+  dojo.connect(window,"onresize",mddMap,"reposition");
+};
+
+
+function mddOnSectionClicked(sSectionId) {
+  var elForm = mddFindForm();
+  if (elForm != null) {
+    var bDisplay = true;
+    var sFolder = "/catalogue/catalog/images/";
+    var sSrc = sFolder+"section_open.gif";
+    var elImg = document.getElementById(elForm.id+":"+sSectionId+"-img");
+    if (elImg != null) {
+      if (elImg.src.indexOf("section_open.gif") != -1) {
+        sSrc = sFolder+"section_closed.gif";
+        bDisplay = false;
+      }
+      elImg.src = sSrc;
+      var elChk = document.getElementById(elForm.id+":"+sSectionId+"-chk");
+      if (elChk != null) elChk.checked = bDisplay;
+    }
+    var el = document.getElementById(elForm.id+":"+sSectionId+"-body");
+
+	if (el != null) {
+	  if (bDisplay) el.style.display = "block"; else el.style.display = "none";
+	  mddMap.reposition();
+	}      
+  }
+}
+
+</script>
+
+
+<span id="mdDetails:xsltBasedDetails"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>Population centres - Queensland</title><meta content="text/html; charset=UTF-8" http-equiv="Content-type"/><style type="text/css">
+                            h1{
+                                font-family:Arial, Verdana, Helvetica, sans-serif;
+                                font-weight:bold;
+                                color:#333333;
+                                font-size:140%;
+                                border-bottom:2px solid #CCCCCC;
+                            }
+                            h2{
+                                font-family:Arial, Verdana, Helvetica, sans-serif;
+                                font-weight:bold;
+                                color:#333333;
+                                font-size:120%;
+                            }
+                            h3{
+                                font-family:Arial, Verdana, Helvetica, sans-serif;
+                                font-weight:bold;
+                                color:#333333;
+                                font-size:110%;
+                            }
+                            
+                            body{
+                                font-family:Verdana, Arial, Helvetica, sans-serif;
+                                font-size:10pt;
+                                line-height:16pt;
+                                color:#333333;
+                                padding-right:10%;
+                            }
+                            
+                            em{
+                                font-family:Arial;
+                                font-style:normal;
+                                font-weight:bold;
+                            }
+                            em.rawContent{
+                                font-style:normal;
+                                font-weight:bold;
+                                font-style:italic;
+                            }
+                            
+                            div{
+                                padding-left:40px;
+                                margin-top:0;
+                                margin-bottom:0;
+                            }</style></head><body><h1>Population centres - Queensland</h1><h2 class="headTitle">Identification</h2><div>
+                <em>Title
+            : 
+        </em>Population centres - Queensland<br/><em>Alternative title
+            : 
+        </em>Population centres<br/><em>Date
+            : 
+        </em>
+                                2024-04-02
+                            
+             (
+            publication
+            ) 
+        <br/>
+                        <em>Presentation form code
+                : 
+            </em>mapDigital<br/>
+                    
+            <em>Related resource:</em><div><em>Identifier: </em>built.build_populationcentres<br/><em>Relationship to related resource
+                : 
+            </em>source<br/></div></div><h2 class="headTitle">Description</h2><div><em>Abstract / Description: </em><div>This topographic dataset contains point features representing the centre of named towns and cities.</div><em>Purpose: </em><div>This Queensland wide dataset provides generalised information for topographical mapping purposes. To provide the central location of named towns and cities for the State of Queensland. The primary objective of this dataset is to provide a cartographic portrayal of Queensland's named features and should be interpreted and utilised correctly. It is suitable for use in land administration, emergency management, topographic mapping and in the production of web based mapping applications.</div><em>Additional Information: </em><div>The location of the feature is generally placed in the centre of the roadway adjacent to the main post office. If this is inappropriate, then in the centre of the roadway in the most central part of the community, generally the main commercial area. Names have been sourced from the Queensland Place Names Database. <br/>Feature Types: <br/>Populated centre - A point representing the centre of a named urban settlement (town or city). <br/><br/>Attributes: <br/>FEATURE TYPE - Unique feature type that identifies the topographic feature e.g. Populated centre. <br/>NAME - The name of the feature. <br/>ALTERNATE NAME - Alternate name of the feature (if one exists) <br/>QLD PNDB ID - Queensland Place Names Database unique identifier <br/>ATTRIBUTE SOURCE - The source map, or data where the name of the feature was obtained from. <br/>ATTRIBUTE DATE - Date of the source map, or data where the name of the feature was obtained from. <br/>ADDITIONAL NAME - Other names of the feature if not recorded in the Queensland Place Names Database. Maybe commonly known by other names or have different spelling. Multiple names can be shown, separated by a comma. <br/>ADD NAME SOURCE - The source map or data that the additional names were obtained from. Multiple sources can be shown, separated by a comma. If multiple sources are shown, the written sequence will be the same as the written sequence of the names themselves. <br/>FEATURE SOURCE - The imagery, map or data that the spatial location of the feature was obtained from. <br/>FEATURE DATE - Date of the source imagery, map, or data that the spatial location of the feature was obtained from. <br/>OPERATIONAL STATUS - The operation status of the building. Options: Abandoned, Historic, Operational, Non Operational, Ruin <br/>POPULATION - The population (number of persons) indicated by the ABS Census figures that exist for this locality. This field will no longer be updated as of the 01/03/2016 due to changes in the source data from ABS data. <br/>POPULATION DATE - The date of the ABS census data <br/>LOCAL GOVERNMENT - The name of the local government <br/>PFI - A Persistent Feature Identifier (PFI) is generated for each feature at the point of creation in the database. The value of the PFI will stay with the feature through all changes to the feature (both spatial and non-spatial) until the feature is retired. (See the Persistent and Unique Feature Identifiers under the Data Model header for more information) <br/>UFI - A Unique Feature Identifier (UFI) is generated for each new feature at the point of creation in the database (at this point the PFI and UFI will be the same). The value of the UFI will stay with the feature through all changes to the feature (both spatial and non-spatial) unless the feature is split into multiple other parts. If the feature is split, the separate parts will retain the original PFI but new UFI’s will be generated for the split parts. (See the Persistent and Unique Feature Identifiers under the Data Model header for more information) <br/>UPPER SCALE - The upper scale for which the feature should be considered suitable <br/>TEXT NOTE - For mapping purposes. Additional annotation that can be shown on a map. <br/>ADD INFORMATION - A comment field (additional information) This dataset is stored in an ESRI Geodatabase. Some column names may be shortened if downloaded in the ESRI shape format.</div><em>Language
+            : 
+        </em>eng<br/><em>Character set
+            : 
+        </em>unknown<br/></div><h2 class="headTitle">Topic</h2><div><em>ISO topic category codes: </em>structure<br/></div><h2 class="headTitle">Spatial Data Information</h2><div>
+                <em>Spatial representation type
+                : 
+            </em>vector<br/>
+            
+            <em>Coordinate Reference System EPSG code: </em>EPSG:7844<br/><div><em>Title
+            : 
+        </em>EPSG Geodetic Parameter<br/>                                Dataset<br/><em>Date
+            : 
+        </em>
+                                        2007-07-16
+                                    
+             (
+            revision
+            ) 
+        <br/><em>Edition
+            : 
+        </em>Version 6.13<br/></div>
+        </div><h2 class="headTitle">Contacts</h2><div><em>Point of contact
+                : 
+            </em><br/><div><em>Organisation
+            : 
+        </em>Department of Resources<br/>
+                        <em>Address:</em><br/><div>
+                                    <em>Delivery point
+            : 
+        </em>1 William Street<br/>
+                                    <em>City
+            : 
+        </em>Brisbane<br/>
+                                    <em>State
+            : 
+        </em>Queensland<br/>
+                                    <em>Postcode
+            : 
+        </em>4000<br/>
+                                    <em>Country
+            : 
+        </em>Australia<br/>
+                                    <em>Email: </em>
+             <a href="mailto:
+            support@spatial-qld-support.atlassian.net
+            ">
+            support@spatial-qld-support.atlassian.net
+            </a> 
+        
+                                </div>
+                    </div><em>Owner
+                : 
+            </em><br/><div><em>Organisation
+            : 
+        </em>Department of Resources<br/></div></div><h2 class="headTitle">Status</h2><div>
+                <em>Progress status
+                : 
+            </em>completed<br/>
+            
+                        <em>Maintenance and update frequency
+                : 
+            </em>asNeeded<br/>
+                    </div><h2 class="headTitle">Data / Resource Constraints</h2><div><em>Resource Access Level
+                            :
+                        </em>
+                                                 --&gt;
+                        
+                        
+                                            
+                    <div>
+                        <em>Security classification (ISO 19115)
+                : 
+            </em>unclassified<br/>
+                    </div><em>Copyright
+                : 
+            </em> (as use constraint)<br/><div>&copy State of Queensland (Department of Resources) 2024</div><em>Licence
+                : 
+            </em> (as use constraint)<br/><div>This material is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/ ">Creative Commons - Attribution 4.0 International</a> licence.<br /> <a rel="license" href="http://creativecommons.org/licenses/by/4.0/ "><img alt="Creative Commons License" title="Creative Commons - Attribution 4.0 International License" style="border: 0;" src="https://licensebuttons.net/l/by/4.0/88x31.png " /></a><br /> The Department of Resources requests attribution in the following manner:<br /> &copy State of Queensland (Department of Resources) 2024</div></div><h2 class="headTitle">Temporal and Spatial extents:</h2><div>
+                
+                    
+                        <em>Bounding box: </em><div><em>West bounding longitude
+            : 
+        </em>138<br/><em>East bounding longitude
+            : 
+        </em>155<br/><em>South bounding latitude
+            : 
+        </em>-29.5<br/><em>North bounding latitude
+            : 
+        </em>-9<br/></div>
+                    
+                    
+                    
+                    <em>Temporal extent: </em><div>
+                            <em> Start: </em> 2016-09-22<em> End: </em> 2024-04-02<br/>
+                        </div>
+                
+            </div><h2 class="headTitle">Data Quality</h2><div>
+            
+                <em>Data quality scope:</em><div>
+                    
+                        <em>Level
+                : 
+            </em>dataset<br/>
+                    
+                    
+                </div>
+            
+            
+                <em>Completeness (omission):</em><div>
+                    
+                        <br/>                                The collection of feature types will be complete.<br/>                            
+                    
+                </div>
+            
+            
+                <em>Consistency (conceptual):</em><div>
+                    
+                        <br/>                                Data should be free from duplicates.<br/>                            
+                    
+                </div>
+            
+            
+                <em>Positional accuracy (external, absolute):</em><div>
+                    
+                        <br/>                                Coordinates within the Place Names Database (PNDB) are shown to the nearest minute of latitude and longitude. These coordinates are moved to a more appropriate position based on imagery.<br/>                            
+                    
+                </div>
+            
+            
+                <em>Attribute accuracy (non quantitative):</em><div>
+                    
+                        <br/>                                Attribution is complete.<br/>                            
+                    
+                </div>
+            
+            
+            
+            
+            
+            
+                <h2 class="headTitle">History:</h2><div>
+                    <em>Lineage statement:</em><div>This dataset is GDA2020 compatible. The source data, and therefore the captured features, are georeferenced as GDA94 (horizontal only). The horizontal accuracy of the geo-referencing and/or data collection method for this example is greater than the datum offset between GDA94 and GDA2020 (1.8 meters). The resulting dataset has been nominated as a low-accuracy GDA2020 dataset. As this data has not been directly captured in GDA2020, nor transformed to GDA2020, the resulting data is 'GDA2020 Compatible' not 'GDA2020 Compliant'. <br/>						Data is extracted as a coordinate from the Queensland Place Names Database (PNDB) that has a Place Type classification of either City, Town or Township. The coordinates of this data is to the nearest minute. These points are then moved visually against imagery to a more appropriate location. The location of the feature is generally placed in the centre of the roadway adjacent to the main post office. If this is inappropriate, then in the centre of the roadway in the most central part of the community, generally the main commercial area. <br/>						The population figures have been arrived at by extraction of data from the Australian Bureau of Statistics (ABS) census. The population figures have been arrived at by extraction of data from the Australian Bureau of Statistics (ABS) census. A date within the data states the year of the ABS census. This field will no longer be updated as of the 01/03/2016 due to changes in the source data from ABS data.</div>
+                    
+                    
+                </div>
+            
+        </div><h2 class="headTitle">Distribution</h2><div>
+        
+            
+                <em>Format(s):</em><div>
+                    <em>Name/identifier
+            : 
+        </em>Queensland Spatial Catalogue<br/>
+                    
+                    <em>Specification
+            : 
+        </em>Download Service<br/>
+                    
+                        
+                                
+                            
+                                
+                                    
+                                        <em>Online resource:</em><div><em>Website: </em><a href="http://qldspatial.information.qld.gov.au/catalogue/"><small>http://qldspatial.information.qld.gov.au/catalogue/</small></a><br/></div>
+                                    
+                                
+                            
+                                <em>Ordering information:</em><div><em>Instructions
+            : 
+        </em>Open the Queensland Spatial Catalogue (QSpatial). Select the large SEARCH button and all available records are displayed. Select one of the four filter options provided and then the further options within the filter. The resultant search is then displayed. Select your record and complete the order.<br/></div>
+                            
+                    
+                </div><br/>
+            
+            
+                <em>Format(s):</em><div>
+                    <em>Name/identifier
+            : 
+        </em>Places<br/>
+                    
+                    <em>Test specification:</em><div>
+                        
+                    </div>
+                    
+                        
+                                
+                            
+                                
+                                    
+                                        <em>Online resource:</em><div><em>Protocol
+            : 
+        </em>OGC:WMS-1.3.0-http-get-capabilities<br/><em>Application profile
+            : 
+        </em>Web Map Service version 1.3.0<br/><em>Name/identifier
+            : 
+        </em>Population centres (ID: 20)<br/><em>Description
+            : 
+        </em>See Places metadata<br/><em>Website: </em><a href="https://spatial-gis.information.qld.gov.au/arcgis/services/Location/Places/MapServer/WMSServer?request=GetCapabilities&amp;service=WMS"><small>https://spatial-gis.information.qld.gov.au/arcgis/services/Location/Places/MapServer/WMSServer?request=GetCapabilities&service=WMS</small></a><br/></div>
+                                    
+                                
+                            
+                                <em>Ordering information:</em><div><em>Fees
+            : 
+        </em>Nil<br/><em>Instructions
+            : 
+        </em>For use in desktop and web applications capable of connecting to Open Geospatial Consortium (OGC) web map service endpoints. <br/>Some clients append request parameters for the service capabilities file so depending on your client in use you may have to remove the parameters when copying the url below.<br/></div>
+                            
+                    
+                </div><br/>
+            
+            
+                <em>Format(s):</em><div>
+                    <em>Name/identifier
+            : 
+        </em>Places<br/>
+                    
+                    
+                        
+                                
+                            
+                                
+                                    
+                                        <em>Online resource:</em><div><em>Protocol
+            : 
+        </em>WWW:LINK-1.0-http--link<br/><em>Application profile
+            : 
+        </em>ArcGIS REST API<br/><em>Name/identifier
+            : 
+        </em>Population centres (ID: 20)<br/><em>Description
+            : 
+        </em>See Places metadata<br/><em>Website: </em><a href="https://spatial-gis.information.qld.gov.au/arcgis/rest/services/Location/Places/MapServer"><small>https://spatial-gis.information.qld.gov.au/arcgis/rest/services/Location/Places/MapServer</small></a><br/></div>
+                                    
+                                
+                            
+                                <em>Ordering information:</em><div><em>Fees
+            : 
+        </em>Nil<br/><em>Instructions
+            : 
+        </em>For use in desktop and web applications capable of connecting to ArcGIS REST map service endpoints.<br/></div>
+                            
+                    
+                </div><br/>
+            
+            
+                <em>Format(s):</em><div>
+                    <em>Name/identifier
+            : 
+        </em>downloadableData<br/>
+                    <em>Version
+            : 
+        </em>10.0<br/>
+                    <em>Specification
+            : 
+        </em>ESRI ArcGIS Server Geoportal Extension Content Type<br/>
+                </div><br/>
+            
+            
+                <em>Distributor:</em><div>
+                        
+                    
+                        <em>Format(s):</em><div>
+                            <em>Name/identifier
+            : 
+        </em>From the Queensland Spatial Catalogue available as ESRI Shape file SHP, MapInfo Tab file TAB, ESRI file geodatabase FGDB, Google file KMZ, and Geopackage version 1.0, 1.1, or 1.2 file GPKG<br/>
+                            
+                        </div><br/>
+                    
+                        
+                            <em>Transfer size (megabytes)
+            : 
+        </em>2<br/>
+                            
+                                <em>Online resource:</em><div><em>Website: </em><a href="http://qldspatial.information.qld.gov.au/catalogue/custom/search.page?q=%22Population centres - Queensland%22"><small>http://qldspatial.information.qld.gov.au/catalogue/custom/search.page?q=%22Population centres - Queensland%22</small></a><br/></div>
+                            
+                            
+                        
+                    </div>
+            
+            <em>Transfer options:</em><div>
+                
+                    
+                        <em>Online resource:</em><div><em>Website: </em>
+                                <em>Function
+                : 
+            </em>download<br/>
+                            </div>
+                    
+                
+            </div>
+        
+    <br><em>Web Service Finder:</em></br><div><em>Website: </em><a href="&#10;                        http://qldspatial.information.qld.gov.au/catalogue/custom/search.page?q=keywords:&quot;&#10;                        Population centres - Queensland&#10;                        &quot;&amp;contentTypes=liveData&#10;                    ">QSpatial Web Service</a></div><div><em>Instructions: </em>
+                    Use the URL to search QSpatial for web services displaying or using this dataset.
+                
+                </div></div><h2 class="headTitle">Metadata Reference Information</h2><div>
+        <em>Hierarchy level (scope of the metadata)
+                : 
+            </em>dataset<br/>
+    <em>Identifier
+            : 
+        </em>{B8A52671-74A1-4155-94EB-95CBC6451BEE}<br/><em>Parent identifier
+            : 
+        </em>x<br/><em>Metadata date stamp: </em>
+        2019-07-08
+    <br/><em>Language
+            : 
+        </em>eng<br/>
+        <em>Character set
+                : 
+            </em>utf8<br/>
+    <em>Metadata standard name
+            : 
+        </em>ISO 19115:2005, ANZLIC ISO 1.1<br/><em>Metadata version name
+            : 
+        </em>QGIS<br/></div></body></html></span><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="2296674114580571717:-3686034331968630780" autocomplete="off" />
+</form>
+  <!--iframe class="section" src="/catalogue/rest/document?f=html&id=%7BB8A52671-74A1-4155-94EB-95CBC6451BEE%7D" width="100%" scrolling="no" frameborder="0"></iframe>
+  //<span class="note">/catalogue/rest/document?f=html&id=%7BB8A52671-74A1-4155-94EB-95CBC6451BEE%7D</span-->
+</span></td>
+</tr>
+</tbody>
+</table>
+
+		</div>
+	</div>
+</body>
+	</html>
+
+
+

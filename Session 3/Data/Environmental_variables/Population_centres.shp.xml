@@ -1,0 +1,584 @@
+<metadata xml:lang="en">
+	<Esri>
+		<CreaDate>20230913</CreaDate>
+		<CreaTime>16304600</CreaTime>
+		<ArcGISFormat>1.0</ArcGISFormat>
+		<SyncOnce>FALSE</SyncOnce>
+		<DataProperties>
+			<itemProps>
+				<itemName Sync="TRUE">Population_centres</itemName>
+				<itemLocation>
+					<linkage Sync="TRUE">file://\\sp-prd-fsx.dnrm.local\share\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\Population_centres.shp</linkage>
+					<protocol Sync="TRUE">Local Area Network</protocol>
+				</itemLocation>
+				<nativeExtBox>
+					<westBL Sync="TRUE">138.120249</westBL>
+					<eastBL Sync="TRUE">153.531460</eastBL>
+					<southBL Sync="TRUE">-28.996645</southBL>
+					<northBL Sync="TRUE">-9.230423</northBL>
+					<exTypeCode Sync="TRUE">1</exTypeCode>
+				</nativeExtBox>
+				<imsContentType>002</imsContentType>
+				<itemSize Sync="TRUE">0.000</itemSize></itemProps>
+			<coordRef>
+				<type Sync="TRUE">Geographic</type>
+				<geogcsn Sync="TRUE">GDA2020</geogcsn>
+				<csUnits Sync="TRUE">Angular Unit: Degree (0.017453)</csUnits>
+				<peXml Sync="TRUE">&lt;GeographicCoordinateSystem xsi:type='typens:GeographicCoordinateSystem' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:typens='http://www.esri.com/schemas/ArcGIS/3.3.0'&gt;&lt;WKT&gt;GEOGCS[&amp;quot;GDA2020&amp;quot;,DATUM[&amp;quot;GDA2020&amp;quot;,SPHEROID[&amp;quot;GRS_1980&amp;quot;,6378137.0,298.257222101]],PRIMEM[&amp;quot;Greenwich&amp;quot;,0.0],UNIT[&amp;quot;Degree&amp;quot;,0.0174532925199433],AUTHORITY[&amp;quot;EPSG&amp;quot;,7844]]&lt;/WKT&gt;&lt;XOrigin&gt;-400&lt;/XOrigin&gt;&lt;YOrigin&gt;-400&lt;/YOrigin&gt;&lt;XYScale&gt;11258999068426.238&lt;/XYScale&gt;&lt;ZOrigin&gt;-100000&lt;/ZOrigin&gt;&lt;ZScale&gt;10000&lt;/ZScale&gt;&lt;MOrigin&gt;-100000&lt;/MOrigin&gt;&lt;MScale&gt;10000&lt;/MScale&gt;&lt;XYTolerance&gt;8.983152841195215e-09&lt;/XYTolerance&gt;&lt;ZTolerance&gt;0.001&lt;/ZTolerance&gt;&lt;MTolerance&gt;0.001&lt;/MTolerance&gt;&lt;HighPrecision&gt;true&lt;/HighPrecision&gt;&lt;LeftLongitude&gt;-180&lt;/LeftLongitude&gt;&lt;WKID&gt;7844&lt;/WKID&gt;&lt;LatestWKID&gt;7844&lt;/LatestWKID&gt;&lt;/GeographicCoordinateSystem&gt;</peXml>
+			</coordRef>
+			<lineage><Process ToolSource="c:\program files\arcgis\server\framework\runtime\arcgis\Resources\ArcToolbox\toolboxes\Analysis Tools.tbx\Select" Date="20250414" Time="102731">Select VPeXbmXx C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres #</Process><Process ToolSource="c:\program files\arcgis\server\framework\runtime\arcgis\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\DeleteField" Date="20250414" Time="102736">DeleteField C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936/data.gdb/Population_centres globalid "Delete Fields"</Process><Process ToolSource="c:\program files\arcgis\server\framework\runtime\arcgis\Resources\ArcToolbox\toolboxes\Conversion Tools.tbx\FeatureClassToFeatureClass" Date="20250414" Time="102741">FeatureClassToFeatureClass C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres \\sp-prd-fsx.dnrm.local\share\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936 Population_centres.shp # "feature_type "Feature Type" true false false 50 Text 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,feature_type,0,49;name "Name" true true false 100 Text 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,name,0,99;alternate_name "Alternate Name" true true false 100 Text 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,alternate_name,0,99;qld_pndb_id "Qld PNDB ID" true true false 4 Long 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,qld_pndb_id,-1,-1;attribute_source "Attribute Source" true false false 100 Text 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,attribute_source,0,99;attribute_date "Attribute Date" true false false 8 Date 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,attribute_date,-1,-1;additional_names "Additional Names" true true false 100 Text 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,additional_names,0,99;add_names_source "Additional Names Source" true true false 100 Text 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,add_names_source,0,99;feature_source "Feature Source" true false false 100 Text 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,feature_source,0,99;feature_date "Feature Date" true false false 8 Date 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,feature_date,-1,-1;operational_status "Operational Status" true true false 30 Text 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,operational_status,0,29;population "Population" true true false 4 Long 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,population,-1,-1;population_date "Population Date" true true false 8 Date 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,population_date,-1,-1;local_government "Local Government" true true false 50 Text 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,local_government,0,49;pfi "PFI" true false false 15 Text 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,pfi,0,14;ufi "UFI" true false false 15 Text 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,ufi,0,14;upper_scale "Upper Scale" true false false 4 Long 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,upper_scale,-1,-1;text_note "Text Note" true true false 50 Text 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,text_note,0,49;add_information "Additional Information" true true false 255 Text 0 0,First,#,C:\customApps\ClipZipShip\working\QSC_Extracted_Data_20250414_102723649618-6936\data.gdb\Population_centres,add_information,0,254" #</Process></lineage></DataProperties>
+		<SyncDate>20250414</SyncDate>
+		<SyncTime>10274000</SyncTime>
+		<ModDate>20250414</ModDate>
+		<ModTime>10274000</ModTime>
+		<ArcGISProfile>ISO19139</ArcGISProfile>
+		<locales>
+			<locale language="eng" country="">
+			</locale>
+		</locales>
+	</Esri>
+	<mdFileID>73214A9D-E7E0-4523-9466-386ABE0D7D03</mdFileID>
+	<mdLang>
+		<languageCode value="eng"/>
+		<countryCode value="USA" Sync="TRUE"></countryCode></mdLang>
+	<mdChar>
+		<CharSetCd value="004"/>
+	</mdChar>
+	<mdHrLv>
+		<ScopeCd value="005"/>
+	</mdHrLv>
+	<mdHrLvName Sync="TRUE">dataset</mdHrLvName>
+	<mdContact>
+		<rpIndName>DNRMMRR, Georesources, SI, SD, GD, Senior Spatial Information Officer</rpIndName>
+		<rpOrgName>Department of Natural Resources and Mines, Manufacturing, and Regional and Rural Development</rpOrgName>
+		<rpPosName>Senior Spatial Information Officer, Spatial Data Management, Spatial Data, Spatial Information</rpPosName>
+		<rpCntInfo>
+			<cntAddress>
+				<city>Brisbane</city>
+				<adminArea>Queensland</adminArea>
+				<postCode>4000</postCode>
+				<country>AU</country>
+				<eMailAdd>SISDTopoDataManagement@resources.qld.gov.au</eMailAdd>
+			</cntAddress>
+		</rpCntInfo>
+		<role>
+			<RoleCd value="007"/>
+		</role>
+	</mdContact>
+	<mdDateSt Sync="TRUE">20250414</mdDateSt>
+	<mdStanName>ArcGIS Metadata</mdStanName>
+	<mdStanVer>1.0</mdStanVer>
+	<distInfo>
+		<distFormat>
+			<formatName Sync="TRUE">Shapefile</formatName>
+			<formatVer>10</formatVer>
+		</distFormat>
+		<distributor>
+			<distorCont>
+				<rpIndName>Resources, Open Data</rpIndName>
+				<rpOrgName>Department of Natural Resources and Mines, Manufacturing, and Regional and Rural Development</rpOrgName>
+				<rpPosName>Senior Product Officer</rpPosName>
+				<rpCntInfo>
+					<cntPhone>
+						<voiceNum>(07) 3330 4438</voiceNum>
+					</cntPhone>
+					<cntAddress>
+						<eMailAdd>opendata@resources.qld.gov.au</eMailAdd>
+					</cntAddress>
+				</rpCntInfo>
+				<role>
+					<RoleCd value="005"/>
+				</role>
+			</distorCont>
+			<distorOrdPrc>
+				<ordInstr>Open the Queensland Spatial Catalogue (QSpatial).
+Select the large SEARCH button and all available records are displayed.
+Select one of the four filter options provided and then the further options within the filter.
+The resultant search is then displayed.
+Select your record and complete the order.</ordInstr>
+			</distorOrdPrc>
+			<distorFormat>
+				<formatName>Queensland Spatial Catalogue</formatName>
+				<formatVer>2.0</formatVer>
+				<formatSpec>SHP, TAB, FGDB, KMZ</formatSpec>
+			</distorFormat>
+			<distorTran>
+				<unitsODist>Whole of dataset, although clipped areas are available through QSpatial.</unitsODist>
+				<transSize>1</transSize>
+				<onLineSrc>
+					<linkage>http://qldspatial.information.qld.gov.au/catalogue/custom/search.page?q=%22Populated places - Queensland%22</linkage>
+				</onLineSrc>
+			</distorTran>
+		</distributor>
+		<distTranOps><transSize Sync="TRUE">0.000</transSize></distTranOps></distInfo>
+	<dataIdInfo>
+		<idCitation>
+			<resTitle>Populated centres - Queensland</resTitle>
+			<resAltTitle>Populated centres</resAltTitle>
+			<date>
+				<pubDate>2016-09-22</pubDate>
+				<reviseDate>2020-04-20</reviseDate>
+			</date>
+			<citRespParty>
+				<rpIndName>DNRMMRR, Georesources, Executive Director Spatial Information</rpIndName>
+				<rpOrgName>Department of Natural Resources and Mines, Manufacturing, and Regional and Rural Development</rpOrgName>
+				<rpPosName>Executive Director, Spatial Information</rpPosName>
+				<role>
+					<RoleCd value="002"/>
+				</role>
+			</citRespParty>
+			<citRespParty>
+				<rpIndName>DNRMMRR, Georesources, SI, SD, Manager Geospatial Data</rpIndName>
+				<rpOrgName>Department of Natural Resources and Mines, Manufacturing, and Regional and Rural Development</rpOrgName>
+				<rpPosName>Manager Geospatial Data, Spatial Data, Spatial Information</rpPosName>
+				<role>
+					<RoleCd value="001"/>
+				</role>
+			</citRespParty>
+			<citRespParty>
+				<rpIndName>DNRMMRR, Georesources, SI, SD, GD, Senior Spatial Information Officer</rpIndName>
+				<rpOrgName>Department of Natural Resources and Mines, Manufacturing, and Regional and Rural Development</rpOrgName>
+				<rpPosName>Senior Spatial Information Officer, Spatial Data Management, Spatial Data, Spatial Information</rpPosName>
+				<rpCntInfo>
+					<cntAddress>
+						<city>Brisbane</city>
+						<adminArea>Queensland</adminArea>
+						<postCode>4000</postCode>
+						<country>AU</country>
+						<eMailAdd>SISDTopoDataManagement@resources.qld.gov.au</eMailAdd>
+					</cntAddress>
+				</rpCntInfo>
+				<role>
+					<RoleCd value="006"/>
+				</role>
+			</citRespParty>
+			<citRespParty>
+				<rpIndName>DNRMMRR, Georesources, SI, SD, GD, Senior Spatial Information Officer</rpIndName>
+				<rpOrgName>Department of Natural Resources and Mines, Manufacturing, and Regional and Rural Development</rpOrgName>
+				<rpPosName>Senior Spatial Information Officer, Spatial Data Management, Spatial Data, Spatial Information</rpPosName>
+				<rpCntInfo>
+					<cntAddress>
+						<city>Brisbane</city>
+						<adminArea>Queensland</adminArea>
+						<postCode>4000</postCode>
+						<country>AU</country>
+						<eMailAdd>SISDTopoDataManagement@resources.qld.gov.au</eMailAdd>
+					</cntAddress>
+				</rpCntInfo>
+				<role>
+					<RoleCd value="007"/>
+				</role>
+			</citRespParty>
+			<presForm>
+				<PresFormCd value="005"/>
+			</presForm>
+		</idCitation>
+		<idAbs>This dataset contains point features representing the centre of named towns and cities.</idAbs>
+		<idPurp>This Queensland wide dataset provides generalised information for topographical mapping purposes.
+
+To provide the location of named towns and cities for the State of Queensland..  The primary objective of this dataset is to provide a cartographic portrayal of Queensland's named features and should be interpreted and utilised correctly. It is suitable for use in land administration, emergency management, topographic mapping and in the production of web based mapping applications. </idPurp>
+		<idCredit>© State of Queensland (Department of Natural Resources and Mines, Manufacturing, and Regional and Rural Development)</idCredit>
+		<idStatus>
+			<ProgCd value="001"/>
+		</idStatus>
+		<idPoC>
+			<rpIndName>DNRMMRR, Georesources, SI, SD, GD, Senior Spatial Information Officer</rpIndName>
+			<rpOrgName>Department of Natural Resources and Mines, Manufacturing, and Regional and Rural Development</rpOrgName>
+			<rpPosName>Senior Spatial Information Officer, Spatial Data Management, Spatial Data, Spatial Information</rpPosName>
+			<rpCntInfo>
+				<cntAddress>
+					<city>Brisbane</city>
+					<adminArea>Queensland</adminArea>
+					<postCode>4000</postCode>
+					<country>AU</country>
+					<eMailAdd>SISDTopoDataManagement@resources.qld.gov.au</eMailAdd>
+				</cntAddress>
+			</rpCntInfo>
+			<role>
+				<RoleCd value="006"/>
+			</role>
+		</idPoC>
+		<resMaint>
+			<maintFreq>
+				<MaintFreqCd value="009"/>
+			</maintFreq>
+			<maintCont>
+				<rpIndName>DNRMMRR, Georesources, SI, SD, GD, Senior Spatial Information Officer</rpIndName>
+				<rpOrgName>Department of Natural Resources and Mines, Manufacturing, and Regional and Rural Development</rpOrgName>
+				<rpPosName>Senior Spatial Information Officer, Spatial Data Management, Spatial Data, Spatial Information</rpPosName>
+				<rpCntInfo>
+					<cntPhone>
+						<voiceNum>61 7 3330 4739</voiceNum>
+					</cntPhone>
+					<cntAddress>
+						<delPoint>275 George Street</delPoint>
+						<city>Brisbane</city>
+						<adminArea>Queensland</adminArea>
+						<postCode>4000</postCode>
+						<country>AU</country>
+						<eMailAdd>SISDTopoDataManagement@resources.qld.gov.au</eMailAdd>
+					</cntAddress>
+				</rpCntInfo>
+				<role>
+					<RoleCd value="007"/>
+				</role>
+			</maintCont>
+		</resMaint>
+		<placeKeys>
+			<keyword>Queensland</keyword>
+			<thesaName>
+				<resTitle>ANZLIC Search Words</resTitle>
+				<date>
+					<pubDate>2007-08-01</pubDate>
+				</date>
+			</thesaName>
+		</placeKeys>
+		<themeKeys>
+			<keyword>population</keyword>
+			<keyword>urban</keyword>
+			<keyword>town</keyword>
+			<keyword>city</keyword>
+			<keyword>settlement</keyword>
+			<thesaName>
+				<resTitle>Common Search Terms</resTitle>
+				<date>
+					<pubDate>2016-02-19</pubDate>
+				</date>
+			</thesaName>
+		</themeKeys>
+		<themeKeys>
+			<keyword>HUMAN ENVIRONMENT</keyword>
+			<thesaName>
+				<resTitle>ANZLIC Search Words</resTitle>
+				<date>
+					<pubDate>2007-08-01</pubDate>
+				</date>
+			</thesaName>
+		</themeKeys>
+		<searchKeys>
+			<keyword>Queensland</keyword>
+			<keyword>population</keyword>
+			<keyword>urban</keyword>
+			<keyword>town</keyword>
+			<keyword>city</keyword>
+			<keyword>settlement</keyword>
+			<keyword>HUMAN ENVIRONMENT</keyword>
+		</searchKeys>
+		<resConst>
+			<Consts>
+				<useLimit>Features have been captured or updated from the best available imagery or data sources, with an attribute within the data describing the source and reliability.</useLimit>
+			</Consts>
+		</resConst>
+		<resConst>
+			<LegConsts>
+				<useLimit>The State of Queensland (Department of Natural Resources and Mines, Manufacturing, and Regional and Rural Development)</useLimit>
+				<useConsts>
+					<RestrictCd value="006"/>
+				</useConsts>
+			</LegConsts>
+		</resConst>
+		<resConst>
+			<LegConsts>
+				<useLimit>This material is licensed under a &lt;a rel="license" href="http://creativecommons.org/licenses/by/4.0/ "&gt; Creative Commons - Attribution 4.0 International&lt;/a&gt; licence. &lt;br /&gt; &lt;a rel="license" href="http://creativecommons.org/licenses/by/4.0/ "&gt;&lt;img alt="Creative Commons License" title="Creative Commons - Attribution 4.0 International License" style="border: 0;" src="https://licensebuttons.net/l/by/4.0/88x31.png "  /&gt;&lt;/a&gt;&lt;br /&gt;
+The Department of Natural Resources and Mines, Manufacturing, and Regional and Rural Development requests attribution in the following manner:&lt;br /&gt;
+&amp;#169; Department of Natural Resources and Mines, Manufacturing, and Regional and Rural Development. Updated data available at http://qldspatial.information.qld.gov.au/catalogue/ .</useLimit>
+				<useConsts>
+					<RestrictCd value="005"/>
+				</useConsts>
+			</LegConsts>
+		</resConst>
+		<resConst>
+			<SecConsts>
+				<class>
+					<ClasscationCd value="001"/>
+				</class>
+				<userNote>Unrestricted to all levels of government and community. Data is available to all government agencies, community groups and individuals. Dataset is available through physical supply and may be made available via web delivery tools, for example, through DNRME's internet sites.</userNote>
+				<classSys>ISO 19115 (mapped from Qld Govt Information Security Standard IS18)</classSys>
+			</SecConsts>
+		</resConst>
+		<aggrInfo>
+			<aggrDSIdent>
+				<identAuth>
+					<resTitle>Spatial Information Resource (SIR) Feature Class</resTitle>
+					<date>
+						<pubDate>2016-09-22</pubDate>
+						<reviseDate>2020-04-20</reviseDate>
+					</date>
+				</identAuth>
+				<identCode>BUILT.Habitation\BUILT.PopulatedPlaces</identCode>
+			</aggrDSIdent>
+			<assocType>
+				<AscTypeCd value="004"/>
+			</assocType>
+		</aggrInfo>
+		<spatRpType>
+			<SpatRepTypCd value="001"/>
+		</spatRpType>
+		<dataLang>
+			<languageCode value="eng"/>
+			<countryCode value="USA" Sync="TRUE"></countryCode></dataLang>
+		<dataChar>
+			<CharSetCd value="004"/>
+		</dataChar>
+		<tpCat>
+			<TopicCatCd value="017"/>
+		</tpCat>
+		<envirDesc Sync="TRUE">Microsoft Windows Server 2012 Version 6.2 (Build 9200) ; Esri ArcGIS 13.3.0.51585</envirDesc>
+		<dataExt>
+			<exDesc>publication date</exDesc>
+			<geoEle>
+				<GeoBndBox>
+					<exTypeCode>true</exTypeCode>
+					<westBL>138.120249</westBL>
+					<eastBL>153.53146</eastBL>
+					<southBL>-28.996645</southBL>
+					<northBL>-9.230423</northBL>
+				</GeoBndBox>
+			</geoEle>
+			<tempEle>
+				<TempExtent>
+					<exTemp>
+						<TM_Period gmlID="IDR0OK1Q0PHHXUNLGNNBSIYIAFKELYO1MO1RPXQCFXM2ZXSQHUPQKE">
+							<tmBegin>2016-09-22T00:00:00</tmBegin>
+							<tmEnd>2023-03-10T00:00:00</tmEnd>
+						</TM_Period>
+					</exTemp>
+				</TempExtent>
+			</tempEle>
+		</dataExt>
+		<dataExt>
+			<geoEle>
+				<GeoBndBox>
+					<exTypeCode>true</exTypeCode>
+					<westBL>138.120249</westBL>
+					<eastBL>153.53146</eastBL>
+					<southBL>-28.996645</southBL>
+					<northBL>-9.230423</northBL>
+				</GeoBndBox>
+			</geoEle>
+		</dataExt>
+		<dataExt>
+			<geoEle>
+				<GeoBndBox>
+					<exTypeCode>true</exTypeCode>
+					<westBL>138.120249</westBL>
+					<eastBL>153.53146</eastBL>
+					<southBL>-28.996645</southBL>
+					<northBL>-9.230423</northBL>
+				</GeoBndBox>
+			</geoEle>
+		</dataExt>
+		<dataExt>
+			<geoEle>
+				<GeoBndBox>
+					<exTypeCode>true</exTypeCode>
+					<westBL>138.120249</westBL>
+					<eastBL>153.53146</eastBL>
+					<southBL>-28.996645</southBL>
+					<northBL>-9.230423</northBL>
+				</GeoBndBox>
+			</geoEle>
+		</dataExt>
+		<suppInfo>The location of the feature is generally placed in the centre of the roadway adjacent to the main post office. If this is inappropriate, then in the centre of the roadway in the most central part of the community, generally the main commercial area.
+
+Names have been sourced from the Queensland Place Names Database.
+
+Feature Types: 
+Populated centre - A point representing the centre of a named urban settlement (town or city).
+
+Attributes: 
+FEATURE TYPE - Unique feature type that identifies the topographic feature e.g. Populated centre. 
+NAME - The name of the feature.
+ALTERNATE NAME - Alternate name of the feature (if one exists)
+QLD PNDB ID - Queensland Place Names Database unique identifier
+ATTRIBUTE SOURCE - The source map, or data where the name of the feature was obtained from.
+ATTRIBUTE DATE - Date of the source map, or data where the name of the feature was obtained from. 
+ADDITIONAL NAME - Other names of the feature if not recorded in the Queensland Place Names Database. Maybe commonly known by other names or have different spelling. Multiple names can be shown, separated by a comma.
+ADD NAME SOURCE - The source map or data that the additional names were obtained from. Multiple sources can be shown, separated by a comma. If multiple sources are shown, the written sequence will be the same as the written sequence of the names themselves.
+FEATURE SOURCE - The imagery, map or data that the spatial location of the feature was obtained from. 
+FEATURE DATE - Date of the source imagery, map, or data that the spatial location of the feature was obtained from.
+OPERATIONAL STATUS - The operation status of the building. Options: Abandoned, Historic, Operational, Non Operational, Ruin
+POPULATION - The population (number of persons) indicated by the ABS Census figures that exist for this locality. This field will no longer be updated as of the 01/03/2016 due to changes in the source data from ABS data.
+POPULATION DATE - The date of the ABS census data
+LOCAL GOVERNMENT - The name of the local government
+PFI - A Persistent Feature Identifier (PFI) is generated for each feature at the point of creation in the database. The value of the PFI will stay with the feature through all changes to the feature (both spatial and non-spatial) until the feature is retired. (See the Persistent and Unique Feature Identifiers under the Data Model header for more information) 
+UFI - A Unique Feature Identifier (UFI) is generated for each new feature at the point of creation in the database (at this point the PFI and UFI will be the same). The value of the UFI will stay with the feature through all changes to the feature (both spatial and non-spatial) unless the feature is split into multiple other parts. If the feature is split, the separate parts will retain the original PFI but new UFI’s will be generated for the split parts. (See the Persistent and Unique Feature Identifiers under the Data Model header for more information) 
+CREATED DATE - The date the feature was originally captured and first loaded to the database
+LAST EDITED DATE - Date of the last editing or revision to the feature
+UPPER SCALE - The upper scale for which the feature should be considered suitable
+TEXT NOTE - For mapping purposes. Additional annotation that can be shown on a map.
+ADD INFORMATION - A comment field (additional information)
+
+
+This dataset is stored in an ESRI Geodatabase. Some column names may be shortened if downloaded in the ESRI shape format.
+</suppInfo>
+		<dataExt><geoEle><GeoBndBox esriExtentType="search"><exTypeCode Sync="TRUE">1</exTypeCode><westBL Sync="TRUE">138.120249</westBL><eastBL Sync="TRUE">153.531460</eastBL><northBL Sync="TRUE">-9.230423</northBL><southBL Sync="TRUE">-28.996645</southBL></GeoBndBox></geoEle></dataExt></dataIdInfo>
+	<mdMaint>
+		<maintFreq>
+			<MaintFreqCd value="009"/>
+		</maintFreq>
+	</mdMaint>
+	<mdConst>
+		<SecConsts>
+			<useLimit>Public</useLimit>
+			<class>
+				<ClasscationCd value="001"/>
+			</class>
+			<classSys>Metadata Access Level</classSys>
+		</SecConsts>
+	</mdConst>
+	<dqInfo>
+		<dqScope>
+			<scpLvl>
+				<ScopeCd value="005"/>
+			</scpLvl>
+		</dqScope>
+		<report type="DQConcConsis">
+			<measDesc>Data should be free from duplicates.</measDesc>
+			<measResult>
+				<ConResult>
+					<conSpec>
+						<resTitle>Department of Natural Resources and Mines, Manufacturing, and Regional and Rural Development data capture process</resTitle>
+						<date>
+							<pubDate>2015-08-19</pubDate>
+						</date>
+					</conSpec>
+					<conExpl>The data is to a standard determined as fit for the purpose for which it was collected.</conExpl>
+					<conPass>true</conPass>
+				</ConResult>
+			</measResult>
+		</report>
+		<report type="DQCompOm">
+			<measDesc>The collection of feature types will be complete. </measDesc>
+			<measResult>
+				<ConResult>
+					<conSpec>
+						<resTitle>Department of Natural Resources and Mines, Manufacturing, and Regional and Rural Development data capture process</resTitle>
+						<date>
+							<pubDate>2015-08-19</pubDate>
+						</date>
+					</conSpec>
+					<conExpl>The data is to a standard determined as fit for the purpose for which it was collected.</conExpl>
+					<conPass>true</conPass>
+				</ConResult>
+			</measResult>
+		</report>
+		<report type="DQNonQuanAttAcc">
+			<measDesc>Attribution is complete.</measDesc>
+			<measResult>
+				<ConResult>
+					<conSpec>
+						<resTitle>Department of Natural Resources and Mines, Manufacturing, and Regional and Rural Development data capture process</resTitle>
+						<date>
+							<pubDate>2015-08-19</pubDate>
+						</date>
+					</conSpec>
+					<conExpl>The data is to a standard determined as fit for the purpose for which it was collected.</conExpl>
+					<conPass>true</conPass>
+				</ConResult>
+			</measResult>
+		</report>
+		<report type="DQAbsExtPosAcc">
+			<measDesc>Coordinates within the Place Names Database (PNDB) are shown to the nearest minute of latitude and longitude. These coordinates are moved to a more appropriate position based on imagery.</measDesc>
+			<measResult>
+				<ConResult>
+					<conSpec>
+						<resTitle>Department of Natural Resources and Mines, Manufacturing, and Regional and Rural Development data capture process</resTitle>
+						<date>
+							<pubDate>2015-08-19</pubDate>
+						</date>
+					</conSpec>
+					<conExpl>The data is to a standard determined as fit for the purpose for which it was collected.</conExpl>
+					<conPass>true</conPass>
+				</ConResult>
+			</measResult>
+		</report>
+		<dataLineage>
+			<statement>This dataset is GDA2020 compatible. The source data, and therefore the captured features, are georeferenced as GDA94 (horizontal only).  The horizontal accuracy of the geo-referencing and/or data collection method for this example is greater than the datum offset between GDA94 and GDA2020 (1.8 meters).  The resulting dataset has been nominated as a low-accuracy GDA2020 dataset. As this data has not been directly captured in GDA2020, nor transformed to GDA2020, the resulting data is 'GDA2020 Compatible' not 'GDA2020 Compliant'.
+
+Data is extracted as a coordinate from the Queensland Place Names Database (PNDB) that has a Place Type classification of either City, Town or Township.
+
+The coordinates of this data is to the nearest minute.
+
+These points are then moved visually against imagery to a more appropriate location. The location of the feature is generally placed in the centre of the roadway adjacent to the main post office. If this is inappropriate, then in the centre of the roadway in the most central part of the community, generally the main commercial area.
+
+The population figures have been arrived at by extraction of data from the Australian Bureau of Statistics (ABS) census. The population figures have been arrived at by extraction of data from the Australian Bureau of Statistics (ABS) census. A date within the data states the year of the ABS census.  This field will no longer be updated as of the 01/03/2016 due to changes in the source data from ABS data. 
+</statement>
+			<dataSource>
+				<srcDesc>Queensland Place Names Database</srcDesc>
+			</dataSource>
+		</dataLineage>
+	</dqInfo>
+	<spatRepInfo>
+		<VectSpatRep><geometObjs Name="Population_centres"><geoObjTyp><GeoObjTypCd value="004" Sync="TRUE"></GeoObjTypCd></geoObjTyp><geoObjCnt Sync="TRUE">0</geoObjCnt></geometObjs><topLvl><TopoLevCd value="001" Sync="TRUE"></TopoLevCd></topLvl></VectSpatRep></spatRepInfo>
+	<refSysInfo>
+		<RefSystem>
+			<refSysID>
+				<identCode code="4283"/>
+				<idCodeSpace Sync="TRUE">EPSG</idCodeSpace>
+				<idVersion Sync="TRUE">8.9.4(10.5.0)</idVersion></refSysID>
+		</RefSystem>
+	</refSysInfo>
+	<eainfo>
+		<detailed Name="Population_centres">
+			<enttyp>
+				<enttypl Sync="TRUE">Population_centres</enttypl>
+				<enttypt Sync="TRUE">Feature Class</enttypt>
+				<enttypc Sync="TRUE">0</enttypc>
+			</enttyp>
+			<attr><attrlabl Sync="TRUE">FID</attrlabl><attalias Sync="TRUE">FID</attalias><attrtype Sync="TRUE">OID</attrtype><attwidth Sync="TRUE">4</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Internal feature number.</attrdef><attrdefs Sync="TRUE">Esri</attrdefs><attrdomv><udom Sync="TRUE">Sequential unique whole numbers that are automatically generated.</udom></attrdomv></attr><attr>
+				<attrlabl Sync="TRUE">SHAPE</attrlabl>
+				<attalias Sync="TRUE">Shape</attalias>
+				<attrtype Sync="TRUE">Geometry</attrtype>
+				<attwidth Sync="TRUE">0</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+				<attrdef Sync="TRUE">Feature geometry.</attrdef>
+				<attrdefs Sync="TRUE">Esri</attrdefs>
+				<attrdomv>
+					<udom Sync="TRUE">Coordinates defining the features.</udom>
+				</attrdomv>
+			</attr>
+			<attr><attrlabl Sync="TRUE">feature_ty</attrlabl><attalias Sync="TRUE">feature_ty</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr>
+				<attrlabl Sync="TRUE">name</attrlabl>
+				<attalias Sync="TRUE">name</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">100</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr><attrlabl Sync="TRUE">alternate_</attrlabl><attalias Sync="TRUE">alternate_</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">100</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">qld_pndb_i</attrlabl><attalias Sync="TRUE">qld_pndb_i</attalias><attrtype Sync="TRUE">Integer</attrtype><attwidth Sync="TRUE">10</attwidth><atprecis Sync="TRUE">10</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">attribute_</attrlabl><attalias Sync="TRUE">attribute_</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">100</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">attribute1</attrlabl><attalias Sync="TRUE">attribute1</attalias><attrtype Sync="TRUE">Date</attrtype><attwidth Sync="TRUE">8</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">additional</attrlabl><attalias Sync="TRUE">additional</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">100</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">add_names_</attrlabl><attalias Sync="TRUE">add_names_</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">100</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">feature_so</attrlabl><attalias Sync="TRUE">feature_so</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">100</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">feature_da</attrlabl><attalias Sync="TRUE">feature_da</attalias><attrtype Sync="TRUE">Date</attrtype><attwidth Sync="TRUE">8</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">operationa</attrlabl><attalias Sync="TRUE">operationa</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">30</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr>
+				<attrlabl Sync="TRUE">population</attrlabl>
+				<attalias Sync="TRUE">population</attalias>
+				<attrtype Sync="TRUE">Integer</attrtype>
+				<attwidth Sync="TRUE">10</attwidth>
+				<atprecis Sync="TRUE">10</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr><attrlabl Sync="TRUE">populati_1</attrlabl><attalias Sync="TRUE">populati_1</attalias><attrtype Sync="TRUE">Date</attrtype><attwidth Sync="TRUE">8</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">local_gove</attrlabl><attalias Sync="TRUE">local_gove</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr>
+				<attrlabl Sync="TRUE">pfi</attrlabl>
+				<attalias Sync="TRUE">pfi</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">15</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">ufi</attrlabl>
+				<attalias Sync="TRUE">ufi</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">15</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr><attrlabl Sync="TRUE">upper_scal</attrlabl><attalias Sync="TRUE">upper_scal</attalias><attrtype Sync="TRUE">Integer</attrtype><attwidth Sync="TRUE">10</attwidth><atprecis Sync="TRUE">10</atprecis><attscale Sync="TRUE">0</attscale></attr><attr>
+				<attrlabl Sync="TRUE">text_note</attrlabl>
+				<attalias Sync="TRUE">text_note</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">50</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr><attrlabl Sync="TRUE">add_inform</attrlabl><attalias Sync="TRUE">add_inform</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">254</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr></detailed>
+	</eainfo>
+	<spdoinfo><ptvctinf><esriterm Name="Population_centres"><efeatyp Sync="TRUE">Simple</efeatyp><efeageom code="1" Sync="TRUE"></efeageom><esritopo Sync="TRUE">FALSE</esritopo><efeacnt Sync="TRUE">0</efeacnt><spindex Sync="TRUE">FALSE</spindex><linrefer Sync="TRUE">FALSE</linrefer></esriterm></ptvctinf></spdoinfo></metadata>

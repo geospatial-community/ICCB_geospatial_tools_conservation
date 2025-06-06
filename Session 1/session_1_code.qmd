@@ -1,0 +1,801 @@
+---
+title: "Getting started with geospatial coding in R using the terra and sf packages"
+author: "Jason Flower"
+date: "`r Sys.Date()`"
+toc: true
+number-sections: false
+format: 
+  html:
+    self-contained: true
+    code-tools: true
+    df-print: paged
+    fig-width: 6
+abstract: |
+  This is the first session of the ICCB workshop titled "Open Source Geospatial Tools for Conservation under Climate Change - a Koala Case Study". We will provide an introduction to working with geospatial in R using the sf and terra packages.
+---
+
+No prior experience of spatial data is assumed, but this introduction will not have time to delve deeply into some important aspects of spatial data such as projections. We will use the two most commonly used R packages for geospatial data manipulation: `sf` for manipulating vector data, and `terra` for manipulating raster and vector data. If you are still using the `raster` package, you should move to `terra`; it is simpler, faster and can do more!
+
+*Resources*:
+
+- The official `terra` [tutorial page](https://rspatial.org/spatial/index.html), and [reference](https://rspatial.github.io/terra/reference/terra-package.html) to all the `terra` functions
+- The official `sf` [website](https://r-spatial.github.io/sf/) with a wealth of tutorials, function documentation, and further links
+- The excellent Geocomputation with R [book](https://r.geocompx.org) which uses both `sf` and `terra`
+- [This website](https://mgimond.github.io/Spatial/index.html) is a good guide to doing GIS work in R using both `terra` and `sf` packages
+
+## Prerequisites 
+
+You will need the `terra` and `sf` packages installed. We will also make an interactive map with `terra`, which requires the `leaflet` package to be installed, and we will need the `dplyr` package for data manipulation. 
+
+```{r}
+#| eval: false
+
+install.packages(c("sf", "terra", "leaflet", "dplyr"))
+```
+
+
+If you have problems, there are more details about installing `terra` [here](https://rspatial.github.io/terra/index.html) and `sf` [here](https://r-spatial.github.io/sf/#installing).  
+
+We can now load the packages:
+
+```{r}
+#| message: false
+
+library(dplyr)
+library(terra)
+library(sf)
+library(tmap)
+```
+
+# Spatial data
+
+There are basically two types of spatial data: vector and raster
+
+## Vector data 
+
+Can be points, lines or polygons. Vectors are useful for representing things like survey locations, rivers, and boundaries. 
+
+```{r}
+#| code-fold: true
+
+pts <- rbind(c(3.2,4), c(3,4.6), c(3.8,4.4), c(3.5,3.8), c(3.4,3.6), c(3.9,4.5)) |>
+  vect()
+
+lnes <- as.lines(vect(rbind(c(3,4.6), c(3.2,4), c(3.5,3.8)))) |>
+  rbind(as.lines(vect(rbind(c(3.9, 4.5), c(3.8, 4.4), c(3.5,3.8), c(3.4,3.6)))))
+
+lux <- vect(system.file("ex/lux.shp", package = "terra"))
+
+par(mfrow = c(1,3))
+par(mar = rep(0.1,4))
+
+plot(pts, axes = F, main = "Points")
+plot(lnes, col = "blue", axes = F, main = "Lines")
+plot(lux, "NAME_2", col = terrain.colors(12), las = 1, axes = F, main = "Polygons")
+
+```
+
+## Raster data 
+
+Raster data is a grid of rectangles, normally called cells. Each cell has a value, making rasters useful for storing continuous data, such as temperature and elevation.
+
+Here is an example of raster data, where each cell in the raster represents elevation.
+
+```{r}
+#| code-fold: true
+
+par(mfrow = c(1,1)) #return to defaults
+par(mar = c(5, 4, 4, 2) + 0.1)
+
+elev <- system.file("ex/elev.tif", package = "terra") |>
+  rast() |>
+  aggregate(fact = 2)
+
+plot(elev, las = 1, main = "Elevation map", col = terrain.colors(100))
+
+elev |>
+  as.polygons(aggregate = FALSE, na.rm = FALSE) |>
+  lines(col = "grey40", lwd = 0.2)
+
+```
+
+# Getting started
+
+## Making and inspecting a raster
+
+Lets start by creating our own raster. We will be doing all manipulation of rasters with the `terra` package. To create rasters from scratch or load them from a file we use the function `rast()`. We can create a simple raster by specifying the x and y limits for the raster and the resolution (how big each cell is).
+
+
+```{r}
+#create raster
+ras <- rast(xmin = 0, xmax = 10, ymin = 0, ymax = 10, resolution = 2)
+
+#see what we've created
+ras
+```
+
+The figure below shows what most of the terms above refer to. As you can see, you don't need to use all the terms to define a raster. Some other important points to note:
+
+- Every object in R has a class, such as `data.frame` and as you can see, rasters in terra are of class `SpatRaster`. 
+- We did not tell `rast()` which coordinate reference system to use, so it defaults to using longitude latitude coordinates, also known as EPSG 4326. We will come back to coordinate reference systems later.
+
+```{r}
+#| echo: false
+
+knitr::include_graphics("figs/terra_raster_properties_figure.png")
+```
+
+But what does the raster we created actually look like when plotted. Lets see. All we need is `plot()`
+
+```{r}
+#| fig-width: 3
+
+plot(ras)
+```
+
+Why is there no plot? Because the raster we created is empty; there are no values associated with the the cells. Lets assign some values to each cell in the raster and try again. First we will find out how many cells are in our raster using `ncell()
+
+```{r}
+ncell(ras)
+```
+
+Ok, now we know this lets give our raster cells values from 1 to `r ncell(ras)`:
+
+```{r}
+values(ras) <- 1:25
+
+plot(ras)
+```
+
+Now our raster has values, we get a plot! Each cell has an integer value between 1 and 25, with cell values increasing from left to right and top to bottom. So the values start being "filled up" in the top left, and finish in the bottom right.
+
+Lets have another look at our raster properties
+
+```{r}
+ras
+```
+
+We can now see a few extra pieces of information compared to last time:
+
+- `sources(s)`: where is the data held on your computer? It says `memory` for this raster, indicating that the raster is in the computer memory. Rasters can also be held on your hard disk, in which case this will be the file name of the raster. We won't go into details here, but `terra` is smart about loading data into memory, only doing so when it needs to and it thinks it will have enough space.
+- `name`: what is the raster called?
+- `min value` & `max value`: the minimum and maximum values in the raster
+
+Ok, now we understand the basic structure of a raster, lets look at vector data using the `sf` package.
+
+## Making and inspecting a vector
+
+As mentioned earlier, vector data can be points, lines or polygons. Let's start by making a single spatial point and plot it:
+
+```{r}
+pt <- st_point(c(1,3))
+
+plot(pt, axes = TRUE)
+```
+
+Simple! But this is just a point. What if we want our point to have some information attached to it? For example, what the temperature is at that point. Well first we need to convert it into a simple feature collection:
+
+```{r}
+pt_sf <- pt |> 
+  st_sfc() |> 
+  st_as_sf()
+
+pt_sf
+```
+
+Inspecting the simple feature collection, `pt_sf`, that we created, we see that there is only 1 feature; our point. There is also a bounding box, which is the same concept as the x and y limits we had for our raster. Like the raster, we also have coordinate reference system (CRS), that is currently not defined.
+
+Now our point is a simple feature collection, we can add some information to it. We will add a column called "temperature" and give our point a value of 25.
+
+```{r}
+pt_sf$temperature <- 25
+
+pt_sf
+```
+
+Now our point has a "field" attached to it with temperature data. The fields are simply columns that have information for each geometry; in our case a point. 
+
+# Real world data
+
+## Vectors
+
+### Loading and plotting
+
+Most of the time, we won't be making our own data from scratch, but reading in data that we have downloaded or been provided with. In this workshop, you are going to be doing a case study of Koalas in south-east Queensland (SEQ). One of the first pieces of spatial data we normally need are the boundaries of the area we are working in. We will use spatial data of the local government areas (LGAs) in Queensland downloaded from the Queensland government [website](https://qldspatial.information.qld.gov.au/catalogue/custom/detail.page?fid={3F3DBD69-647B-4833-B0A5-CC43D5E70699}) to define our SEQ boundary. 
+
+We use `st_read()` to read the data which is in the `data` folder you should have downloaded with the code from Github. The file is a Geopackage, which is widely used for storing geospatial data, and is similar (but better!) than shapefile. The `st_read()` command can read data in many different spatial formats: run `st_drivers()` to see a complete list of formats.
+
+```{r}
+#| warning: false
+
+lgas <- st_read("data/Local_Government_Areas.gpkg") 
+```
+
+`sf` gives us some information about the data we have read: we can see it is MULTIPOLYGON and has 78 features and 6 fields, i.e. 78 rows of geometry and 6 columns of data, and its CRS is WGS 84. We will come back to the coordinate reference system (CRS) later, so for now, lets have a look at the first few rows (features):
+
+```{r}
+head(lgas)
+```
+
+Now we can see that the 6 fields contain information about each LGA, including various name formats and the areas. The final column called "Shape" contains the spatial information: the coordinates for each point that makes up the polygons. This column is most commonly labelled "geometry".
+
+The fields in our `sf` data are just like columns in a data frame. So if we want all the values in one column, we can just select that column in the same way as a data frame:
+
+```{r}
+lgas$lga
+```
+
+Let's plot the data to see what we have:
+
+```{r}
+plot(lgas)
+```
+
+Looks like Queensland! We got one map for each field (column). If we want a map of just one field we can select only the field we want:
+
+```{r}
+plot(lgas[, "lga"], axes = TRUE)
+```
+
+We added axes using the `axes = TRUE` argument. 
+
+### Subsetting and merging
+
+Our data has local government areas (LGAs) for the whole of Queensland, but we just want a polygon of south-east Queensland (SEQ). How do we get that?
+
+First, we make a vector containing the names of all the LGAs in SEQ:
+
+```{r}
+seq_lga_names <- c(
+  "Brisbane City",
+  "Moreton Bay City",
+  "Logan City",
+  "Ipswich City",
+  "Redland City",
+  "Scenic Rim Regional",
+  "Somerset Regional",
+  "Lockyer Valley Regional",
+  "Gold Coast City",
+  "Sunshine Coast Regional",
+  "Toowoomba Regional",
+  "Noosa Shire"
+)
+```
+
+Now we can subset our LGAs spatial data for just these LGAs:
+
+```{r}
+lgas_seq <- lgas |> 
+  filter(lga %in% seq_lga_names) #select only the rows of data with LGA names that we have listed
+
+plot(lgas_seq[, "lga"])
+```
+
+Great! We've got only the LGAs in SEQ. But at the moment we have many polygons that make up SEQ:
+
+```{r}
+head(lgas_seq)
+```
+
+How do we get just one polygon that is the boundary of the area? We use `st_union()`:
+
+```{r}
+seq_boundary <- st_union(lgas_seq)
+
+plot(seq_boundary)
+```
+
+This merges all our polygons into one polygon. Note that we lose all the fields when we do this:
+
+```{r}
+head(seq_boundary)
+```
+
+## Rasters
+
+### Loading and plotting
+
+We now want to get some climate data for our south-east Queensland study area that we will use in a later session to do species modelling. Climate data is normally stored in raster format, so we will be using the `terra` package to manipulate the data. Example climate data is already in the `data` folder, and you will learn about how to create these data in the following session. For now, let's load one of the climate rasters and have a look at it:
+
+```{r}
+climate1 <- rast("data/Current_climate_QLD/bioclim_01.tif")
+
+climate1
+```
+
+It is a raster with 0.05 degree resolution: we know it is in degrees because it is unprojected, in the EPSG 4326 coordinate reference system. Let's plot the data:
+
+```{r}
+plot(climate1)
+```
+
+We can see that the data covers the whole of Australia. What type of data do you think this is?
+
+### Cropping and masking
+
+The raster data we have at the moment is for a much larger area than just SEQ. Let's plot our raster and SEQ polygon together to see:
+
+```{r}
+seq_vect <- vect(seq_boundary) #we need to convert our sf polygon into a SpatVector, which is the vector format that the terra package uses
+
+plot(climate1) 
+lines(seq_vect) #adds the SEQ polygon as lines on top of the raster
+```
+
+To get only SEQ data, we need to crop and mask the raster data using our SEQ polygon. 
+
+Cropping means that we keep only the data inside the **extent** of the vector we are using. Mask means that all the data outside the vector is set to NA or some other value we specify. Lets have a look how this works.
+
+First lets have a look at the extent of the SEQ polygon. We can get the extent of a raster or vector using `ext()`. We need to convert this into a `SpatVector` object for plotting using `vect()`. We only need to do this for plotting; when we crop, we can just use the SEQ polygon as the input.
+
+
+```{r}
+#| fig-cap: "Cropping means we remove everything outside the extent (blue box) of our polygon. Masking sets all values outside our polygon to NA."
+
+seq_vect_extent <- ext(seq_vect) |> 
+  vect()
+
+plot(climate1)
+lines(seq_vect)
+lines(seq_vect_extent, col = "blue")
+```
+
+So when we crop, we get only the area within the blue box.
+
+We crop using the `crop()` function, using the raster we want to crop as the first argument and the vector we are cropping as the second.
+
+```{r}
+#crop
+climate1_cropped <- crop(climate1, seq_vect)
+
+#plot
+plot(climate1_cropped)
+lines(seq_vect)
+```
+
+Now we have cropped our raster, we can mask it so that we only have values for the area within the SEQ boundary. We do this using `mask`:
+
+```{r}
+#mask
+climate_seq <- mask(climate1_cropped, seq_vect)
+
+#plot
+plot(climate_seq)
+lines(seq_vect)
+```
+
+Now we only see raster values for cells that are within the SEQ boundary. But remember that the areas that are white, still have values, they are just `NA` values. We can confirm this by plotting the `NA` cells in grey (or any other colour):
+
+```{r}
+plot(climate_seq, colNA = "grey")
+lines(seq_vect)
+```
+
+Often we want to `crop` and `mask` one after the other, and you can do this in one command using `crop(climate1_projected, seq_vect, mask = TRUE)`. 
+
+For reference, here is a figure comparing what `crop`, `mask` and `crop(mask = TRUE)` do:
+
+```{r}
+#| code-fold: true
+
+par(mfrow = c(2,2))
+
+plot(climate1, main = "Original raster")
+lines(seq_vect)
+
+plot(climate1_cropped, main = "Cropped")
+lines(seq_vect)
+
+climate1 |>
+  mask(seq_vect) |>
+  plot(main = "Masked")
+lines(seq_vect)
+
+plot(crop(climate1, seq_vect, mask = TRUE), main = "Cropped and masked")
+lines(seq_vect)
+```
+
+```{r}
+#| include: false
+
+par(mfrow = c(1,1))
+```
+
+Why not just mask rather than crop and mask? As we see in the figure above, this would mean we have a lot of area we are not interested in and even though most of those cells would be `NA` they take up space in our raster, so it is not efficient.
+
+### Raster values
+
+Remember that each cell in our raster has a value. We might want to examine some summaries of these raster values. We can get a histogram of all the values in a raster using the `hist()` function:
+
+```{r}
+hist(climate_seq)
+```
+
+There is a tail of low values, which are mostly from the south-east of Australia (Tasmania is chilly!). What is the mean value for the whole of Australia?
+
+```{r}
+global(climate_seq, "mean", na.rm = TRUE)
+```
+
+We can also get a statistical summary of the raster values just by using the `summary()` function:
+
+```{r}
+summary(climate_seq)
+```
+
+### Raster math
+
+The great thing about rasters are you can do maths with them! For example, doing `climate1 + 1` just adds one to each raster value, and doing `climate1*2` multiplies each raster value by two.
+
+As an example, lets convert our temperature data into Fahrenheit for our confused colleagues from the U.S. The conversion from Celsius to Fahrenheit is: Fahrenheit = (Celsius * 1.8) + 32.
+
+```{r}
+#do the conversion
+climate_seq_fahrenheit <- (climate_seq*1.8) + 32
+
+#plot our new raster
+plot(climate_seq_fahrenheit)
+```
+
+### Coordinate reference systems and projection
+
+Remember that the CRS of our data is WGS 84. What does this mean? We can get some more information using `st_crs()`:
+
+```{r}
+crs(climate_seq)
+```
+
+This is the well-known text (wkt) description of the CRS, which gives a lot of detail. Let's get a simpler version:
+
+```{r}
+crs(climate_seq, describe = TRUE)
+```
+
+We often have to deal with spatial data that have different CRS's, which involves transforming the data from one CRS to another. But first, what is a CRS?
+
+#### Coordinate reference systems
+
+<details>
+<summary>Click here to expand this section</summary>
+
+If we want to know where things are in space, we need to use some kind of spatial reference. We can use our own arbitrary system, e.g. a sampling grid like the one shown in the photo below where we could define the location of each square relative to one of the corners. But normally we want to know where something is on Earth.
+
+```{r}
+#| echo: false
+
+knitr::include_graphics("figs/quadrat.jpg")
+```
+
+There are two types of coordinate systems we can use to represent locations on Earth:
+
+- Geographic coordinate systems (GCS): uses a 3-D surface (e.g. globe) to define locations on the Earth using longitude and latitude. The 3-D surface is normally an ellipsoid which approximates the Earth but cannot be exact since the Earth is not a smooth surface. This approximation of the Earth is called a datum and can be aligned with the true Earth (the geoid) in different ways depending on whether we are trying to get a good approximation at some particular location (local datum), e.g. Brisbane, or best approximation across the whole Earth (geocentric datum). The figure below (sourced from [here](https://mgimond.github.io/Spatial/chp09_0.html)) shows examples of these datums.
+
+```{r}
+#| echo: false
+
+knitr::include_graphics("figs/datums.png")
+```
+
+A commonly used geocentric datum is World Geodetic Survey for 1984 (WGS84). This is almost synonymous with the commonly used coordinate reference system EPSG 4326, but EPSG 4326 defines the latitude and longitude coordinates used on the WGS84 ellipsoid ([Ref](https://gis.stackexchange.com/questions/3334/difference-between-wgs84-and-epsg4326))
+
+- Projected coordinate system (projection): Unfortunately, we can't carry around globes all the time when we want to look at a map, and doing calculations, such as distance and area, in 3-D is much more difficult than 2-D. So we need a way of getting from our 3-D globe to a piece of paper (or for younger people, a screen). To do this we need to 'project' from a GCS to a projected coordinate system, which is called projection because we can think of this as putting a light in the centre of a globe and the light shines through the globe projecting features onto a flat piece of paper. The figure below (from [QGIS docs](https://docs.qgis.org/3.34/en/docs/gentle_gis_introduction/coordinate_reference_systems.html)) illustrates this, showing the 3 projection families:
+
+```{r}
+#| echo: false
+#| fig-cap: "a) Cylindrical; b) conical, and; c) planar projecions"
+
+knitr::include_graphics("figs/projections_qgis_docs.png")
+```
+
+All projections are a compromise because they will always distort the shape, area, distances, and directions of the original GCS. A map that preserves shape is called conformal; one that preserves area is called equal-area; one that preserves distance is called equidistant; and one that preserves direction is called azimuthal. There are a huge number of projections available and choosing the correct one can be challenging. Often your choice will be to use the a local projection that is used by goverment or other authorities in the location you are working, e.g. for this workshop we will use [EPSG 7856, GDA2020 / MGA zone 56](https://spatialreference.org/ref/epsg/7856/), which is suitable for our study area of south-east Queensland. For global work where equal area is important, the Mollweide projection is commonly used.
+
+We have only covered the basics of coordinate reference systems because it is a big topic to cover. The following resources are useful for understanding in more depth:
+
+- The QGIS software [documentation](https://docs.qgis.org/3.34/en/docs/gentle_gis_introduction/coordinate_reference_systems.html)
+- The Geocomputation with R [book section](https://r.geocompx.org/spatial-class#crs-intro)
+- R for Spatial Data Science book [section](https://r-spatial.org/book/08-Plotting.html)
+- Stackexchange [question](https://gis.stackexchange.com/questions/149749/is-wgs84-a-coordinate-system-or-projection-system) about WGS84
+
+</details>
+
+Coming back to our Queensland data, you will remember that it is in the WGS 84 CRS, which is a geographic CRS. We want to transform it into a suitable projected CRS. We will be using GDA2020 / MGA zone 56, which is identified by the EPSG code 7843. Let's check if this is a suitable projection:
+
+```{r}
+crs("EPSG:7856", describe = TRUE)
+```
+
+It says it's suitable for Australia between 150°E and 156°E. Is our data between those bounds? We can check by finding the extent of the unprojected data, which is in degrees longitude and latitude:
+
+```{r}
+ext(climate_seq)
+```
+
+Yep, we're good!
+
+So now we can go ahead and project the data:
+
+```{r}
+climate_seq_projected <- project(climate_seq, "EPSG:7856")
+
+plot(climate_seq_projected)
+```
+
+The data looks the same, but our axes are no longer in degrees latitude and longitude. What are our units of measurement in our projected CRS? Normally they would be metres (unless you're in some weird American projection and you're using feet), but lets check. We need to use `sf`'s crs function for this:
+
+```{r}
+st_crs(climate_seq_projected)$units_gdal
+```
+
+Yep, we're in metres. Compare this to the units for the unprojected data:
+
+```{r}
+st_crs(climate_seq)$units_gdal
+```
+
+It is really important to understand that when we project a raster, we are changing the raster, because we have to create a new raster in the new CRS. 
+
+Lets compare our original raster and the projected version:
+
+```{r}
+climate_seq
+```
+
+```{r}
+climate_seq_projected
+```
+
+The extent, resolution, and dimensions of the projected raster are all different from the unprojected one. This projected CRS has units of meters, which means the size of each raster cell is `r sprintf("%.2f", res(climate_seq_projected)[1])`m x `r sprintf("%.2f", res(climate_seq_projected)[2])`m. 
+
+Let's compare the statistics for the two rasters:
+
+```{r}
+summary(climate_seq)
+
+summary(climate_seq_projected)
+```
+
+The statistics are similar, but not exactly the same. There are more NA values in the projected raster, largely because there are more cells: `r format(ncell(climate_seq), scientific = F)` in the original and `r format(ncell(climate_seq_projected), scientific = F)` in the projected raster.
+
+These changes in the raster are really important to think about when making decisions about projecting rasters. In general avoid projecting rasters if you can. You can find more information about the methods you can use when project in the `project()` help file (`?project`).
+
+We can also project vector data. For this we use the `sf` function `st_transform()`. Let's project our SEQ boundary polygon into the local projection:
+
+```{r}
+seq_boundary_projected <- st_transform(seq_boundary, 7856)
+
+seq_boundary_projected
+```
+
+Note that we don't need to use the "EPSG:" part like we did when using `project()`.
+
+The nice thing about projecting vector data is that the values stay the same. So if you can, project your vector data into the CRS of your raster data.
+
+### Many raster layers
+
+We've been working with just one raster, but what if we want to do the same thing to many rasters at the same time?
+
+In the `data/Current_climate_QLD` folder, there are 19 raster files. It would be painful to have to load, crop, mask and project each file individually. A very useful feature of rasters is that they can have many layers. These layers often represent different time periods, such as days or months, or different variables, such as temperature maximum, minimum and mean.
+
+First we need to load all 19 rasters. We can do this by getting the file names and then reading those file into a list.
+
+```{r}
+bioclim_list <- list.files("data/Current_climate_QLD", full.names = TRUE) |> 
+  lapply(FUN = rast)
+```
+
+The `lapply()` applies the `rast()` function to each file name, i.e. loads each raster, and places them into a list. If you haven't encountered lists before, they can be a little confusing, but they are very helpful for holding any type of data. In our case, each element in the list is a raster. We can access each list element using the index. For example, to get the first object (in our case, raster), we do:
+
+```{r}
+bioclim_list[[1]]
+```
+
+We can find out how long our list is using `length()`:
+
+```{r}
+length(bioclim_list)
+```
+
+This is the same number of files that we read in: each raster is 1 element in the list. 
+
+We can manipulate the rasters in the list, but it is a little easier if we can just create a single raster object to work with. Happily we can create a multi-layer raster, with each of our rasters as one layer. 
+
+```{r}
+bioclim_ras <- rast(bioclim_list)
+bioclim_ras
+```
+
+We can see that we have many raster names, and the `nlyr` (number of layers) variable is now 19. 
+
+We can think of a multi-layer raster as a data sandwich (as my colleague likes to say!):
+
+```{r}
+#| code-fold: true
+#| message: false
+
+#This is to create a stack of maps 
+#The code is modified from: https://www.urbandemographics.org/post/figures-map-layers-r/
+
+#functions
+rotate_data <- function(data, y_add) {
+  x_add = 0
+  
+  shear_matrix <- function(){ matrix(c(2, 1.2, 0, 1), 2, 2) }
+  
+  rotate_matrix <- function(x){ 
+    matrix(c(cos(x), sin(x), -sin(x), cos(x)), 2, 2) 
+  }
+  data %>% 
+    dplyr::mutate(
+      geometry = .$geometry * shear_matrix() * rotate_matrix(pi/20) + c(x_add, y_add)
+    )
+}
+
+#aggregate and polygonize data
+temp_poly <- aggregate(bioclim_ras, fact = 4) |> 
+  as.polygons(aggregate = FALSE) |> 
+  st_as_sf()
+  
+#make tilted plot
+ggplot2::ggplot() +
+  ggplot2::geom_sf(data = rotate_data(temp_poly[,1], y_add = 0), ggplot2::aes(fill = .data[[names(temp_poly)[1]]]), color=NA, show.legend = FALSE) +
+  ggplot2::scale_fill_viridis_c() +
+  ggplot2::geom_sf(data = rotate_data(temp_poly[,7], y_add = 20), ggplot2::aes(fill = .data[[names(temp_poly)[7]]]), color=NA, show.legend = FALSE) +
+  ggplot2::scale_fill_viridis_c() +
+  ggplot2::geom_sf(data = rotate_data(temp_poly[,8], y_add = 40), ggplot2::aes(fill = .data[[names(temp_poly)[8]]]), color=NA, show.legend = FALSE) +
+  ggplot2::scale_fill_viridis_c() +
+  ggplot2::geom_sf(data = rotate_data(temp_poly[,5], y_add = 60), ggplot2::aes(fill = .data[[names(temp_poly)[5]]]), color=NA, show.legend = FALSE) +
+  ggplot2::scale_fill_viridis_c() +
+  ggplot2::theme_void()
+```
+
+We can use functions on our new multi-layer raster in the same way as we did for just one raster layer. We can map the rasters using the `plot()` function as normal:
+
+```{r}
+plot(bioclim_ras)
+```
+
+Not all the rasters fit in the window, so only the first 16 are show. 
+
+It's important to remember that if you want to put rasters into a multi-layer raster like we have done here, they must be the same extent, resolution, and crs.
+
+Now, we want to crop, mask and project our raster, same as we did with our single raster before. We can use exactly the same commands:
+
+```{r}
+bioclim_seq <- bioclim_ras |> 
+  crop(seq_vect, mask = TRUE) |> 
+  project(crs(climate_seq_projected))
+```
+
+Just three lines of codes and we've got our 19 rasters cropped, masked and projected! Let's check everything looks right:
+
+```{r}
+plot(bioclim_seq)
+```
+
+## Nice maps
+
+So far we have been using the `plot()` functions from the `terra` and `sf` packages. If you want to make detailed, publication quality maps, there are many great plotting packages such as `tmap` and `ggplot`. The final session of this workshop goes into detail about making nice maps, and there is an excellent section on map making in the [Geocomputation with R](https://r.geocompx.org/adv-map) book. For now, we will use the `tmap` package to make a nice map of our rasters with the SEQ polygon boundary.
+
+To make maps using `tmap`, you build up layers. You add data layers to the map using `tm_shape()` and that is followed by another `tm_` function that tells `tmap` what kind of data you are visualizing (e.g. raster, polygons, points) and how to show it (what colours, scales, etc.). First let's plot some of the raster data. We will use just the first two rasters from our multi-layer raster:
+
+```{r}
+tm_shape(bioclim_seq[[1:2]]) +
+  tm_raster()
+```
+
+We will change colours and scales in a moment, but first let's add our SEQ boundary polygon. We use `tm_shape()` to tell it what data we want to map, and then `tm_borders()` to show it as a border, not a filled polygon.
+
+```{r}
+tm_shape(bioclim_seq[[1:2]]) +
+  tm_raster() +
+  tm_shape(seq_boundary_projected) +
+  tm_borders()
+```
+
+We can add a scale bar and north arrow with two simple functions:
+
+```{r}
+tm_shape(bioclim_seq[[1:2]]) +
+  tm_raster() +
+  tm_shape(seq_boundary_projected) +
+  tm_borders() +
+  tm_scalebar() +
+  tm_compass()
+```
+
+Let's move the north arrow to the top left of the frame where there is some space, and set the scale bar to have marks at 0, 50 and 100 km. We will also change our raster scale colour palette:
+
+```{r}
+tm_shape(bioclim_seq[[1:2]]) +
+  tm_raster(col.scale = tm_scale_continuous(values = "brewer.yl_or_rd")) +
+  tm_shape(seq_boundary_projected) +
+  tm_borders() +
+  tm_scalebar(breaks = c(0, 50, 100)) +
+  tm_compass(position = c("left", "top"))
+```
+
+There are a HUGE variety of colour scales available. A good way to see some options is to use the `cols4all` package that is installed when you install the `tmap` package:
+
+```{r}
+#| eval: false
+
+cols4all::c4a_gui()
+```
+
+This brings up a window where you can view many colour palettes and lots of information about them, such as if the palette is colour blind friendly.
+
+We can make a few more tweaks to our maps to make them a bit neater:
+
+```{r}
+tm_shape(bioclim_seq[[1:2]]) +
+  tm_raster(col.scale = tm_scale_continuous(values = "brewer.yl_or_rd"),
+            col.legend = tm_legend(title = "Temperature", #Title for legends
+                                   orientation = "landscape")) + #change legends to landscape (horizontal) orientation
+  tm_shape(seq_boundary_projected) +
+  tm_borders() +
+  tm_scalebar(breaks = c(0, 50, 100)) +
+  tm_compass(position = c("left", "top")) +
+  tm_layout(panel.labels = c("Climate layer 1", "Climate layer 2")) #labels above each map
+```
+
+### Interactive maps
+
+It's often useful to see your data on a maps that you can move around on, with basemaps, such as satellite data, already loaded. There are two quick ways to do this. One is to use the `plet()` function from terra, which is just like `plot()`, but makes an interactive map, using the `leaflet` package behind the scenes:
+
+```{r}
+plet(bioclim_seq[[1]]) #show only the first layer of the multi-layer raster
+```
+
+We can choose a different basemap using the `tiles = ` argument:
+
+```{r}
+plet(bioclim_seq[[1]], tiles = "Esri.WorldImagery")
+```
+
+Another way of making an interactive map is using `tmap` and the `tmap_mode()` function:
+
+```{r}
+tmap_mode("view") #all tmap plots from now on will be interactive
+
+#now we copy our tmap code from above
+tm_shape(bioclim_seq[[1:2]]) +
+  tm_raster(col.scale = tm_scale_continuous(values = "brewer.yl_or_rd"),
+            col.legend = tm_legend(title = "Temperature", #Title for legends
+                                   orientation = "landscape")) + #change legends to landscape (horizontal) orientation
+  tm_shape(seq_boundary_projected) +
+  tm_borders()
+
+tmap_mode("plot") #reset the plotting to non-interactive
+```
+
+## Saving
+
+We will need the SEQ polygon later, so lets save it using `st_write()`:
+
+```{r}
+st_write(seq_boundary_projected, "data/seq_boundary.gpkg", append = FALSE)
+```
+
+You can save in many different formats (see `st_drivers()`). You can change the file format just by changing the file extension, e.g. use "seq_polygon.shp" if you want a shapefile.
+
+We use the `append = FALSE` argument to overwrite a file with the same name. This is useful if you are making changes to code and want to make sure that the most up-to-date version of your data gets saved.
+
+We will also need the cropped, masked and projected climate data. We can save rasters using the `writeRaster()` function from the `terra` package:
+
+```{r}
+writeRaster(bioclim_seq, "data/bioclim_seq.tif", overwrite = TRUE)
+```
+
+We don't need to save each raster as a separate file, instead we save a single multi-band Geotiff. Geotiff is a widely used raster file format and can be loaded by pretty much any GIS software. 
+
+We can check that this file will load as a multi-layer raster:
+
+```{r}
+rast("data/bioclim_seq.tif")
+```
+
+## Wrapping-up
+
+We've covered the basics of vector and raster manipulation in R using the `sf` and `terra` packages, and the `tmap` package for making maps. This is a relatively short introduction to a lot of geospatial concepts, but should provide the background you need for the following sessions which focus on data retrieval, manipulation and modelling.
+
+

@@ -1,0 +1,793 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<MD_Metadata xmlns="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.isotc211.org/2005/gmd/gmd.xsd      http://www.opengis.net/gml http://www.isotc211.org/2005/gml/gml.xsd      http://www.w3.org/1999/xlink http://www.isotc211.org/2005/xlink/xlinks.xsd">
+    <fileIdentifier>
+        <gco:CharacterString>{B8A52671-74A1-4155-94EB-95CBC6451BEE}</gco:CharacterString>
+    </fileIdentifier>
+    <language>
+        <gco:CharacterString>eng</gco:CharacterString>
+    </language>
+    <characterSet>
+        <MD_CharacterSetCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8"/>
+    </characterSet>
+    <parentIdentifier>
+        <gco:CharacterString>x</gco:CharacterString>
+    </parentIdentifier>
+    <hierarchyLevel>
+        <MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset">dataset</MD_ScopeCode>
+    </hierarchyLevel>
+    
+    <contact>
+        <CI_ResponsibleParty id="metadataContact">
+            <organisationName>
+                <gco:CharacterString>Department of Resources</gco:CharacterString>
+            </organisationName>
+            <positionName>
+                <gco:CharacterString>Senior Information Officer</gco:CharacterString>
+            </positionName>
+            <contactInfo>
+                <CI_Contact>
+                    <phone>
+                        <CI_Telephone>
+                            <voice>
+                                <gco:CharacterString>33304101</gco:CharacterString>
+                            </voice>
+                        </CI_Telephone>
+                    </phone>
+                    <address>
+                        <CI_Address>
+                            <deliveryPoint>
+                                <gco:CharacterString>1 William Street</gco:CharacterString>
+                            </deliveryPoint>
+                            <city>
+                                <gco:CharacterString>Brisbane</gco:CharacterString>
+                            </city>
+                            <administrativeArea>
+                                <gco:CharacterString>Queensland</gco:CharacterString>
+                            </administrativeArea>
+                            <postalCode>
+                                <gco:CharacterString>4000</gco:CharacterString>
+                            </postalCode>
+                            <country>
+                                <gco:CharacterString>Australia</gco:CharacterString>
+                            </country>
+                            <electronicMailAddress>
+                                <gco:CharacterString>support@spatial-qld-support.atlassian.net</gco:CharacterString>
+                            </electronicMailAddress>
+                        </CI_Address>
+                    </address>
+                    
+                </CI_Contact>
+            </contactInfo>
+            <role>
+                <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</CI_RoleCode>
+            </role>
+        </CI_ResponsibleParty>
+    </contact>
+    <dateStamp>
+        <gco:Date>2019-07-08</gco:Date>
+    </dateStamp>
+    <metadataStandardName>
+        <gco:CharacterString>ISO 19115:2005, ANZLIC ISO 1.1</gco:CharacterString>
+    </metadataStandardName>
+    <metadataStandardVersion>
+        <gco:CharacterString>QGIS</gco:CharacterString>
+    </metadataStandardVersion>
+    <referenceSystemInfo>
+        <MD_ReferenceSystem id="coordRefSystem">
+            <referenceSystemIdentifier>
+                <RS_Identifier>
+                    <authority>
+                        <CI_Citation>
+                            <title>
+                                <gco:CharacterString>EPSG Geodetic Parameter
+                                Dataset</gco:CharacterString>
+                            </title>
+                            <date>
+                                <CI_Date>
+                                    <date>
+                                        <gco:Date>2007-07-16</gco:Date>
+                                    </date>
+                                    <dateType>
+                                        <CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision </CI_DateTypeCode>
+                                    </dateType>
+                                </CI_Date>
+                            </date>
+                            <edition>
+                                <gco:CharacterString>Version 6.13</gco:CharacterString>
+                            </edition>
+                        </CI_Citation>
+                    </authority>
+                    <code>
+                        <gco:CharacterString>EPSG:7844</gco:CharacterString>
+                    </code>
+                </RS_Identifier>
+            </referenceSystemIdentifier>
+        </MD_ReferenceSystem>
+    </referenceSystemInfo>
+    
+    
+    
+    <identificationInfo>
+        <MD_DataIdentification>
+            <citation>
+                <CI_Citation>
+                    <title>
+                        <gco:CharacterString>Population centres - Queensland</gco:CharacterString>
+                    </title>
+                    <alternateTitle>
+                        <gco:CharacterString>Population centres</gco:CharacterString>
+                    </alternateTitle>
+                    <date>
+                        <CI_Date>
+                            <date>
+                                <gco:Date>2024-04-02</gco:Date>
+                            </date>
+                            <dateType>
+                                <CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+                            </dateType>
+                        </CI_Date>
+                    </date>
+                    
+                    
+                    
+                    <citedResponsibleParty>
+                        <CI_ResponsibleParty id="resourceCustodian">
+                            <organisationName>
+                                <gco:CharacterString>Department of Resources</gco:CharacterString>
+                            </organisationName>
+                            <positionName>
+                                <gco:CharacterString>Executive Director, Spatial Information</gco:CharacterString>
+                            </positionName>
+                            <contactInfo>
+                                <CI_Contact>
+                                                                
+                                </CI_Contact>
+                            </contactInfo>
+                            <role>
+                                <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="custodian">custodian</CI_RoleCode>
+                            </role>
+                        </CI_ResponsibleParty>
+                    </citedResponsibleParty>
+                    <citedResponsibleParty>
+                        <CI_ResponsibleParty id="resourceOwner">
+                            <organisationName>
+                                <gco:CharacterString>Department of Resources</gco:CharacterString>
+                            </organisationName>
+                            <positionName>
+                                <gco:CharacterString>Manager, Geospatial Data, Spatial Data</gco:CharacterString>
+                            </positionName>
+                            <role>
+                                <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="owner">owner</CI_RoleCode>
+                            </role>
+                        </CI_ResponsibleParty>
+                    </citedResponsibleParty>
+                    
+                    
+                    
+                    <presentationForm>
+                        <CI_PresentationFormCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_PresentationFormCode" codeListValue="mapDigital">mapDigital</CI_PresentationFormCode>
+                    </presentationForm>
+                    
+                </CI_Citation>
+            </citation>
+
+
+            <abstract>
+                <gco:CharacterString>This topographic dataset contains point features representing the centre of named towns and cities.</gco:CharacterString>
+            </abstract>
+            <purpose>
+                <gco:CharacterString>This Queensland wide dataset provides generalised information for topographical mapping purposes. To provide the central location of named towns and cities for the State of Queensland. The primary objective of this dataset is to provide a cartographic portrayal of Queensland's named features and should be interpreted and utilised correctly. It is suitable for use in land administration, emergency management, topographic mapping and in the production of web based mapping applications.</gco:CharacterString>
+            </purpose>
+            <status>
+                <MD_ProgressCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ProgressCode" codeListValue="completed">completed</MD_ProgressCode>
+            </status>
+            <pointOfContact>
+                <CI_ResponsibleParty>
+                    <organisationName>
+                        <gco:CharacterString>Department of Resources</gco:CharacterString>
+                    </organisationName>
+                    <positionName>
+                        <gco:CharacterString>Senior Information Officer</gco:CharacterString>
+                    </positionName>
+                    <contactInfo>
+                        <CI_Contact>
+                            <phone>
+                                <CI_Telephone>
+                                    <voice>
+                                        <gco:CharacterString>33304101</gco:CharacterString>
+                                    </voice>
+                                </CI_Telephone>
+                            </phone>
+                            <address>
+                                <CI_Address>
+                                    <deliveryPoint>
+                                        <gco:CharacterString>1 William Street</gco:CharacterString>
+                                    </deliveryPoint>
+                                    <city>
+                                        <gco:CharacterString>Brisbane</gco:CharacterString>
+                                    </city>
+                                    <administrativeArea>
+                                        <gco:CharacterString>Queensland</gco:CharacterString>
+                                    </administrativeArea>
+                                    <postalCode>
+                                        <gco:CharacterString>4000</gco:CharacterString>
+                                    </postalCode>
+                                    <country>
+                                        <gco:CharacterString>Australia</gco:CharacterString>
+                                    </country>
+                                    <electronicMailAddress>
+                                        <gco:CharacterString>support@spatial-qld-support.atlassian.net</gco:CharacterString>
+                                    </electronicMailAddress>
+                                </CI_Address>
+                            </address>
+                                                        
+                        </CI_Contact>
+                    </contactInfo>
+                    <role>
+                        <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact"/>
+                    </role>
+                </CI_ResponsibleParty>
+            </pointOfContact>
+            <resourceMaintenance>
+                <MD_MaintenanceInformation>
+                    <maintenanceAndUpdateFrequency>
+                        <MD_MaintenanceFrequencyCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_MaintenanceFrequencyCode" codeListValue="asNeeded"/>
+                    </maintenanceAndUpdateFrequency>
+                    
+                </MD_MaintenanceInformation>
+            </resourceMaintenance>
+            
+            <resourceFormat>
+                <MD_Format>
+                    <name>
+                        <gco:CharacterString>SHP, TAB, FGDB, KMZ, GPKG</gco:CharacterString>
+                    </name>
+                    <version>
+                        <gco:CharacterString>1</gco:CharacterString>
+                    </version>
+                </MD_Format>
+            </resourceFormat>
+            <descriptiveKeywords>
+                <MD_Keywords id="ThemeAnzlicThesaurus">
+                    <keyword>
+                        <gco:CharacterString>HUMAN-ENVIRONMENT</gco:CharacterString>
+                    </keyword>
+                    <type>
+                        <MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme">theme</MD_KeywordTypeCode>
+                    </type>
+                    <thesaurusName>
+                        <CI_Citation>
+                            <title>
+                                <gco:CharacterString>ANZLIC Search Words</gco:CharacterString>
+                            </title>
+                            <date>
+                                <CI_Date>
+                                    <date gco:nilReason="unknown"/>
+                                    <dateType>
+                                        <CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
+                                    </dateType>
+                                </CI_Date>
+                            </date>
+                        </CI_Citation>
+                    </thesaurusName>
+                </MD_Keywords>
+            </descriptiveKeywords>
+            <descriptiveKeywords>
+                <MD_Keywords id="ThemeOpenDataThesaurus">
+                    <keyword>
+                        <gco:CharacterString>Geography</gco:CharacterString>
+                    </keyword>
+                    <type>
+                        <MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme">theme</MD_KeywordTypeCode>
+                    </type>
+                    <thesaurusName>
+                        <CI_Citation>
+                            <title>
+                                <gco:CharacterString>Queensland Open Data Categories</gco:CharacterString>
+                            </title>
+                            <date>
+                                <CI_Date>
+                                    <date gco:nilReason="unknown"/>
+                                    <dateType>
+                                        <CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
+                                    </dateType>
+                                </CI_Date>
+                            </date>
+                        </CI_Citation>
+                    </thesaurusName>
+                </MD_Keywords>
+            </descriptiveKeywords>
+            <descriptiveKeywords>
+                <MD_Keywords id="ThemeOtherThesaurus">
+                    <keyword>
+                        <gco:CharacterString>urban environment</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>town</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>city</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>settlement</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>population centre</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>population</gco:CharacterString>
+                    </keyword>
+<keyword>
+                        <gco:CharacterString>populated</gco:CharacterString>
+                    </keyword>
+                    <type>
+                        <MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme">theme</MD_KeywordTypeCode>
+                    </type>
+                    <thesaurusName>
+                        <CI_Citation>
+                            <title>
+                                <gco:CharacterString>Common name</gco:CharacterString>
+                            </title>
+                            <date>
+                                <CI_Date>
+                                    <date gco:nilReason="unknown"/>
+                                    <dateType>
+                                        <CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
+                                    </dateType>
+                                </CI_Date>
+                            </date>
+                            <otherCitationDetails>
+                                <gco:CharacterString>Theme keywords input by metadata
+                                publisher</gco:CharacterString>
+                            </otherCitationDetails>
+                        </CI_Citation>
+                    </thesaurusName>
+                </MD_Keywords>
+            </descriptiveKeywords>
+            
+            <resourceConstraints>
+                <MD_SecurityConstraints>
+                    
+                    <classification>
+                        <MD_ClassificationCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ClassificationCode" codeListValue="unclassified">unclassified</MD_ClassificationCode>
+                    </classification>
+                    <classificationSystem>
+                        <gco:CharacterString>Resource Access Level</gco:CharacterString>
+                    </classificationSystem>
+                </MD_SecurityConstraints>
+            </resourceConstraints>
+            <resourceConstraints>
+                <MD_LegalConstraints>
+                    <useLimitation>
+                        <gco:CharacterString>&amp;copy State of Queensland (Department of Resources) 2024</gco:CharacterString>
+                    </useLimitation>
+                    <useConstraints>
+                        <MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="copyright">copyright</MD_RestrictionCode>
+                    </useConstraints>
+                </MD_LegalConstraints>
+            </resourceConstraints>
+            <resourceConstraints>
+                <MD_LegalConstraints>
+                    <useLimitation>
+                        <gco:CharacterString>This material is licensed under a &lt;a rel="license" href="http://creativecommons.org/licenses/by/4.0/ "&gt;Creative Commons - Attribution 4.0 International&lt;/a&gt; licence.&lt;br /&gt; &lt;a rel="license" href="http://creativecommons.org/licenses/by/4.0/ "&gt;&lt;img alt="Creative Commons License" title="Creative Commons - Attribution 4.0 International License" style="border: 0;" src="https://licensebuttons.net/l/by/4.0/88x31.png " /&gt;&lt;/a&gt;&lt;br /&gt; The Department of Resources requests attribution in the following manner:&lt;br /&gt; &amp;copy State of Queensland (Department of Resources) 2024</gco:CharacterString>
+                    </useLimitation>
+                    <useConstraints>
+                        <MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="license">license</MD_RestrictionCode>
+                    </useConstraints>
+                </MD_LegalConstraints>
+            </resourceConstraints>
+            
+            
+            
+            
+            <aggregationInfo>
+                <MD_AggregateInformation>
+                    <aggregateDataSetIdentifier>
+                        <MD_Identifier>
+                            <code>
+                                <gco:CharacterString>built.build_populationcentres</gco:CharacterString>
+                            </code>
+                        </MD_Identifier>
+                    </aggregateDataSetIdentifier>
+                    <associationType>
+                        <DS_AssociationTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#DS_AssociationTypeCode" codeListValue="source">source</DS_AssociationTypeCode>
+                    </associationType>
+                </MD_AggregateInformation>
+            </aggregationInfo>
+            <spatialRepresentationType>
+                <MD_SpatialRepresentationTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="vector">vector</MD_SpatialRepresentationTypeCode>
+            </spatialRepresentationType>
+            
+            <language>
+                <gco:CharacterString>eng</gco:CharacterString>
+            </language>
+            <characterSet gco:nilReason="unknown"/>
+            <topicCategory>
+                <MD_TopicCategoryCode>structure</MD_TopicCategoryCode>
+            </topicCategory>
+            <environmentDescription>
+                <gco:CharacterString>Spatial Information Resource</gco:CharacterString>
+            </environmentDescription>
+            <extent>
+                <EX_Extent>
+                    <geographicElement>
+                        <EX_GeographicBoundingBox>
+                            <westBoundLongitude>
+                                <gco:Decimal>138</gco:Decimal>
+                            </westBoundLongitude>
+                            <eastBoundLongitude>
+                                <gco:Decimal>155</gco:Decimal>
+                            </eastBoundLongitude>
+                            <southBoundLatitude>
+                                <gco:Decimal>-29.5</gco:Decimal>
+                            </southBoundLatitude>
+                            <northBoundLatitude>
+                                <gco:Decimal>-9</gco:Decimal>
+                            </northBoundLatitude>
+                        </EX_GeographicBoundingBox>
+                    </geographicElement>
+                    
+                    
+                    <temporalElement>
+                        <EX_TemporalExtent>
+                            <extent>
+                                <gml:TimePeriod frame="#ISO-8601" gml:id="timePeriod1">
+                                    <gml:beginPosition>2016-09-22</gml:beginPosition>
+                                    <gml:endPosition>2024-04-02</gml:endPosition>
+                                </gml:TimePeriod>
+                            </extent>
+                        </EX_TemporalExtent>
+                    </temporalElement>
+                </EX_Extent>
+            </extent>
+            <supplementalInformation>
+                <gco:CharacterString>The location of the feature is generally placed in the centre of the roadway adjacent to the main post office. If this is inappropriate, then in the centre of the roadway in the most central part of the community, generally the main commercial area. Names have been sourced from the Queensland Place Names Database. &#13;
+Feature Types: &#13;
+Populated centre - A point representing the centre of a named urban settlement (town or city). &#13;
+&#13;
+Attributes: &#13;
+FEATURE TYPE - Unique feature type that identifies the topographic feature e.g. Populated centre. &#13;
+NAME - The name of the feature. &#13;
+ALTERNATE NAME - Alternate name of the feature (if one exists) &#13;
+QLD PNDB ID - Queensland Place Names Database unique identifier &#13;
+ATTRIBUTE SOURCE - The source map, or data where the name of the feature was obtained from. &#13;
+ATTRIBUTE DATE - Date of the source map, or data where the name of the feature was obtained from. &#13;
+ADDITIONAL NAME - Other names of the feature if not recorded in the Queensland Place Names Database. Maybe commonly known by other names or have different spelling. Multiple names can be shown, separated by a comma. &#13;
+ADD NAME SOURCE - The source map or data that the additional names were obtained from. Multiple sources can be shown, separated by a comma. If multiple sources are shown, the written sequence will be the same as the written sequence of the names themselves. &#13;
+FEATURE SOURCE - The imagery, map or data that the spatial location of the feature was obtained from. &#13;
+FEATURE DATE - Date of the source imagery, map, or data that the spatial location of the feature was obtained from. &#13;
+OPERATIONAL STATUS - The operation status of the building. Options: Abandoned, Historic, Operational, Non Operational, Ruin &#13;
+POPULATION - The population (number of persons) indicated by the ABS Census figures that exist for this locality. This field will no longer be updated as of the 01/03/2016 due to changes in the source data from ABS data. &#13;
+POPULATION DATE - The date of the ABS census data &#13;
+LOCAL GOVERNMENT - The name of the local government &#13;
+PFI - A Persistent Feature Identifier (PFI) is generated for each feature at the point of creation in the database. The value of the PFI will stay with the feature through all changes to the feature (both spatial and non-spatial) until the feature is retired. (See the Persistent and Unique Feature Identifiers under the Data Model header for more information) &#13;
+UFI - A Unique Feature Identifier (UFI) is generated for each new feature at the point of creation in the database (at this point the PFI and UFI will be the same). The value of the UFI will stay with the feature through all changes to the feature (both spatial and non-spatial) unless the feature is split into multiple other parts. If the feature is split, the separate parts will retain the original PFI but new UFI’s will be generated for the split parts. (See the Persistent and Unique Feature Identifiers under the Data Model header for more information) &#13;
+UPPER SCALE - The upper scale for which the feature should be considered suitable &#13;
+TEXT NOTE - For mapping purposes. Additional annotation that can be shown on a map. &#13;
+ADD INFORMATION - A comment field (additional information) This dataset is stored in an ESRI Geodatabase. Some column names may be shortened if downloaded in the ESRI shape format.</gco:CharacterString>
+            </supplementalInformation>
+        </MD_DataIdentification>
+    </identificationInfo>
+    <distributionInfo>
+        <MD_Distribution>
+            <distributionFormat>
+                <MD_Format id="DownloadService">
+                    <name>
+                        <gco:CharacterString>Queensland Spatial Catalogue</gco:CharacterString>
+                    </name>
+                    <version gco:nilReason="inapplicable"/>
+                    <specification>
+                        <gco:CharacterString>Download Service</gco:CharacterString>
+                    </specification>
+                    <formatDistributor>
+                        <MD_Distributor>
+                            <distributorContact>
+                                <CI_ResponsibleParty>
+                                    <organisationName>
+                                        <gco:CharacterString>Department of Resources</gco:CharacterString>
+                                    </organisationName>
+                                    <role>
+                                        <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="resourceProvider">resourceProvider</CI_RoleCode>
+                                    </role>
+                                </CI_ResponsibleParty>
+                            </distributorContact>
+                            <distributionOrderProcess>
+                                <MD_StandardOrderProcess>
+                                    
+                                    <orderingInstructions>
+                                        <gco:CharacterString>Open the Queensland Spatial Catalogue (QSpatial). Select the large SEARCH button and all available records are displayed. Select one of the four filter options provided and then the further options within the filter. The resultant search is then displayed. Select your record and complete the order.</gco:CharacterString>
+                                    </orderingInstructions>
+                                </MD_StandardOrderProcess>
+                            </distributionOrderProcess>
+                            <distributorTransferOptions>
+                                <MD_DigitalTransferOptions>
+                                    <onLine>
+                                        <CI_OnlineResource id="dns1">
+                                            <linkage>
+                                                <URL>http://qldspatial.information.qld.gov.au/catalogue/</URL>
+                                            </linkage>
+                                        </CI_OnlineResource>
+                                    </onLine>
+                                </MD_DigitalTransferOptions>
+                            </distributorTransferOptions>
+                        </MD_Distributor>
+                    </formatDistributor>
+                </MD_Format>
+            </distributionFormat>
+            <distributionFormat>
+                <MD_Format id="OpenWebServices">
+                    <name>
+                        <gco:CharacterString>Places</gco:CharacterString>
+                    </name>
+                    <version gco:nilReason="unknown"/>
+                    <specification>
+                        <gco:CharacterString/>
+                    </specification>
+                    <formatDistributor>
+                        <MD_Distributor>
+                            <distributorContact>
+                                <CI_ResponsibleParty>
+                                    <organisationName>
+                                        <gco:CharacterString>Department of Resources</gco:CharacterString>
+                                    </organisationName>
+                                    <role>
+                                        <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="resourceProvider">resourceProvider</CI_RoleCode>
+                                    </role>
+                                </CI_ResponsibleParty>
+                            </distributorContact>
+                            <distributionOrderProcess>
+                                <MD_StandardOrderProcess>
+                                    <fees>
+                                        <gco:CharacterString>Nil</gco:CharacterString>
+                                    </fees>
+                                    <orderingInstructions>
+                                        <gco:CharacterString>For use in desktop and web applications capable of connecting to Open Geospatial Consortium (OGC) web map service endpoints. &#13;
+Some clients append request parameters for the service capabilities file so depending on your client in use you may have to remove the parameters when copying the url below.</gco:CharacterString>
+                                    </orderingInstructions>
+                                </MD_StandardOrderProcess>
+                            </distributionOrderProcess>
+                            <distributorTransferOptions>
+                                <MD_DigitalTransferOptions>
+                                    <onLine>
+                                        <CI_OnlineResource id="ows1">
+                                            <linkage>
+                                                <URL>https://spatial-gis.information.qld.gov.au/arcgis/services/Location/Places/MapServer/WMSServer?request=GetCapabilities&amp;service=WMS</URL>
+                                            </linkage>
+                                            <protocol>
+                                                <gco:CharacterString>OGC:WMS-1.3.0-http-get-capabilities</gco:CharacterString>
+                                            </protocol>
+                                            <applicationProfile>
+                                                <gco:CharacterString>Web Map Service version 1.3.0</gco:CharacterString>
+                                            </applicationProfile>
+                                            <name>
+                                                <gco:CharacterString>Population centres (ID: 20)</gco:CharacterString>
+                                            </name>
+                                            <description>
+                                                <gco:CharacterString>See Places metadata</gco:CharacterString>
+                                            </description>
+                                        </CI_OnlineResource>
+                                    </onLine>
+                                </MD_DigitalTransferOptions>
+                            </distributorTransferOptions>
+                        </MD_Distributor>
+                    </formatDistributor>
+                </MD_Format>
+            </distributionFormat>
+            <distributionFormat>
+                <MD_Format id="ProprietaryWebServices">
+                    <name>
+                        <gco:CharacterString>Places</gco:CharacterString>
+                    </name>
+                    <version gco:nilReason="unknown"/>
+                    <formatDistributor>
+                        <MD_Distributor>
+                            <distributorContact>
+                                <CI_ResponsibleParty>
+                                    <organisationName>
+                                        <gco:CharacterString>Department of Resources</gco:CharacterString>
+                                    </organisationName>
+                                    <role>
+                                        <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="resourceProvider">resourceProvider</CI_RoleCode>
+                                    </role>
+                                </CI_ResponsibleParty>
+                            </distributorContact>
+                            <distributionOrderProcess>
+                                <MD_StandardOrderProcess>
+                                    <fees>
+                                        <gco:CharacterString>Nil</gco:CharacterString>
+                                    </fees>
+                                    <orderingInstructions>
+                                        <gco:CharacterString>For use in desktop and web applications capable of connecting to ArcGIS REST map service endpoints.</gco:CharacterString>
+                                    </orderingInstructions>
+                                </MD_StandardOrderProcess>
+                            </distributionOrderProcess>
+                            <distributorTransferOptions>
+                                <MD_DigitalTransferOptions>
+                                    <onLine>
+                                        <CI_OnlineResource id="pws1">
+                                            <linkage>
+                                                <URL>https://spatial-gis.information.qld.gov.au/arcgis/rest/services/Location/Places/MapServer</URL>
+                                            </linkage>
+                                            <protocol>
+                                                <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                                            </protocol>
+                                            <applicationProfile>
+                                                <gco:CharacterString>ArcGIS REST API</gco:CharacterString>
+                                            </applicationProfile>
+                                            <name>
+                                                <gco:CharacterString>Population centres (ID: 20)</gco:CharacterString>
+                                            </name>
+                                            <description>
+                                                <gco:CharacterString>See Places metadata</gco:CharacterString>
+                                            </description>
+                                        </CI_OnlineResource>
+                                    </onLine>
+                                </MD_DigitalTransferOptions>
+                            </distributorTransferOptions>
+                        </MD_Distributor>
+                    </formatDistributor>
+                </MD_Format>
+            </distributionFormat>
+            <distributionFormat>
+                <MD_Format id="GptBehaviour">
+                    <name>
+                        <gco:CharacterString>downloadableData</gco:CharacterString>
+                    </name>
+                    <version>
+                        <gco:CharacterString>10.0</gco:CharacterString>
+                    </version>
+                    <specification>
+                        <gco:CharacterString>ESRI ArcGIS Server Geoportal Extension Content Type</gco:CharacterString>
+                    </specification>
+                </MD_Format>
+            </distributionFormat>
+            <distributor>
+                <MD_Distributor id="distributorContact1">
+                    <distributorContact>
+                        <CI_ResponsibleParty>
+                            <organisationName>
+                                <gco:CharacterString>Department of Resources</gco:CharacterString>
+                            </organisationName>
+                            <positionName>
+                                <gco:CharacterString>support@spatial-qld-support.atlassian.net</gco:CharacterString>
+                            </positionName>
+                            <role>
+                                <CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="distributor">distributor</CI_RoleCode>
+                            </role>
+                        </CI_ResponsibleParty>
+                    </distributorContact>
+                    
+                    <distributorFormat>
+                        <MD_Format>
+                            <name>
+                                <gco:CharacterString>From the Queensland Spatial Catalogue available as ESRI Shape file SHP, MapInfo Tab file TAB, ESRI file geodatabase FGDB, Google file KMZ, and Geopackage version 1.0, 1.1, or 1.2 file GPKG</gco:CharacterString>
+                            </name>
+                            <version gco:nilReason="inapplicable"/>
+                        </MD_Format>
+                    </distributorFormat>
+                    <distributorTransferOptions>
+                        <MD_DigitalTransferOptions>
+                            <transferSize>
+                                <gco:Real>2</gco:Real>
+                            </transferSize>
+                            <onLine>
+                                <CI_OnlineResource>
+                                    <linkage>
+                                        <URL>http://qldspatial.information.qld.gov.au/catalogue/custom/search.page?q=%22Population centres - Queensland%22</URL>
+                                    </linkage>
+                                </CI_OnlineResource>
+                            </onLine>
+                            
+                        </MD_DigitalTransferOptions>
+                    </distributorTransferOptions>
+                </MD_Distributor>
+            </distributor>
+            <transferOptions>
+                <MD_DigitalTransferOptions id="download">
+                    <onLine>
+                        <CI_OnlineResource>
+                            <linkage>
+                                <URL/>
+                            </linkage>
+                            <function>
+                                <CI_OnLineFunctionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download">download</CI_OnLineFunctionCode>
+                            </function>
+                        </CI_OnlineResource>
+                    </onLine>
+                </MD_DigitalTransferOptions>
+            </transferOptions>
+        </MD_Distribution>
+    </distributionInfo>
+    <dataQualityInfo>
+        <DQ_DataQuality>
+            <scope>
+                <DQ_Scope>
+                    <level>
+                        <MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset">dataset</MD_ScopeCode>
+                    </level>
+                    
+                </DQ_Scope>
+            </scope>
+            <report>
+                <DQ_CompletenessOmission>
+                    <result>
+                        <DQ_ConformanceResult>
+                            <specification gco:nilReason="missing"/>
+                            <explanation>
+                                <gco:CharacterString>The collection of feature types will be complete.</gco:CharacterString>
+                            </explanation>
+                            <pass gco:nilReason="inapplicable"/>
+                        </DQ_ConformanceResult>
+                    </result>
+                </DQ_CompletenessOmission>
+            </report>
+            <report>
+                <DQ_ConceptualConsistency>
+                    <result>
+                        <DQ_ConformanceResult>
+                            <specification gco:nilReason="missing"/>
+                            <explanation>
+                                <gco:CharacterString>Data should be free from duplicates.</gco:CharacterString>
+                            </explanation>
+                            <pass gco:nilReason="inapplicable"/>
+                        </DQ_ConformanceResult>
+                    </result>
+                </DQ_ConceptualConsistency>
+            </report>
+            <report>
+                <DQ_AbsoluteExternalPositionalAccuracy>
+                    <result>
+                        <DQ_ConformanceResult>
+                            <specification gco:nilReason="missing"/>
+                            <explanation>
+                                <gco:CharacterString>Coordinates within the Place Names Database (PNDB) are shown to the nearest minute of latitude and longitude. These coordinates are moved to a more appropriate position based on imagery.</gco:CharacterString>
+                            </explanation>
+                            <pass gco:nilReason="inapplicable"/>
+                        </DQ_ConformanceResult>
+                    </result>
+                </DQ_AbsoluteExternalPositionalAccuracy>
+            </report>
+            <report>
+                <DQ_NonQuantitativeAttributeAccuracy>
+                    <result>
+                        <DQ_ConformanceResult>
+                            <specification gco:nilReason="missing"/>
+                            <explanation>
+                                <gco:CharacterString>Attribution is complete.</gco:CharacterString>
+                            </explanation>
+                            <pass gco:nilReason="inapplicable"/>
+                        </DQ_ConformanceResult>
+                    </result>
+                </DQ_NonQuantitativeAttributeAccuracy>
+            </report>
+            
+            
+            
+            
+            <lineage>
+                <LI_Lineage>
+                    <statement>
+                        <gco:CharacterString>This dataset is GDA2020 compatible. The source data, and therefore the captured features, are georeferenced as GDA94 (horizontal only). The horizontal accuracy of the geo-referencing and/or data collection method for this example is greater than the datum offset between GDA94 and GDA2020 (1.8 meters). The resulting dataset has been nominated as a low-accuracy GDA2020 dataset. As this data has not been directly captured in GDA2020, nor transformed to GDA2020, the resulting data is 'GDA2020 Compatible' not 'GDA2020 Compliant'. &#13;
+						Data is extracted as a coordinate from the Queensland Place Names Database (PNDB) that has a Place Type classification of either City, Town or Township. The coordinates of this data is to the nearest minute. These points are then moved visually against imagery to a more appropriate location. The location of the feature is generally placed in the centre of the roadway adjacent to the main post office. If this is inappropriate, then in the centre of the roadway in the most central part of the community, generally the main commercial area. &#13;
+						The population figures have been arrived at by extraction of data from the Australian Bureau of Statistics (ABS) census. The population figures have been arrived at by extraction of data from the Australian Bureau of Statistics (ABS) census. A date within the data states the year of the ABS census. This field will no longer be updated as of the 01/03/2016 due to changes in the source data from ABS data.</gco:CharacterString>
+                    </statement>
+                    
+                    
+                </LI_Lineage>
+            </lineage>
+        </DQ_DataQuality>
+    </dataQualityInfo>
+    <metadataConstraints>
+        <MD_SecurityConstraints>
+            <useLimitation>
+                <gco:CharacterString>Public</gco:CharacterString>
+            </useLimitation>
+            <classification>
+                <MD_ClassificationCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ClassificationCode" codeListValue="unclassified"/>
+            </classification>
+            <classificationSystem>
+                <gco:CharacterString>Metadata Access Level</gco:CharacterString>
+            </classificationSystem>
+        </MD_SecurityConstraints>
+    </metadataConstraints>
+</MD_Metadata>
