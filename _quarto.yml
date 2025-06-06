@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "ICCB - Open Source Geospatial Tools for Conservation under Climate Change"
+  title: "ICCB - Open Geospatial Tools"
   navbar:
     left:
       - href: index.qmd
