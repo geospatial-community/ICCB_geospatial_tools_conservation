@@ -1,3 +1,7 @@
+# Manually added
+# to prevent multiple project files from each collaborator
+*.Rproj 
+
 # History files
 .Rhistory
 .Rapp.history
