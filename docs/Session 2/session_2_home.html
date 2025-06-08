@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -36,10 +70,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a973770d809960bcbda85a0f6824f60f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -162,8 +196,27 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#iccb2025-geospatial-workshop-session-2-using-downscaled-climate-projections-in-r" id="toc-iccb2025-geospatial-workshop-session-2-using-downscaled-climate-projections-in-r" class="nav-link active" data-scroll-target="#iccb2025-geospatial-workshop-session-2-using-downscaled-climate-projections-in-r">ICCB2025 Geospatial Workshop Session 2: Using downscaled climate projections in R</a>
+  <ul class="collapse">
+  <li><a href="#models-and-climate-change-scenarios" id="toc-models-and-climate-change-scenarios" class="nav-link" data-scroll-target="#models-and-climate-change-scenarios">Models and climate change scenarios</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#scripts" id="toc-scripts" class="nav-link" data-scroll-target="#scripts">Scripts</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
+  <li><a href="#install-packages" id="toc-install-packages" class="nav-link" data-scroll-target="#install-packages">Install packages</a></li>
+  <li><a href="#part-1-temperature-data-one-model" id="toc-part-1-temperature-data-one-model" class="nav-link" data-scroll-target="#part-1-temperature-data-one-model">Part 1: Temperature Data (one model)</a></li>
+  <li><a href="#part-2-rainfall-data-multiple-models" id="toc-part-2-rainfall-data-multiple-models" class="nav-link" data-scroll-target="#part-2-rainfall-data-multiple-models">Part 2: Rainfall Data (multiple models)</a>
+  <ul class="collapse">
+  <li><a href="#working-with-multiple-models" id="toc-working-with-multiple-models" class="nav-link" data-scroll-target="#working-with-multiple-models">Working with multiple Models</a></li>
+  </ul></li>
+  <li><a href="#part-3-validating-your-data-calculating-bioclim-indices" id="toc-part-3-validating-your-data-calculating-bioclim-indices" class="nav-link" data-scroll-target="#part-3-validating-your-data-calculating-bioclim-indices">Part 3: Validating your data Calculating BioClim Indices</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -193,9 +246,661 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Landing page for Session 2.</p>
+<iframe src="ICCB2025_Session2_ClimateProjections.pdf" width="100%" height="600px">
+</iframe>
+<section id="iccb2025-geospatial-workshop-session-2-using-downscaled-climate-projections-in-r" class="level1">
+<h1>ICCB2025 Geospatial Workshop Session 2: Using downscaled climate projections in R</h1>
+<p>This repository has all of the scripts and data for the ICCB 2025 workshop ‘Using downscaled climate projections in R’. The powerpoint slides include instructions for running through the scripts and pictures of what the output should look like.</p>
+<section id="models-and-climate-change-scenarios" class="level2">
+<h2 class="anchored" data-anchor-id="models-and-climate-change-scenarios">Models and climate change scenarios</h2>
+<p>We have provided data for three downscaled climate models. These models were downscaled from the CMIP6 GCMs (Global Climate Models) using the CCAM model to a 10km resolution over Australia. The model name refers to the CMIP6 GCM which acted as the host model and provided input to CCAM. Further information on the downscaling technique is available in Chapman et al.&nbsp;(2023) and information on the climate change impacts shown in these models is available in Chapman et al.&nbsp;(2024).</p>
+<p>We have selected three models which represent the span from the full ensemble (set of all downscaled climate models): - ACCESS-ESM1-5 r6i1p1f1 - dry model - EC-Earth3 r1i1p1f1 - wet model - GFDL-ESM4 r1i1p1f1 - this model is close to the ensemble average for both temperature and precipitation changes at the end of the century</p>
+<p>We have provided data for three climate change scenarios: - SSP126 - a low emission pathway, with on average 2°C of global warming at the end of century compared to pre-industrial times. - SSP245 - a medium emission pathway, with on average 3°C of warming. - SSP370 - a high emission pathway, with on average 4°C of warming.</p>
+<p>Note that there can be a great deal of variation within a model ensemble, and for each scenario there will be models that are warmer or cooler than the ensemble average.</p>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<ul>
+<li><code>annual</code>: annual average precipitation (mm/day) and temperature (celsius) for 1981 - 2100 for Queensland.<br>
+</li>
+<li><code>monthly</code>: monthly pr (mm/day), tasmax and tasmin (celsius) for 1981 - 2100 for South-East Queensland.<br>
+</li>
+<li><code>obs</code>: observational data from the Australian Gridded Climate Dataset (AGCD). Variables include daily maximum and minimum temperature and precipitation for 1981 - 2020 at a 5km resolution. See Jones et al (2009) for further details.<br>
+</li>
+<li><code>shp</code>: Shapefiles for Queensland and the Sunshine Coast.</li>
+</ul>
+</section>
+<section id="scripts" class="level2">
+<h2 class="anchored" data-anchor-id="scripts">Scripts</h2>
+<ul>
+<li><code>ICCB_Training.R</code>: the training script. This is what will be used in the workshop.<br>
+</li>
+<li><code>ICCB_Training_complete.R</code>: the training script with additional examples. Try not to look at these until you’ve had a go yourself!</li>
+</ul>
+<p>The remaining scripts in this folder were used to prepare the workshop data and are included for interest only.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>Further information on the models and datasets used here can be found in the following papers:</p>
+<p>Chapman, S., Syktus, J., Trancoso, R., Thatcher, M., Toombs, N., Wong, K. K.-H., &amp; Takbash, A. (2023). Evaluation of Dynamically Downscaled CMIP6-CCAM Models Over Australia. Earth’s Future, 11(11), e2023EF003548. https://doi.org/10.1029/2023EF003548</p>
+<p>Chapman, S., Syktus, J., Trancoso, R., Toombs, N., &amp; Eccles, R. (2024). Projected changes in mean climate and extremes from downscaled high-resolution CMIP6 simulations in Australia. Weather and Climate Extremes, 46, 100733. https://doi.org/10.1016/j.wace.2024.10073</p>
+<p>Jones, D. A., Wang, W., &amp; Fawcett, R. (2009). High-quality spatial climate data-sets for Australia. Australian Meteorlogical and Oceangraphic Journal, 58, 233–248.</p>
+</section>
+</section>
+<section id="install-packages" class="level1">
+<h1>Install packages</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("terra")</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("dplyr")</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("sf")</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("ggplot2")</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("dismo")</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("rasterVis")</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("reshape")</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Import packages</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>terra 1.8.54</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:terra':
+
+    intersect, union</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dismo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: raster</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: sp</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'raster'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    select</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rasterVis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: lattice</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'reshape'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    rename</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="part-1-temperature-data-one-model" class="level1">
+<h1>Part 1: Temperature Data (one model)</h1>
+<p>Set working directory</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#setwd("C:/R Code/Training/ICCB/")</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()                   <span class="co"># get work directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "/Users/xiangzhaoqcif/Documents/QCIF_MacBook_Pro/github/ICCB_geospatial_tools_conservation/Session 2"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>()                     <span class="co"># list folders in the work directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data"                                    
+[2] "ICCB2025_Session2_ClimateProjections.pdf"
+[3] "README.md"                               
+[4] "scripts"                                 
+[5] "session_2_home.qmd"                      
+[6] "session_2_home.rmarkdown"                </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>(<span class="st">"data/annual/"</span>)       <span class="co"># List files in subdirectory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "pr_ACCESS-ESM1-5_ssp126_r6i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc" 
+ [2] "pr_ACCESS-ESM1-5_ssp245_r6i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc" 
+ [3] "pr_ACCESS-ESM1-5_ssp370_r6i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc" 
+ [4] "pr_EC-Earth3_ssp126_r1i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc"     
+ [5] "pr_EC-Earth3_ssp245_r1i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc"     
+ [6] "pr_EC-Earth3_ssp370_r1i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc"     
+ [7] "pr_GFDL-ESM4_ssp126_r1i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc"     
+ [8] "pr_GFDL-ESM4_ssp245_r1i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc"     
+ [9] "pr_GFDL-ESM4_ssp370_r1i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc"     
+[10] "tas_ACCESS-ESM1-5_ssp126_r6i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc"
+[11] "tas_ACCESS-ESM1-5_ssp245_r6i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc"
+[12] "tas_ACCESS-ESM1-5_ssp370_r6i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc"
+[13] "tas_EC-Earth3_ssp126_r1i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc"    
+[14] "tas_EC-Earth3_ssp245_r1i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc"    
+[15] "tas_EC-Earth3_ssp370_r1i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc"    
+[16] "tas_GFDL-ESM4_ssp126_r1i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc"    
+[17] "tas_GFDL-ESM4_ssp245_r1i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc"    
+[18] "tas_GFDL-ESM4_ssp370_r1i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc"    </code></pre>
+</div>
+</div>
+<p>Retrieve file names in the directory</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>files<span class="ot">=</span><span class="fu">dir</span>(<span class="st">"data/annual/"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>files[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "pr_ACCESS-ESM1-5_ssp126_r6i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc"</code></pre>
+</div>
+</div>
+<p>Load file and query data (working with one model)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>tas <span class="ot">=</span> <span class="fu">rast</span>(<span class="st">"data/annual/tas_GFDL-ESM4_ssp370_r1i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc"</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>tas </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatRaster 
+size        : 205, 176, 120  (nrow, ncol, nlyr)
+resolution  : 0.1, 0.1  (x, y)
+extent      : 137.45, 155.05, -29.45, -8.95  (xmin, xmax, ymin, ymax)
+coord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84) 
+source      : tas_GFDL-ESM4_ssp370_r1i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc 
+varname     : tas_annual (Seasonal average of Near-Surface Air Temperature (Annual)) 
+names       : tas_annual_1, tas_annual_2, tas_annual_3, tas_annual_4, tas_annual_5, tas_annual_6,  ... 
+unit        : degC 
+time (days) : 1981-01-01 to 2100-01-01 (120 steps) </code></pre>
+</div>
+</div>
+<p>Check your lat and lon coords</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xFromCol</span>(tas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] 137.5 137.6 137.7 137.8 137.9 138.0 138.1 138.2 138.3 138.4 138.5 138.6
+ [13] 138.7 138.8 138.9 139.0 139.1 139.2 139.3 139.4 139.5 139.6 139.7 139.8
+ [25] 139.9 140.0 140.1 140.2 140.3 140.4 140.5 140.6 140.7 140.8 140.9 141.0
+ [37] 141.1 141.2 141.3 141.4 141.5 141.6 141.7 141.8 141.9 142.0 142.1 142.2
+ [49] 142.3 142.4 142.5 142.6 142.7 142.8 142.9 143.0 143.1 143.2 143.3 143.4
+ [61] 143.5 143.6 143.7 143.8 143.9 144.0 144.1 144.2 144.3 144.4 144.5 144.6
+ [73] 144.7 144.8 144.9 145.0 145.1 145.2 145.3 145.4 145.5 145.6 145.7 145.8
+ [85] 145.9 146.0 146.1 146.2 146.3 146.4 146.5 146.6 146.7 146.8 146.9 147.0
+ [97] 147.1 147.2 147.3 147.4 147.5 147.6 147.7 147.8 147.9 148.0 148.1 148.2
+[109] 148.3 148.4 148.5 148.6 148.7 148.8 148.9 149.0 149.1 149.2 149.3 149.4
+[121] 149.5 149.6 149.7 149.8 149.9 150.0 150.1 150.2 150.3 150.4 150.5 150.6
+[133] 150.7 150.8 150.9 151.0 151.1 151.2 151.3 151.4 151.5 151.6 151.7 151.8
+[145] 151.9 152.0 152.1 152.2 152.3 152.4 152.5 152.6 152.7 152.8 152.9 153.0
+[157] 153.1 153.2 153.3 153.4 153.5 153.6 153.7 153.8 153.9 154.0 154.1 154.2
+[169] 154.3 154.4 154.5 154.6 154.7 154.8 154.9 155.0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">yFromRow</span>(tas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1]  -9.0  -9.1  -9.2  -9.3  -9.4  -9.5  -9.6  -9.7  -9.8  -9.9 -10.0 -10.1
+ [13] -10.2 -10.3 -10.4 -10.5 -10.6 -10.7 -10.8 -10.9 -11.0 -11.1 -11.2 -11.3
+ [25] -11.4 -11.5 -11.6 -11.7 -11.8 -11.9 -12.0 -12.1 -12.2 -12.3 -12.4 -12.5
+ [37] -12.6 -12.7 -12.8 -12.9 -13.0 -13.1 -13.2 -13.3 -13.4 -13.5 -13.6 -13.7
+ [49] -13.8 -13.9 -14.0 -14.1 -14.2 -14.3 -14.4 -14.5 -14.6 -14.7 -14.8 -14.9
+ [61] -15.0 -15.1 -15.2 -15.3 -15.4 -15.5 -15.6 -15.7 -15.8 -15.9 -16.0 -16.1
+ [73] -16.2 -16.3 -16.4 -16.5 -16.6 -16.7 -16.8 -16.9 -17.0 -17.1 -17.2 -17.3
+ [85] -17.4 -17.5 -17.6 -17.7 -17.8 -17.9 -18.0 -18.1 -18.2 -18.3 -18.4 -18.5
+ [97] -18.6 -18.7 -18.8 -18.9 -19.0 -19.1 -19.2 -19.3 -19.4 -19.5 -19.6 -19.7
+[109] -19.8 -19.9 -20.0 -20.1 -20.2 -20.3 -20.4 -20.5 -20.6 -20.7 -20.8 -20.9
+[121] -21.0 -21.1 -21.2 -21.3 -21.4 -21.5 -21.6 -21.7 -21.8 -21.9 -22.0 -22.1
+[133] -22.2 -22.3 -22.4 -22.5 -22.6 -22.7 -22.8 -22.9 -23.0 -23.1 -23.2 -23.3
+[145] -23.4 -23.5 -23.6 -23.7 -23.8 -23.9 -24.0 -24.1 -24.2 -24.3 -24.4 -24.5
+[157] -24.6 -24.7 -24.8 -24.9 -25.0 -25.1 -25.2 -25.3 -25.4 -25.5 -25.6 -25.7
+[169] -25.8 -25.9 -26.0 -26.1 -26.2 -26.3 -26.4 -26.5 -26.6 -26.7 -26.8 -26.9
+[181] -27.0 -27.1 -27.2 -27.3 -27.4 -27.5 -27.6 -27.7 -27.8 -27.9 -28.0 -28.1
+[193] -28.2 -28.3 -28.4 -28.5 -28.6 -28.7 -28.8 -28.9 -29.0 -29.1 -29.2 -29.3
+[205] -29.4</code></pre>
+</div>
+</div>
+<p>Adding missing year values to the data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">=</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">"1981-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2100-12-01"</span>), <span class="at">by=</span><span class="st">"year"</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tas) <span class="ot">=</span> dates  <span class="co"># fixing the time data in the NetCDF</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>tas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatRaster 
+size        : 205, 176, 120  (nrow, ncol, nlyr)
+resolution  : 0.1, 0.1  (x, y)
+extent      : 137.45, 155.05, -29.45, -8.95  (xmin, xmax, ymin, ymax)
+coord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84) 
+source      : tas_GFDL-ESM4_ssp370_r1i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc 
+varname     : tas_annual (Seasonal average of Near-Surface Air Temperature (Annual)) 
+names       : 1981-01-01, 1982-01-01, 1983-01-01, 1984-01-01, 1985-01-01, 1986-01-01,  ... 
+unit        : degC 
+time (days) : 1981-01-01 to 2100-01-01 (120 steps) </code></pre>
+</div>
+</div>
+<p>Sub-setting and plotting the data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>tas[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatRaster 
+size        : 205, 176, 1  (nrow, ncol, nlyr)
+resolution  : 0.1, 0.1  (x, y)
+extent      : 137.45, 155.05, -29.45, -8.95  (xmin, xmax, ymin, ymax)
+coord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84) 
+source      : tas_GFDL-ESM4_ssp370_r1i1p1f1_CCAM10_aus-10i_10km_sem_1981-2100.nc 
+varname     : tas_annual (Seasonal average of Near-Surface Air Temperature (Annual)) 
+name        : 1981-01-01 
+unit        :       degC 
+time (days) : 1981-01-01 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tas[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session_2_home_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tas[[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session_2_home_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tas[[<span class="dv">117</span><span class="sc">:</span><span class="dv">120</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session_2_home_files/figure-html/unnamed-chunk-7-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Can also sub-set the data according to the date array</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tas[[dates <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"1981-01-01"</span>) <span class="sc">&amp;</span> dates <span class="sc">&lt;=</span> <span class="fu">as.Date</span>(<span class="st">"1984-01-01"</span>)]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session_2_home_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tas[[dates <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"2097-01-01"</span>) <span class="sc">&amp;</span> dates <span class="sc">&lt;=</span> <span class="fu">as.Date</span>(<span class="st">"2100-01-01"</span>)]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session_2_home_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>tas_base <span class="ot">=</span> <span class="fu">mean</span>(tas[[<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>]])      <span class="co"># Calculating climatology for baseline (1981-2010)</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>tas_fut <span class="ot">=</span> <span class="fu">mean</span>(tas[[<span class="dv">91</span><span class="sc">:</span><span class="dv">120</span>]])     <span class="co"># Calculating climatology for future (2071-2100)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Q: Can you cut the historical data and future based on the dates?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tas_base)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session_2_home_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tas_fut)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session_2_home_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Change in future temperature (future - base)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>tas_dif <span class="ot">=</span> tas_fut <span class="sc">-</span> tas_base</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tas_dif)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session_2_home_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Q. Can you make this plot nicer? Add a title and change the colours</p>
+<p>Hint: You can set plot titles using ‘main’</p>
+<p>Control the colours using col = brewer.pal(11, ‘PaletteName’) (see https://colorbrewer2.org/ for colour options)</p>
+<p>You can plot multiple figures in one plot using par (mfrow = c(nrows, ncols))</p>
+<p>Also check the instructions from Session 1!</p>
+<p>Extracting out point data (timeseries)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>tas[<span class="dv">50</span>,<span class="dv">50</span>]                  <span class="co"># extracts data from the 50th lat and 50th lon position</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  1981-01-01 1982-01-01 1983-01-01 1984-01-01 1985-01-01 1986-01-01 1987-01-01
+1   25.24902   25.26156   24.88015   24.41082   24.94491   24.89218   25.25115
+  1988-01-01 1989-01-01 1990-01-01 1991-01-01 1992-01-01 1993-01-01 1994-01-01
+1   25.23535   25.03982   25.42452   25.37658    25.3677   25.10143    25.3218
+  1995-01-01 1996-01-01 1997-01-01 1998-01-01 1999-01-01 2000-01-01 2001-01-01
+1   24.87841   25.11816   25.46691   25.25924   25.05966   25.53942   25.29299
+  2002-01-01 2003-01-01 2004-01-01 2005-01-01 2006-01-01 2007-01-01 2008-01-01
+1   25.82775   25.32467   25.54989   25.65566   25.43701   25.56466   25.35082
+  2009-01-01 2010-01-01 2011-01-01 2012-01-01 2013-01-01 2014-01-01 2015-01-01
+1   25.64773   25.44879   25.77899   25.52069   26.40573   26.00399   26.02764
+  2016-01-01 2017-01-01 2018-01-01 2019-01-01 2020-01-01 2021-01-01 2022-01-01
+1   25.50436   25.88986   26.02621   25.68951    25.9519   25.43524   26.02264
+  2023-01-01 2024-01-01 2025-01-01 2026-01-01 2027-01-01 2028-01-01 2029-01-01
+1   26.07147   25.98385    26.4558   25.86419   26.31649   25.50891   26.05761
+  2030-01-01 2031-01-01 2032-01-01 2033-01-01 2034-01-01 2035-01-01 2036-01-01
+1   26.26635   26.16805   25.56466    25.6921    26.2561   26.34539    25.9425
+  2037-01-01 2038-01-01 2039-01-01 2040-01-01 2041-01-01 2042-01-01 2043-01-01
+1   26.57571   26.29916   26.85446   26.48287   26.22824   26.75714   26.34863
+  2044-01-01 2045-01-01 2046-01-01 2047-01-01 2048-01-01 2049-01-01 2050-01-01
+1   26.01452   26.37426   26.30599   26.89645   26.49154   26.71673   26.64852
+  2051-01-01 2052-01-01 2053-01-01 2054-01-01 2055-01-01 2056-01-01 2057-01-01
+1   26.51864   26.47985   26.61602    26.9179   26.97494   26.73034   27.19863
+  2058-01-01 2059-01-01 2060-01-01 2061-01-01 2062-01-01 2063-01-01 2064-01-01
+1   27.05032   26.64703   27.30004   26.55456   27.39593   27.40051   27.23416
+  2065-01-01 2066-01-01 2067-01-01 2068-01-01 2069-01-01 2070-01-01 2071-01-01
+1    27.5408   27.24737   27.33636   27.09204   27.59817   26.69656   27.19824
+  2072-01-01 2073-01-01 2074-01-01 2075-01-01 2076-01-01 2077-01-01 2078-01-01
+1   26.80004   27.00533    28.2991   27.67822    27.7326   27.16381   28.68814
+  2079-01-01 2080-01-01 2081-01-01 2082-01-01 2083-01-01 2084-01-01 2085-01-01
+1   27.56314    27.8674   27.92907   27.94192    27.6759   27.62152   27.59582
+  2086-01-01 2087-01-01 2088-01-01 2089-01-01 2090-01-01 2091-01-01 2092-01-01
+1   28.27426     27.941   28.31573   27.85235   27.81686   27.98327   28.39962
+  2093-01-01 2094-01-01 2095-01-01 2096-01-01 2097-01-01 2098-01-01 2099-01-01
+1   28.12872   28.79971   28.32763   27.89684   28.33975   27.95684   28.80871
+  2100-01-01
+1    28.1459</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>cells <span class="ot">&lt;-</span> <span class="fu">cellFromRowCol</span>(tas[[<span class="dv">1</span>]], <span class="dv">50</span>, <span class="dv">50</span>)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xyFromCell</span>(tas,cells)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         x     y
+[1,] 142.4 -13.9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">melt</span>(tas[<span class="dv">50</span>,<span class="dv">50</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Using  as id variables</code></pre>
+</div>
+</div>
+<p>Basic plot</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df, <span class="at">xlab =</span> <span class="st">"Year"</span>, <span class="at">ylab =</span> <span class="st">"Temperature (degC)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session_2_home_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Calculating spatial average of all data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>spat_ave <span class="ot">=</span> <span class="fu">global</span>(tas, <span class="at">fun=</span>mean, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>spat_ave<span class="sc">$</span>date <span class="ot">=</span> dates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>ggplot</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> spat_ave, <span class="fu">aes</span>(<span class="at">y=</span>mean, <span class="at">x=</span>date))<span class="sc">+</span> </span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">'Temperature (degC)'</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">'Year'</span>) <span class="sc">+</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session_2_home_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Q. Can you add another model to this plot and compare the two?</p>
+<p>Hint: You’ll need to prepare a dataframe with data for all models in it. One of the columns will need to be the values, and the other the model name.</p>
+</section>
+<section id="part-2-rainfall-data-multiple-models" class="level1">
+<h1>Part 2: Rainfall Data (multiple models)</h1>
+<section id="working-with-multiple-models" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-multiple-models">Working with multiple Models</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>pr_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">"data/annual/"</span>, <span class="at">pattern =</span> <span class="st">"pr"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)            <span class="co"># Lists all files, including all scenarios</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>pr_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">"data/annual/"</span>, <span class="at">pattern =</span> <span class="st">"pr.*ssp370"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)    <span class="co"># Lists files with only ssp370</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>pr_data <span class="ot">=</span> <span class="fu">rast</span>(pr_files)<span class="sc">*</span><span class="dv">365</span>  <span class="co"># daily mean to annual total. CCAM has a 365 day calendar.</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>pr_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatRaster 
+size        : 205, 176, 360  (nrow, ncol, nlyr)
+resolution  : 0.1, 0.1  (x, y)
+extent      : 137.45, 155.05, -29.45, -8.95  (xmin, xmax, ymin, ymax)
+coord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84) 
+source(s)   : memory
+varname     : pr_annual (Seasonal average of Precipitation (Annual)) 
+names       : pr_annual_1, pr_annual_2, pr_annual_3, pr_annual_4, pr_annual_5, pr_annual_6, ... 
+min values  :      52.196,    48.72456,    85.55378,    54.58001,    150.5908,    117.2378, ... 
+max values  :    6151.675,  7233.45194,  5595.35947,  6152.59279,   5482.5640,   5449.5375, ... 
+time (days) : 1981-01-01 to 2100-01-01 (120 steps) </code></pre>
+</div>
+</div>
+<p>Repeating the year names multiple times to correspond with multiple models</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>years <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">1981</span>,<span class="dv">2100</span>)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>years_rep <span class="ot">=</span> <span class="fu">rep</span>(years, <span class="at">times =</span><span class="dv">3</span>)</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pr_data) <span class="ot">=</span> years_rep</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Calculating the model average</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>pr_modavg <span class="ot">=</span> <span class="fu">tapp</span>(pr_data, years, <span class="at">fun =</span> mean)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating climatology for baseline (1981-2010)</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>pr_base <span class="ot">=</span> <span class="fu">mean</span>(pr_modavg[[<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>]])  <span class="co"># Converting from daily mean to annual mean</span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating climatology for future (2071-2100)</span></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>pr_fut <span class="ot">=</span> <span class="fu">mean</span>(pr_modavg[[<span class="dv">91</span><span class="sc">:</span><span class="dv">120</span>]])  <span class="co"># Converting from daily mean to annual mean</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Q: Can you select the data based on the years instead?</p>
+<p>Plot historic and future rainfall</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levelplot</span>(pr_base)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session_2_home_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levelplot</span>(pr_fut)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session_2_home_files/figure-html/unnamed-chunk-20-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Cutting data to Queensland</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>qld_shp <span class="ot">=</span> <span class="fu">vect</span>(<span class="st">'data/shp/QLD_State_Mask.shp'</span>)</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>pr_dif <span class="ot">=</span> pr_fut <span class="sc">-</span> pr_base</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>pr_dif_masked <span class="ot">&lt;-</span> <span class="fu">crop</span>(pr_dif, qld_shp, <span class="at">mask =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levelplot</span>(pr_dif_masked, <span class="at">margin =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session_2_home_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Plotting the percent change</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>pr_pdif <span class="ot">=</span> (pr_fut <span class="sc">-</span> pr_base ) <span class="sc">/</span> pr_base <span class="sc">*</span><span class="dv">100</span>  <span class="co">#Percent difference</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>pr_pdif_masked <span class="ot">&lt;-</span> <span class="fu">crop</span>(pr_pdif, qld_shp, <span class="at">mask =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levelplot</span>(pr_pdif_masked, <span class="at">margin =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session_2_home_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Specifying plotting bins and colours</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>my.at <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">20</span>, <span class="dv">20</span>, <span class="at">length.out =</span> <span class="dv">10</span>)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>my.at <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, my.at, <span class="cn">Inf</span>)</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levelplot</span>(pr_pdif_masked, <span class="at">margin =</span> <span class="cn">FALSE</span>, <span class="at">at =</span> my.at, <span class="at">cuts=</span><span class="dv">11</span>, <span class="at">pretty=</span>T,</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">col.regions=</span>((<span class="fu">brewer.pal</span>(<span class="dv">11</span>,<span class="st">"RdBu"</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="session_2_home_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Q. Can you modify this plot to show more infomation? Can you add a title and change the colours?</p>
+<p>Would showing multiple models on this plot help?</p>
+<p>Q. Can we compare the results from SSP370 to another Scenario?</p>
+</section>
+</section>
+<section id="part-3-validating-your-data-calculating-bioclim-indices" class="level1">
+<h1>Part 3: Validating your data Calculating BioClim Indices</h1>
+<p>List monthly climate files</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>(<span class="st">"data/monthly/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Load shapefile for Sunshine Coast</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>lga_shp <span class="ot">=</span> <span class="fu">vect</span>(<span class="st">'data/shp/SunshineCoast.shp'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Load monthly climate data</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>tmax <span class="ot">=</span> <span class="fu">rast</span>(<span class="st">"data/monthly/tasmax_GFDL-ESM4_ssp370_r1i1p1f1_CCAM10_aus-10i_10km_mon_1981-2100.nc"</span>)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>tmin <span class="ot">=</span> <span class="fu">rast</span>(<span class="st">"data/monthly/tasmin_GFDL-ESM4_ssp370_r1i1p1f1_CCAM10_aus-10i_10km_mon_1981-2100.nc"</span>)</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>pr <span class="ot">=</span> <span class="fu">rast</span>(<span class="st">"data/monthly/pr_GFDL-ESM4_ssp370_r1i1p1f1_CCAM10_aus-10i_10km_mon_1981-2100.nc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Assign time labels</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">"1981-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2100-12-01"</span>), <span class="at">by =</span> <span class="st">"month"</span>)</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tmax) <span class="ot">=</span> dates</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tmin) <span class="ot">=</span> dates</span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pr) <span class="ot">=</span> dates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Plot temperature minimum</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>temp_stack <span class="ot">&lt;-</span> <span class="fu">mean</span>(tmin[[<span class="dv">1</span><span class="sc">:</span><span class="dv">360</span>]])</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>lga_shp2 <span class="ot">&lt;-</span> <span class="fu">as</span>(lga_shp, <span class="st">"Spatial"</span>)</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>qld2 <span class="ot">&lt;-</span> <span class="fu">as</span>(qld_shp, <span class="st">"Spatial"</span>)</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levelplot</span>(temp_stack, <span class="at">margin =</span> <span class="cn">FALSE</span>, <span class="at">par.settings =</span> BuRdTheme, <span class="at">main =</span> <span class="st">'TMIN'</span>) <span class="sc">+</span></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>  latticeExtra<span class="sc">::</span><span class="fu">layer</span>(<span class="fu">sp.polygons</span>(lga_shp2, <span class="at">col =</span> <span class="st">'blue'</span>)) <span class="sc">+</span></span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a>  latticeExtra<span class="sc">::</span><span class="fu">layer</span>(<span class="fu">sp.polygons</span>(qld2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Load observational data</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>(<span class="st">"data/obs/"</span>)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>obs_tmax <span class="ot">=</span> <span class="fu">rast</span>(<span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">"data/obs/"</span>, <span class="at">pattern =</span> <span class="st">"tmax"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>obs_tmin <span class="ot">=</span> <span class="fu">rast</span>(<span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">"data/obs/"</span>, <span class="at">pattern =</span> <span class="st">"tmin"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>obs_pr <span class="ot">=</span> <span class="fu">rast</span>(<span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">"data/obs/"</span>, <span class="at">pattern =</span> <span class="st">"precip"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Resample observational data</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>obs_tmax_regridded <span class="ot">&lt;-</span> <span class="fu">resample</span>(obs_tmax, tmax, <span class="at">method =</span> <span class="st">"bilinear"</span>)</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>obs_tmin_regridded <span class="ot">&lt;-</span> <span class="fu">resample</span>(obs_tmin, tmin, <span class="at">method =</span> <span class="st">"bilinear"</span>)</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>obs_pr_regridded <span class="ot">&lt;-</span> <span class="fu">resample</span>(obs_pr, pr, <span class="at">method =</span> <span class="st">"bilinear"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Extract historical slices</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>tmax_his <span class="ot">=</span> tmax[[dates <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"1981-01-01"</span>) <span class="sc">&amp;</span> dates <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">"2021-01-01"</span>)]]</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>tmin_his <span class="ot">=</span> tmin[[dates <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"1981-01-01"</span>) <span class="sc">&amp;</span> dates <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">"2021-01-01"</span>)]]</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>pr_his <span class="ot">=</span> pr[[dates <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"1981-01-01"</span>) <span class="sc">&amp;</span> dates <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">"2021-01-01"</span>)]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Evaluate tmin bias</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>tmin_bias <span class="ot">=</span> <span class="fu">mean</span>(tmin_his) <span class="sc">-</span> <span class="fu">mean</span>(obs_tmin_regridded)</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>tmin_bias_masked <span class="ot">&lt;-</span> <span class="fu">crop</span>(tmin_bias, qld_shp, <span class="at">mask =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>my.at <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">10</span>), <span class="cn">Inf</span>)</span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a><span class="fu">levelplot</span>(tmin_bias_masked, <span class="at">at =</span> my.at, <span class="at">margin =</span> <span class="cn">FALSE</span>, <span class="at">cuts =</span> <span class="dv">11</span>, <span class="at">pretty =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">'Tmin bias (degC)'</span>,</span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">col.regions =</span> <span class="fu">rev</span>(<span class="fu">brewer.pal</span>(<span class="dv">11</span>, <span class="st">"RdBu"</span>))) <span class="sc">+</span></span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>  latticeExtra<span class="sc">::</span><span class="fu">layer</span>(<span class="fu">sp.polygons</span>(lga_shp2, <span class="at">col =</span> <span class="st">'blue'</span>)) <span class="sc">+</span></span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>  latticeExtra<span class="sc">::</span><span class="fu">layer</span>(<span class="fu">sp.polygons</span>(qld2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Bias metrics</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>rmse <span class="ot">=</span> <span class="fu">global</span>((<span class="fu">mean</span>(tmin_his) <span class="sc">-</span> <span class="fu">mean</span>(obs_tmin_regridded))<span class="sc">^</span><span class="dv">2</span>, <span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span>]</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>mape <span class="ot">=</span> <span class="fu">global</span>(<span class="fu">abs</span>((<span class="fu">mean</span>(tmin_his) <span class="sc">-</span> <span class="fu">mean</span>(obs_tmin_regridded)) <span class="sc">/</span> <span class="fu">mean</span>(obs_tmin_regridded)) <span class="sc">*</span> <span class="dv">100</span>, <span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span>]</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"RMSE:"</span>, rmse))</span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"MAPE:"</span>, mape))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Mask climate data to Sunshine Coast</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>pr_masked <span class="ot">&lt;-</span> <span class="fu">crop</span>(pr, lga_shp, <span class="at">mask =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>tmin_masked <span class="ot">&lt;-</span> <span class="fu">crop</span>(tmin, lga_shp, <span class="at">mask =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>tmax_masked <span class="ot">&lt;-</span> <span class="fu">crop</span>(tmax, lga_shp, <span class="at">mask =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Spatial averages</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>pr_ave_coarse <span class="ot">=</span> <span class="fu">global</span>(pr_masked, <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>tmin_ave_coarse <span class="ot">=</span> <span class="fu">global</span>(tmin_masked, <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>tmax_ave_coarse <span class="ot">=</span> <span class="fu">global</span>(tmax_masked, <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Plot masked tmin</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>tmin_masked_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(tmin_masked[[<span class="dv">1</span><span class="sc">:</span><span class="dv">360</span>]])</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levelplot</span>(tmin_masked_mean, <span class="at">margin =</span> <span class="cn">FALSE</span>, <span class="at">par.settings =</span> BuRdTheme, <span class="at">main =</span> <span class="st">'TMIN'</span>) <span class="sc">+</span></span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>  latticeExtra<span class="sc">::</span><span class="fu">layer</span>(<span class="fu">sp.polygons</span>(lga_shp2, <span class="at">col =</span> <span class="st">'blue'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Weighted average</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>pr_ave <span class="ot">=</span> <span class="fu">as.data.frame</span>(<span class="fu">t</span>(terra<span class="sc">::</span><span class="fu">extract</span>(pr, lga_shp, <span class="at">weights =</span> <span class="cn">TRUE</span>, <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">ID =</span> <span class="cn">FALSE</span>)))</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>tmin_ave <span class="ot">=</span> <span class="fu">as.data.frame</span>(<span class="fu">t</span>(terra<span class="sc">::</span><span class="fu">extract</span>(tmin, lga_shp, <span class="at">weights =</span> <span class="cn">TRUE</span>, <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">ID =</span> <span class="cn">FALSE</span>)))</span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>tmax_ave <span class="ot">=</span> <span class="fu">as.data.frame</span>(<span class="fu">t</span>(terra<span class="sc">::</span><span class="fu">extract</span>(tmax, lga_shp, <span class="at">weights =</span> <span class="cn">TRUE</span>, <span class="at">fun =</span> mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">ID =</span> <span class="cn">FALSE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Compare averages</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pr_ave_coarse<span class="sc">$</span>mean, pr_ave<span class="sc">$</span>V1, <span class="at">xlab =</span> <span class="st">"Average"</span>, <span class="at">ylab =</span> <span class="st">"Spatial Average"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Prepare dataframe for biovars</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(pr_ave)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"pr"</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tmin_ave)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"tmin"</span></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tmax_ave)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"tmax"</span></span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>pr_ave<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">rownames</span>(pr_ave)</span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>tmin_ave<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">rownames</span>(tmin_ave)</span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a>tmax_ave<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">rownames</span>(tmax_ave)</span>
+<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">merge</span>(pr_ave, tmin_ave, <span class="at">by =</span> <span class="st">"date"</span>, <span class="at">all =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">merge</span>(df, tmax_ave, <span class="at">by =</span> <span class="st">"date"</span>, <span class="at">all =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Subset to baseline and future</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(df<span class="sc">$</span>date)</span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">format</span>(df<span class="sc">$</span>date, <span class="st">"%Y"</span>))</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>df_base <span class="ot">=</span> <span class="fu">subset</span>(df, year <span class="sc">&gt;=</span> <span class="dv">1981</span> <span class="sc">&amp;</span> year <span class="sc">&lt;=</span> <span class="dv">2010</span>)</span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>df_fut <span class="ot">=</span> <span class="fu">subset</span>(df, year <span class="sc">&gt;=</span> <span class="dv">2071</span> <span class="sc">&amp;</span> year <span class="sc">&lt;=</span> <span class="dv">2100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Calculate biovars</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>bio_base <span class="ot">=</span> <span class="fu">biovars</span>(df_base<span class="sc">$</span>pr, df_base<span class="sc">$</span>tmin, df_base<span class="sc">$</span>tmax)</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>bio_fut <span class="ot">=</span> <span class="fu">biovars</span>(df_fut<span class="sc">$</span>pr, df_fut<span class="sc">$</span>tmin, df_fut<span class="sc">$</span>tmax)</span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(bio_base[, <span class="fu">c</span>(<span class="st">"bio5"</span>, <span class="st">"bio6"</span>, <span class="st">"bio12"</span>, <span class="st">"bio15"</span>)])</span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(bio_fut[, <span class="fu">c</span>(<span class="st">"bio5"</span>, <span class="st">"bio6"</span>, <span class="st">"bio12"</span>, <span class="st">"bio15"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Full raster bioclim calculation</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>tmax_base <span class="ot">=</span> tmax[[dates <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"1981-01-01"</span>) <span class="sc">&amp;</span> dates <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">"2011-01-01"</span>)]]</span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>tmin_base <span class="ot">=</span> tmin[[dates <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"1981-01-01"</span>) <span class="sc">&amp;</span> dates <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">"2011-01-01"</span>)]]</span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>pr_base <span class="ot">=</span> pr[[dates <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"1981-01-01"</span>) <span class="sc">&amp;</span> dates <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">"2011-01-01"</span>)]]</span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a>tmax_fut <span class="ot">=</span> tmax[[dates <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"2071-01-01"</span>) <span class="sc">&amp;</span> dates <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">"2101-01-01"</span>)]]</span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a>tmin_fut <span class="ot">=</span> tmin[[dates <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"2071-01-01"</span>) <span class="sc">&amp;</span> dates <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">"2101-01-01"</span>)]]</span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a>pr_fut <span class="ot">=</span> pr[[dates <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"2071-01-01"</span>) <span class="sc">&amp;</span> dates <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">"2101-01-01"</span>)]]</span>
+<span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-8"><a href="#cb86-8" aria-hidden="true" tabindex="-1"></a>bioclim_input_base <span class="ot">=</span> <span class="fu">c</span>(pr_base, tmin_base, tmax_base)</span>
+<span id="cb86-9"><a href="#cb86-9" aria-hidden="true" tabindex="-1"></a>bioclim_input_fut <span class="ot">=</span> <span class="fu">c</span>(pr_fut, tmin_fut, tmax_fut)</span>
+<span id="cb86-10"><a href="#cb86-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-11"><a href="#cb86-11" aria-hidden="true" tabindex="-1"></a>fun_bio_calc <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb86-12"><a href="#cb86-12" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x) <span class="sc">/</span> <span class="dv">3</span></span>
+<span id="cb86-13"><a href="#cb86-13" aria-hidden="true" tabindex="-1"></a>  pr <span class="ot">&lt;-</span> x[<span class="dv">1</span><span class="sc">:</span>n]</span>
+<span id="cb86-14"><a href="#cb86-14" aria-hidden="true" tabindex="-1"></a>  tmin <span class="ot">&lt;-</span> x[(n <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>(<span class="dv">2</span> <span class="sc">*</span> n)]</span>
+<span id="cb86-15"><a href="#cb86-15" aria-hidden="true" tabindex="-1"></a>  tmax <span class="ot">&lt;-</span> x[(<span class="dv">2</span> <span class="sc">*</span> n <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>(<span class="dv">3</span> <span class="sc">*</span> n)]</span>
+<span id="cb86-16"><a href="#cb86-16" aria-hidden="true" tabindex="-1"></a>  bio <span class="ot">&lt;-</span> <span class="fu">biovars</span>(pr, tmin, tmax)</span>
+<span id="cb86-17"><a href="#cb86-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(bio)</span>
+<span id="cb86-18"><a href="#cb86-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb86-19"><a href="#cb86-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-20"><a href="#cb86-20" aria-hidden="true" tabindex="-1"></a>bio_base <span class="ot">&lt;-</span> <span class="fu">app</span>(bioclim_input_base, <span class="at">fun =</span> fun_bio_calc)</span>
+<span id="cb86-21"><a href="#cb86-21" aria-hidden="true" tabindex="-1"></a>bio_fut <span class="ot">&lt;-</span> <span class="fu">app</span>(bioclim_input_fut, <span class="at">fun =</span> fun_bio_calc)</span>
+<span id="cb86-22"><a href="#cb86-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-23"><a href="#cb86-23" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bio_base[[<span class="dv">12</span>]])</span>
+<span id="cb86-24"><a href="#cb86-24" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bio_fut[[<span class="dv">12</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Discussion Questions</p>
+<p>Q: can you plot the bioclimatic indices in the past and present and compare the changes?</p>
+<p>Q: What does the bioclimatic indicators look like for a lower emissions scenario?</p>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -280,8 +985,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -392,7 +1095,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

@@ -626,7 +626,7 @@
     "href": "Session 4/session_4_home.html",
     "title": "Session 4",
     "section": "",
-    "text": "Landing page for Session 4.\n\n\n\n Back to top",
+    "text": "# Load required packages\nlibrary(terra)\nlibrary(viridisLite)\nlibrary(prioritizr)\nlibrary(raster)\nlibrary(sf)",
     "crumbs": [
       "Session 4"
     ]
@@ -784,7 +784,7 @@
     "href": "Session 2/session_2_home.html",
     "title": "Session 2",
     "section": "",
-    "text": "Landing page for Session 2.\n\n\n\n Back to top",
+    "text": "Back to top",
     "crumbs": [
       "Session 2"
     ]
@@ -809,5 +809,135 @@
     "title": "Session 1",
     "section": "",
     "text": "Landing page for Session 1.\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#load-spatial-data",
+    "href": "Session 4/session_4_home.html#load-spatial-data",
+    "title": "Session 4",
+    "section": "Load Spatial Data",
+    "text": "Load Spatial Data\n\n# Load the Planning unit\nPU &lt;- terra::rast(\"data/otherdata/PlanningUnits.tif\")\nplot(PU, col = viridisLite::mako(n = 1))\n\n\n\n\n\n\n\n\n\n# Get the file names of the testing data\nspp.list &lt;- list.files(path = \"data/SpeciesDistributions/\", full.names = TRUE, recursive = TRUE, pattern = \".tif$\")\n\n\nLoad current species distribution\n\nspp &lt;- rast(spp.list[grep(\"current\", spp.list)])\nnew_names &lt;- tools::file_path_sans_ext(basename(spp.list[grep(\"current\", spp.list)]))\nnames(spp) &lt;- new_names\nplot(spp, axes = FALSE, col = viridisLite::mako(n = 100, direction = -1), main = names(spp))\n\n\n\n\n\n\n\n\n\n\nLoad future species distribution\n\nspp &lt;- rast(spp.list[grep(\"future\", spp.list)])\nnew_names &lt;- tools::file_path_sans_ext(basename(spp.list[grep(\"future\", spp.list)]))\nnames(spp) &lt;- new_names\nplot(spp, axes = FALSE, col = viridisLite::mako(n = 100, direction = -1), main = names(spp))\n\n\n\n\n\n\n\n\n\n\nLoad protected areas, urban centers, and cost layer\n\nPA &lt;- rast(\"data/otherdata/protected_areas.tif\")\nplot(PA, axes = FALSE, col = viridisLite::mako(n = 100, direction = -1), main = \"Protected Areas (I & II)\")\n\n\n\n\n\n\n\nurban &lt;- rast(\"data/otherdata/urban_centers.tif\")\nplot(urban, axes = FALSE, col = viridisLite::mako(n = 100, direction = -1), main = \"Urban Centers\")\n\n\n\n\n\n\n\nhfp &lt;- rast(\"data/otherdata/cost_hfp2013.tif\")\nplot(hfp, axes = FALSE, col = viridisLite::mako(n = 10, direction = -1), main = \"Global human footprint\")",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#define-budget",
+    "href": "Session 4/session_4_home.html#define-budget",
+    "title": "Session 4",
+    "section": "Define Budget",
+    "text": "Define Budget\n\nbudget.area &lt;- round(0.3 * length(cells(PU)))",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#scenario-1-basic-shortfall-objective",
+    "href": "Session 4/session_4_home.html#scenario-1-basic-shortfall-objective",
+    "title": "Session 4",
+    "section": "Scenario 1: Basic Shortfall Objective",
+    "text": "Scenario 1: Basic Shortfall Objective\n\np &lt;- problem(PU, spp) %&gt;% \n  add_min_shortfall_objective(budget = budget.area) %&gt;%\n  add_relative_targets(targets = 1) %&gt;% \n  add_default_solver() %&gt;%\n  add_proportion_decisions()\n\ns1 &lt;- solve(p)\nplot(s1, main = \"Scenario 1\")",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#scenario-2-lock-out-urban-areas",
+    "href": "Session 4/session_4_home.html#scenario-2-lock-out-urban-areas",
+    "title": "Session 4",
+    "section": "Scenario 2: Lock Out Urban Areas",
+    "text": "Scenario 2: Lock Out Urban Areas\n\np &lt;- problem(PU, spp) %&gt;% \n  add_min_shortfall_objective(budget = budget.area) %&gt;%\n  add_relative_targets(targets = 1) %&gt;%\n  add_proportion_decisions() %&gt;%\n  add_locked_out_constraints(urban) %&gt;%\n  add_default_solver()\n\ns2 &lt;- solve(p)\nplot(s2, main = \"Scenario 2 - lock out\")",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#scenario-3-lock-in-protected-areas",
+    "href": "Session 4/session_4_home.html#scenario-3-lock-in-protected-areas",
+    "title": "Session 4",
+    "section": "Scenario 3: Lock In Protected Areas",
+    "text": "Scenario 3: Lock In Protected Areas\n\np &lt;- problem(PU, spp) %&gt;% \n  add_min_shortfall_objective(budget = budget.area) %&gt;%\n  add_relative_targets(targets = 1) %&gt;%\n  add_proportion_decisions() %&gt;%\n  add_locked_in_constraints(PA) %&gt;%\n  add_locked_out_constraints(urban) %&gt;%\n  add_default_solver()\n\ns3 &lt;- solve(p)\nplot(s3, main = \"Scenario 3 - lock in\")",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#scenario-4-penalize-human-footprint",
+    "href": "Session 4/session_4_home.html#scenario-4-penalize-human-footprint",
+    "title": "Session 4",
+    "section": "Scenario 4: Penalize Human Footprint",
+    "text": "Scenario 4: Penalize Human Footprint\n\np &lt;- problem(PU, spp) %&gt;% \n  add_min_shortfall_objective(budget = budget.area) %&gt;%\n  add_relative_targets(targets = 1) %&gt;%\n  add_linear_penalties(penalty = 1, data = hfp) %&gt;%\n  add_proportion_decisions() %&gt;%\n  add_locked_in_constraints(PA) %&gt;%\n  add_locked_out_constraints(urban) %&gt;%\n  add_default_solver()\n\ns4 &lt;- solve(p)\nplot(s4, main = \"Scenario 4 - apply penalty\")",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#plot-all-scenarios-side-by-side",
+    "href": "Session 4/session_4_home.html#plot-all-scenarios-side-by-side",
+    "title": "Session 4",
+    "section": "Plot All Scenarios Side by Side",
+    "text": "Plot All Scenarios Side by Side\n\npar(mfrow = c(2, 2), mar = c(3, 3, 3, 1))\nplot(s1, main = \"Scenario 1\")\nplot(s2, main = \"Scenario 2 - lock out\")\nplot(s3, main = \"Scenario 3 - lock in\")\nplot(s4, main = \"Scenario 4 - apply penalty\")\n\n\n\n\n\n\n\npar(mfrow = c(1, 1))",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#evaluate-metrics",
+    "href": "Session 4/session_4_home.html#evaluate-metrics",
+    "title": "Session 4",
+    "section": "Evaluate Metrics",
+    "text": "Evaluate Metrics\n\nrpz_target_spp_s1 &lt;- eval_target_coverage_summary(p, s1) \nmean(rpz_target_spp_s1$relative_held)\n\n[1] 0.02279414\n\nmean(rpz_target_spp_s1$relative_shortfall)\n\n[1] 0.9772059\n\nrpz_target_spp_s2 &lt;- eval_target_coverage_summary(p, s2) \nmean(rpz_target_spp_s2$relative_held)\n\n[1] 0.3410345\n\nmean(rpz_target_spp_s2$relative_shortfall)\n\n[1] 0.6589655\n\nrpz_target_spp_s3 &lt;- eval_target_coverage_summary(p, s3) \nmean(rpz_target_spp_s3$relative_held)\n\n[1] 0.3294218\n\nmean(rpz_target_spp_s3$relative_shortfall)\n\n[1] 0.6705782\n\nrpz_target_spp_s4 &lt;- eval_target_coverage_summary(p, s4) \nmean(rpz_target_spp_s4$relative_held)\n\n[1] 0.1013999\n\nmean(rpz_target_spp_s4$relative_shortfall)\n\n[1] 0.8986001",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 2/session_2_home.html#working-with-multiple-models",
+    "href": "Session 2/session_2_home.html#working-with-multiple-models",
+    "title": "Session 2",
+    "section": "Working with multiple Models",
+    "text": "Working with multiple Models\n\npr_files &lt;- list.files(path = \"data/annual/\", pattern = \"pr\", full.names = TRUE)            # Lists all files, including all scenarios\npr_files &lt;- list.files(path = \"data/annual/\", pattern = \"pr.*ssp370\", full.names = TRUE)    # Lists files with only ssp370\n\n\npr_data = rast(pr_files)*365  # daily mean to annual total. CCAM has a 365 day calendar.\npr_data\n\nclass       : SpatRaster \nsize        : 205, 176, 360  (nrow, ncol, nlyr)\nresolution  : 0.1, 0.1  (x, y)\nextent      : 137.45, 155.05, -29.45, -8.95  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84) \nsource(s)   : memory\nvarname     : pr_annual (Seasonal average of Precipitation (Annual)) \nnames       : pr_annual_1, pr_annual_2, pr_annual_3, pr_annual_4, pr_annual_5, pr_annual_6, ... \nmin values  :      52.196,    48.72456,    85.55378,    54.58001,    150.5908,    117.2378, ... \nmax values  :    6151.675,  7233.45194,  5595.35947,  6152.59279,   5482.5640,   5449.5375, ... \ntime (days) : 1981-01-01 to 2100-01-01 (120 steps) \n\n\nRepeating the year names multiple times to correspond with multiple models\n\nyears = seq(1981,2100)\nyears_rep = rep(years, times =3)\nnames(pr_data) = years_rep\n\nCalculating the model average\n\npr_modavg = tapp(pr_data, years, fun = mean)\n\n# Calculating climatology for baseline (1981-2010)\npr_base = mean(pr_modavg[[1:30]])  # Converting from daily mean to annual mean\n\n# Calculating climatology for future (2071-2100)\npr_fut = mean(pr_modavg[[91:120]])  # Converting from daily mean to annual mean\n\nQ: Can you select the data based on the years instead?\nPlot historic and future rainfall\n\nlevelplot(pr_base)\n\n\n\n\n\n\n\nlevelplot(pr_fut)\n\n\n\n\n\n\n\n\nCutting data to Queensland\n\nqld_shp = vect('data/shp/QLD_State_Mask.shp')\npr_dif = pr_fut - pr_base\npr_dif_masked &lt;- crop(pr_dif, qld_shp, mask = TRUE)\nlevelplot(pr_dif_masked, margin = FALSE)\n\n\n\n\n\n\n\n\nPlotting the percent change\n\npr_pdif = (pr_fut - pr_base ) / pr_base *100  #Percent difference\npr_pdif_masked &lt;- crop(pr_pdif, qld_shp, mask = TRUE)\nlevelplot(pr_pdif_masked, margin = FALSE)\n\n\n\n\n\n\n\n\nSpecifying plotting bins and colours\n\nmy.at &lt;- seq(-20, 20, length.out = 10)\nmy.at = c(-Inf, my.at, Inf)\nlevelplot(pr_pdif_masked, margin = FALSE, at = my.at, cuts=11, pretty=T,\n                col.regions=((brewer.pal(11,\"RdBu\"))))\n\n\n\n\n\n\n\n\nQ. Can you modify this plot to show more infomation? Can you add a title and change the colours?\nWould showing multiple models on this plot help?\nQ. Can we compare the results from SSP370 to another Scenario?",
+    "crumbs": [
+      "Session 2"
+    ]
+  },
+  {
+    "objectID": "Session 2/session_2_home.html#models-and-climate-change-scenarios",
+    "href": "Session 2/session_2_home.html#models-and-climate-change-scenarios",
+    "title": "Session 2",
+    "section": "Models and climate change scenarios",
+    "text": "Models and climate change scenarios\nWe have provided data for three downscaled climate models. These models were downscaled from the CMIP6 GCMs (Global Climate Models) using the CCAM model to a 10km resolution over Australia. The model name refers to the CMIP6 GCM which acted as the host model and provided input to CCAM. Further information on the downscaling technique is available in Chapman et al. (2023) and information on the climate change impacts shown in these models is available in Chapman et al. (2024).\nWe have selected three models which represent the span from the full ensemble (set of all downscaled climate models): - ACCESS-ESM1-5 r6i1p1f1 - dry model - EC-Earth3 r1i1p1f1 - wet model - GFDL-ESM4 r1i1p1f1 - this model is close to the ensemble average for both temperature and precipitation changes at the end of the century\nWe have provided data for three climate change scenarios: - SSP126 - a low emission pathway, with on average 2°C of global warming at the end of century compared to pre-industrial times. - SSP245 - a medium emission pathway, with on average 3°C of warming. - SSP370 - a high emission pathway, with on average 4°C of warming.\nNote that there can be a great deal of variation within a model ensemble, and for each scenario there will be models that are warmer or cooler than the ensemble average.",
+    "crumbs": [
+      "Session 2"
+    ]
+  },
+  {
+    "objectID": "Session 2/session_2_home.html#data",
+    "href": "Session 2/session_2_home.html#data",
+    "title": "Session 2",
+    "section": "Data",
+    "text": "Data\n\nannual: annual average precipitation (mm/day) and temperature (celsius) for 1981 - 2100 for Queensland.\n\nmonthly: monthly pr (mm/day), tasmax and tasmin (celsius) for 1981 - 2100 for South-East Queensland.\n\nobs: observational data from the Australian Gridded Climate Dataset (AGCD). Variables include daily maximum and minimum temperature and precipitation for 1981 - 2020 at a 5km resolution. See Jones et al (2009) for further details.\n\nshp: Shapefiles for Queensland and the Sunshine Coast.",
+    "crumbs": [
+      "Session 2"
+    ]
+  },
+  {
+    "objectID": "Session 2/session_2_home.html#scripts",
+    "href": "Session 2/session_2_home.html#scripts",
+    "title": "Session 2",
+    "section": "Scripts",
+    "text": "Scripts\n\nICCB_Training.R: the training script. This is what will be used in the workshop.\n\nICCB_Training_complete.R: the training script with additional examples. Try not to look at these until you’ve had a go yourself!\n\nThe remaining scripts in this folder were used to prepare the workshop data and are included for interest only.",
+    "crumbs": [
+      "Session 2"
+    ]
+  },
+  {
+    "objectID": "Session 2/session_2_home.html#references",
+    "href": "Session 2/session_2_home.html#references",
+    "title": "Session 2",
+    "section": "References",
+    "text": "References\nFurther information on the models and datasets used here can be found in the following papers:\nChapman, S., Syktus, J., Trancoso, R., Thatcher, M., Toombs, N., Wong, K. K.-H., & Takbash, A. (2023). Evaluation of Dynamically Downscaled CMIP6-CCAM Models Over Australia. Earth’s Future, 11(11), e2023EF003548. https://doi.org/10.1029/2023EF003548\nChapman, S., Syktus, J., Trancoso, R., Toombs, N., & Eccles, R. (2024). Projected changes in mean climate and extremes from downscaled high-resolution CMIP6 simulations in Australia. Weather and Climate Extremes, 46, 100733. https://doi.org/10.1016/j.wace.2024.10073\nJones, D. A., Wang, W., & Fawcett, R. (2009). High-quality spatial climate data-sets for Australia. Australian Meteorlogical and Oceangraphic Journal, 58, 233–248.",
+    "crumbs": [
+      "Session 2"
+    ]
   }
 ]
