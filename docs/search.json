@@ -138,487 +138,52 @@
     ]
   },
   {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html",
-    "href": "Session 3/ICCB_Modelling_and_validation.html",
-    "title": "ICCB Species distribution modelling and validation",
+    "objectID": "Session 2/session_2_code.html",
+    "href": "Session 2/session_2_code.html",
+    "title": "Session 2 Code",
     "section": "",
-    "text": "We wrote this script drawing on some of the following resources:\n-Ecocommons Notebooks https://www.ecocommons.org.au/notebooks/\n-Damaris Zurell’s SDM Intro https://damariszurell.github.io/SDM-Intro/\nhttps://damariszurell.github.io/EEC-MGC/b4_SDM_eval.html",
+    "text": "Code\n#install.packages(\"terra\")\n#install.packages(\"dplyr\")\n#install.packages(\"sf\")\n#install.packages(\"ggplot2\")\n#install.packages(\"dismo\")\n#install.packages(\"rasterVis\")\n#install.packages(\"reshape\")\n\n## Import packages\nlibrary(terra)\nlibrary(dplyr)\nlibrary(sf)\nlibrary(ggplot2)\nlibrary(dismo)\nlibrary(rasterVis)\nlibrary(reshape)\nlibrary(RColorBrewer)",
     "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
+      "Session 2",
+      "Session 2 Code"
     ]
   },
   {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#import-packages",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#import-packages",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Import packages",
-    "text": "Import packages\n\n\nCode\nlibrary(dplyr)\n\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\n\nCode\nlibrary(purrr)\nlibrary(ggplot2)\nlibrary(terra)\n\n\nterra 1.8.50\n\n\nCode\nlibrary(sf)\n\n\nLinking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE\n\n\nCode\nlibrary(predicts)\nlibrary(blockCV)\n\n\nblockCV 3.1.5\n\n\nCode\nlibrary(ecospat)\nlibrary(usdm)\nlibrary(randomForest)\n\n\nrandomForest 4.7-1.2\n\n\nType rfNews() to see new features/changes/bug fixes.\n\n\n\nAttaching package: 'randomForest'\n\n\nThe following object is masked from 'package:ggplot2':\n\n    margin\n\n\nThe following object is masked from 'package:dplyr':\n\n    combine\n\n\nCode\nlibrary(precrec)\nlibrary(corrplot)\n\n\ncorrplot 0.95 loaded\n\n\nCode\n# Install the mecofun package, used in the materials at https://damariszurell.github.io/SDM-Intro/\nlibrary(devtools)\n\n\nLoading required package: usethis\n\n\nCode\ndevtools::install_git(\"https://gitup.uni-potsdam.de/macroecology/mecofun.git\")\n\n\nSkipping install of 'mecofun' from a xgit remote, the SHA1 (feb82c4a) has not changed since last install.\n  Use `force = TRUE` to force installation\n\n\nCode\n# Load the mecofun package\nlibrary(mecofun)",
+    "objectID": "Session 2/session_2_code.html#working-with-multiple-models",
+    "href": "Session 2/session_2_code.html#working-with-multiple-models",
+    "title": "Session 2 Code",
+    "section": "Working with multiple Models",
+    "text": "Working with multiple Models\n\n\nCode\npr_files &lt;- list.files(path = \"data/annual/\", pattern = \"pr\", full.names = TRUE)            # Lists all files, including all scenarios\npr_files &lt;- list.files(path = \"data/annual/\", pattern = \"pr.*ssp370\", full.names = TRUE)    # Lists files with only ssp370\n\n\n\n\nCode\npr_data = rast(pr_files)*365  # daily mean to annual total. CCAM has a 365 day calendar.\npr_data\n\n\nclass       : SpatRaster \ndimensions  : 205, 176, 360  (nrow, ncol, nlyr)\nresolution  : 0.1, 0.1  (x, y)\nextent      : 137.45, 155.05, -29.45, -8.95  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84) \nsource(s)   : memory\nvarname     : pr_annual (Seasonal average of Precipitation (Annual)) \nnames       : pr_annual_1, pr_annual_2, pr_annual_3, pr_annual_4, pr_annual_5, pr_annual_6, ... \nmin values  :      52.196,    48.72456,    85.55378,    54.58001,    150.5908,    117.2378, ... \nmax values  :    6151.675,  7233.45194,  5595.35947,  6152.59279,   5482.5640,   5449.5375, ... \ntime (days) : 1981-01-01 to 2100-01-01 (2 steps) \n\n\nRepeating the year names multiple times to correspond with multiple models\n\n\nCode\nyears = seq(1981,2100)\nyears_rep = rep(years, times =3)\nnames(pr_data) = years_rep\n\n\nCalculating the model average\n\n\nCode\npr_modavg = tapp(pr_data, years, fun = mean)\n\n# Calculating climatology for baseline (1981-2010)\npr_base = mean(pr_modavg[[1:30]])  # Converting from daily mean to annual mean\n\n# Calculating climatology for future (2071-2100)\npr_fut = mean(pr_modavg[[91:120]])  # Converting from daily mean to annual mean\n\n\nQ: Can you select the data based on the years instead?\nPlot historic and future rainfall\n\n\nCode\nlevelplot(pr_base)\n\n\n\n\n\n\n\n\n\nCode\nlevelplot(pr_fut)\n\n\n\n\n\n\n\n\n\nCutting data to Queensland\n\n\nCode\nqld_shp = vect('data/shp/QLD_State_Mask.shp')\npr_dif = pr_fut - pr_base\npr_dif_masked &lt;- crop(pr_dif, qld_shp, mask = TRUE)\nlevelplot(pr_dif_masked, margin = FALSE)\n\n\n\n\n\n\n\n\n\nPlotting the percent change\n\n\nCode\npr_pdif = (pr_fut - pr_base ) / pr_base *100  #Percent difference\npr_pdif_masked &lt;- crop(pr_pdif, qld_shp, mask = TRUE)\nlevelplot(pr_pdif_masked, margin = FALSE)\n\n\n\n\n\n\n\n\n\nSpecifying plotting bins and colours\n\n\nCode\nmy.at &lt;- seq(-20, 20, length.out = 10)\nmy.at = c(-Inf, my.at, Inf)\nlevelplot(pr_pdif_masked, margin = FALSE, at = my.at, cuts=11, pretty=T,\n                col.regions=((brewer.pal(11,\"RdBu\"))))\n\n\n\n\n\n\n\n\n\nQ. Can you modify this plot to show more infomation? Can you add a title and change the colours?\nWould showing multiple models on this plot help?\nQ. Can we compare the results from SSP370 to another Scenario?",
     "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
+      "Session 2",
+      "Session 2 Code"
     ]
   },
   {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#load-koala-presences-and-background-points",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#load-koala-presences-and-background-points",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Load koala presences and background points",
-    "text": "Load koala presences and background points\nThey are loaded as spatvectors, but we also want them as dataframes for model input requirements.\n\n\nCode\nkoala_occ &lt;- vect(\"Data/Biological_records/SEQ_koala_occurrences.shp\")\nbackground &lt;- vect(\"Data/Biological_records/background_points_2.5k_random.shp\")\n\n# Make a dataframe of just x, y and presence\nkoala_occ_df &lt;- koala_occ %&gt;% \n  as.data.frame(geom = \"XY\") %&gt;% \n  dplyr::select(x,y) %&gt;% \n  mutate(Presence = 1)\n\nhead(koala_occ_df)\n\n\n\n  \n\n\n\nCode\nbackground_df &lt;- background %&gt;% \n  as.data.frame(geom = \"XY\") %&gt;% \n  dplyr::select(x,y) %&gt;% \n  mutate(Presence = 0)\n\nhead(background_df)\n\n\n\n  \n\n\n\nCode\n# Combine to one\npr_bg &lt;- rbind(koala_occ_df, background_df)",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#load-environmental-covariates",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#load-environmental-covariates",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Load environmental covariates",
-    "text": "Load environmental covariates\nLoading current covariate rasters. We formatted these rasters in the same way as the Koala data, so that they are all in the same projection and extent. We did this in the script: ‘ICCB_Environmental_data.qmd’\n\n\nCode\ncovs_current &lt;- rast(\"Data/Environmental_variables/current_bioclim.tif\")\n\n\n# Define the BIOCLIM names for the raster layers\nlayer_names &lt;- c(\n  \"BIO1_Annual_Mean_Temp\",\n  \"BIO2_Mean_Diurnal_Temp_Range\",\n  \"BIO3_Isothermality\",\n  \"BIO4_Temperature_Seasonality\",\n  \"BIO5_Max_Temp_Warmest_Month\",\n  \"BIO6_Min_Temp_Coldest_Month\",\n  \"BIO7_Temperature_Annual_Range\",\n  \"BIO8_Mean_Temp_Wettest_Quarter\",\n  \"BIO9_Mean_Temp_Driest_Quarter\",\n  \"BIO10_Mean_Temp_Warmest_Quarter\",\n  \"BIO11_Mean_Temp_Coldest_Quarter\",\n  \"BIO12_Annual_Precipitation\",\n  \"BIO13_Precip_Wettest_Month\",\n  \"BIO14_Precip_Driest_Month\",\n  \"BIO15_Precip_Seasonality\",\n  \"BIO16_Precip_Wettest_Quarter\",\n  \"BIO17_Precip_Driest_Quarter\",\n  \"BIO18_Precip_Warmest_Quarter\",\n  \"BIO19_Precip_Coldest_Quarter\")\n\nnames(covs_current) &lt;- layer_names",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#covariate-selection",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#covariate-selection",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Covariate selection",
-    "text": "Covariate selection\n\nOption 1. Narrow down potential covariates based on ecological knowledge\nFor this example, we had advice from CSIRO scientists who conducted an expert elicitation to gather a set of potential covariates that are likely to be important for koalas. We use this knowledge to filter out the key bioclim variables.\nWe select the following: Bio5 : Max temp of the warmest month (mainly for the northern populations) Bio6 : Min temp of the coldest month (mainly for southern populations, which essentially excludes alpine regions) Bio12 : Annual Precipitation Bio15 : Precipitation seasonality (coefficient of variation)\n\n\nCode\nfor(i in 1:nlyr(covs_current)) {\n  terra::plot(covs_current[[i]], main = names(covs_current)[[i]])\n}",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#show-the-four-from-expert-elicitation-the-layers",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#show-the-four-from-expert-elicitation-the-layers",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Show the four from expert elicitation the layers",
-    "text": "Show the four from expert elicitation the layers\n\n\nCode\ncovs_current_expert &lt;- subset(covs_current, names(covs_current) %in% c(\"BIO5_Max_Temp_Warmest_Month\", \n                                                                       \"BIO6_Min_Temp_Coldest_Month\", \n                                                                       \"BIO12_Annual_Precipitation\", \n                                                                       \"BIO15_Precip_Seasonality\"))\n\nfor(i in 1:nlyr(covs_current_expert)) {\n  terra::plot(covs_current_expert[[i]], main = names(covs_current_expert)[[i]])\n}",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#extract-environmental-covariate-values-from-presence-and-background-locations-training-locations",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#extract-environmental-covariate-values-from-presence-and-background-locations-training-locations",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Extract environmental covariate values from presence and background locations (training locations)",
-    "text": "Extract environmental covariate values from presence and background locations (training locations)\n\n\nCode\ntrain_PB_covs &lt;- terra::extract(covs_current, pr_bg[,c(\"x\", \"y\")], xy = T)\ntrain_PB_covs &lt;- cbind(train_PB_covs, pr_bg[\"Presence\"])\n\n# Remove rows where there's values missing from at least one covariate\nprint(paste0(\"RECORDS FROM \", nrow(train_PB_covs) - sum(complete.cases(train_PB_covs)), \" ROWS IN TRAINING DATA REMOVED DUE TO MISSING COVARIATE VALUES\"))\n\n\n[1] \"RECORDS FROM 68 ROWS IN TRAINING DATA REMOVED DUE TO MISSING COVARIATE VALUES\"\n\n\nCode\ntrain_PB_covs &lt;- train_PB_covs[complete.cases(train_PB_covs), ] \ntrain_PB_covs &lt;- dplyr::select(train_PB_covs, -ID)\n\nhead(train_PB_covs)",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#thin-the-koala-presence-points-for-tutorial-only",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#thin-the-koala-presence-points-for-tutorial-only",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Thin the koala presence points (for tutorial only)",
-    "text": "Thin the koala presence points (for tutorial only)\nWe now thin the presences to reduce the number of points to a manageable size for plotting and modelling. This is not a recommended step for real data, but is done here to make the tutorial run faster and to make the plots clearer.\n\n\nCode\ntrain_PB_covs_pres &lt;- train_PB_covs %&gt;% filter(Presence == 1)\ntrain_PB_covs_bg &lt;- train_PB_covs %&gt;% filter(Presence == 0)\n\n# Thin the presences for plotting\ntrain_PB_covs_pres_thin &lt;- train_PB_covs_pres[sample(nrow(train_PB_covs_pres), 10000), ]\n\n# Combine back into both presence and background\ntrain_PB_covs_thinned &lt;- rbind(train_PB_covs_pres_thin, train_PB_covs_bg)",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#check-correlation-and-multicollinearity-of-covariates",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#check-correlation-and-multicollinearity-of-covariates",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Check correlation and multicollinearity of covariates",
-    "text": "Check correlation and multicollinearity of covariates\n\nCorrelation plot\nThere are several different methods for creating correlation plots.\n\n\nCode\necospat.cor.plot(covs_current_expert)\n\n\n\n\n\n\n\n\n\n\n\nUsing the corplots package\nFor a simple and quick plot.\n\n\nCode\ncorplots &lt;- ENMTools::raster.cor.plot(covs_current_expert)\ncorplots$cor.mds.plot\n\n\n\n\n\n\n\n\n\nCode\ncorplots$cor.heatmap\n\n\n\n\n\n\n\n\n\nHere, we use the corrplot package to create a correlation plot of the selected covariates (this is taken from an EcoCommons Australia notebook).\n\n\nCode\n# Select columns by their names\ncor_data &lt;- train_PB_covs[, names(train_PB_covs) %in% c(\"BIO5_Max_Temp_Warmest_Month\", \n                                                        \"BIO6_Min_Temp_Coldest_Month\", \n                                                        \"BIO12_Annual_Precipitation\", \n                                                        \"BIO15_Precip_Seasonality\")]\n\n# Check the structure of the numeric data\nstr(cor_data)\n\n\n'data.frame':   88136 obs. of  4 variables:\n $ BIO5_Max_Temp_Warmest_Month: num  29.7 30.5 30.5 29.7 30.2 ...\n $ BIO6_Min_Temp_Coldest_Month: num  9.39 8.94 8.49 9.96 8.96 ...\n $ BIO12_Annual_Precipitation : num  1238 1165 1161 1223 1109 ...\n $ BIO15_Precip_Seasonality   : num  92.9 98.8 99.5 88.9 97.2 ...\n\n\nCode\n# Calculate the correlation matrix for the numeric columns\ncor_matrix &lt;- cor(cor_data, use = \"complete.obs\", method = \"pearson\")\n\n\ncorrplot(cor_matrix,\n         method = \"color\",            # Use colored squares for correlation\n         type = \"upper\",              # Show upper triangle only\n         order = \"hclust\",            # Reorder variables hierarchically\n         addCoef.col = \"black\",       # Show correlation coefficients in black\n         number.cex = 0.5,            # Reduce the size of correlation labels\n         tl.col = \"black\",            # Text label color\n         tl.srt = 30,                 # Rotate labels slightly for readability\n         tl.cex = 0.5,                # Reduce text size of variable labels (set smaller valu)\n         cl.cex = 0.8,                # Reduce text size of color legend\n         diag = FALSE,                # Hide diagonal\n         col = colorRampPalette(c(\"#11aa96\", \"#61c6fa\", \"#f6aa70\"))(200),\n         sig.level = 0.01, insig = \"blank\")\n\n\n\n\n\n\n\n\n\n\n\nVariance Inflation Factor (VIF)\nIf you find corrplot is hard for you to make decisions, we can use Variance Inflation Factor (VIF). VIF is another statistical measure used to detect multicollinearity in a set of explanatory (independent) variables in a regression model.\nInterpretation:\n\nVIF = 1: No correlation\nVIF &gt; 1 and &lt;= 5: Moderate correlation; may not require corrective action.\nVIF &gt; 5: Indicates high correlation. Multicollinearity may be problematic, and further investigation is recommended.\nVIF &gt; 10: Strong multicollinearity. The variable is highly collinear with others, and steps should be taken to address this.\n\n\n\nCode\n# usdm::vif(covs_current_expert) # just VIF for all covariates\nusdm::vifstep(covs_current_expert) # Variance Inflation Factor and test for multicollinearity\n\n\nNo variable from the 4 input variables has collinearity problem. \n\nThe linear correlation coefficients ranges between: \nmin correlation ( BIO15_Precip_Seasonality ~ BIO6_Min_Temp_Coldest_Month ):  -0.2756697 \nmax correlation ( BIO12_Annual_Precipitation ~ BIO6_Min_Temp_Coldest_Month ):  0.8769718 \n\n---------- VIFs of the remained variables -------- \n                    Variables      VIF\n1 BIO5_Max_Temp_Warmest_Month 2.751370\n2 BIO6_Min_Temp_Coldest_Month 4.528719\n3  BIO12_Annual_Precipitation 6.888077\n4    BIO15_Precip_Seasonality 1.263385",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#exploration-of-the-koala-presence-and-background-data",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#exploration-of-the-koala-presence-and-background-data",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Exploration of the koala presence and background data",
-    "text": "Exploration of the koala presence and background data\nIt is good practice to assess where in the environmental space the presence and background points are located. This can help to identify if there are any potential issues with the data, such as a lack of background points in certain areas of environmental space, and should show any patterns in the data that the model should pick up.\n\n\nCode\n# Iterate over all of the variables to create density plots of the background and presence data\nfor(i in 1:ncol(train_PB_covs_thinned)) {\n  \n  print(ggplot() +\n          geom_density(data = train_PB_covs_thinned, \n                       aes(x = .data[[names(train_PB_covs_thinned)[i]]], fill = as.factor(Presence)), \n                       alpha = 0.5) +\n    theme_bw() +\n    labs(title = names(train_PB_covs_thinned)[i]))\n  \n}",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#null-model",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#null-model",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Null model",
-    "text": "Null model\nNull model: no explanatory variables or predictors are included.\nIt is always helpful to create a null model as a benchmark to assess how the inclusion of explanatory variables improves the model.\n\n\nCode\n# Fit a null model with only the intercept\nnull_model &lt;- glm(Presence ~ 1,\n                  data = train_PB_covs,\n                  family = binomial(link = \"logit\"))\n\n# Check the model results\nsummary(null_model)\n\n\n\nCall:\nglm(formula = Presence ~ 1, family = binomial(link = \"logit\"), \n    data = train_PB_covs)\n\nCoefficients:\n            Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)  4.08096    0.02636   154.8   &lt;2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 14902  on 88135  degrees of freedom\nResidual deviance: 14902  on 88135  degrees of freedom\nAIC: 14904\n\nNumber of Fisher Scoring iterations: 7",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#glm-model-1---expert-variables",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#glm-model-1---expert-variables",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "GLM Model 1 - expert variables",
-    "text": "GLM Model 1 - expert variables\n\n\nCode\nglm_model_1 &lt;- glm(Presence ~ \n                     BIO5_Max_Temp_Warmest_Month + \n                     BIO6_Min_Temp_Coldest_Month + \n                     BIO12_Annual_Precipitation + \n                     BIO15_Precip_Seasonality,\n                   data=train_PB_covs_thinned,\n                   family = binomial(link = \"logit\"))\n\n# Check the model results\nsummary(glm_model_1)\n\n\n\nCall:\nglm(formula = Presence ~ BIO5_Max_Temp_Warmest_Month + BIO6_Min_Temp_Coldest_Month + \n    BIO12_Annual_Precipitation + BIO15_Precip_Seasonality, family = binomial(link = \"logit\"), \n    data = train_PB_covs_thinned)\n\nCoefficients:\n                              Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)                 -5.1633283  1.5710088  -3.287  0.00101 ** \nBIO5_Max_Temp_Warmest_Month -0.6523178  0.0526585 -12.388  &lt; 2e-16 ***\nBIO6_Min_Temp_Coldest_Month  0.8807456  0.0283998  31.012  &lt; 2e-16 ***\nBIO12_Annual_Precipitation  -0.0030273  0.0002765 -10.949  &lt; 2e-16 ***\nBIO15_Precip_Seasonality     0.2504815  0.0108866  23.008  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 8758.5  on 11463  degrees of freedom\nResidual deviance: 5671.7  on 11459  degrees of freedom\nAIC: 5681.7\n\nNumber of Fisher Scoring iterations: 6\n\n\nCode\n# These response curves don't look very helpful\ndismo::response(glm_model_1)",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#glm-model-2---expert-variables-with-quadratics",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#glm-model-2---expert-variables-with-quadratics",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "GLM Model 2 - expert variables with quadratics",
-    "text": "GLM Model 2 - expert variables with quadratics\nIn this model, we include quadratic terms for the covariates. This is a common approach in species distribution modelling to account for non-linear relationships between the predictors and the response variable. This increases the complexity of the model and allows for more flexibility in fitting the data.\n\n\nCode\nglm_model_2 &lt;- glm(Presence ~ \n                     BIO5_Max_Temp_Warmest_Month + I(BIO5_Max_Temp_Warmest_Month^2) + \n                     BIO6_Min_Temp_Coldest_Month + I(BIO6_Min_Temp_Coldest_Month^2) + \n                     BIO12_Annual_Precipitation + I(BIO12_Annual_Precipitation^2) + \n                     BIO15_Precip_Seasonality + I(BIO15_Precip_Seasonality^2), \n                   data=train_PB_covs_thinned,\n                   family = binomial(link = \"logit\"))\n\n# Check the model results\nsummary(glm_model_2)\n\n\n\nCall:\nglm(formula = Presence ~ BIO5_Max_Temp_Warmest_Month + I(BIO5_Max_Temp_Warmest_Month^2) + \n    BIO6_Min_Temp_Coldest_Month + I(BIO6_Min_Temp_Coldest_Month^2) + \n    BIO12_Annual_Precipitation + I(BIO12_Annual_Precipitation^2) + \n    BIO15_Precip_Seasonality + I(BIO15_Precip_Seasonality^2), \n    family = binomial(link = \"logit\"), data = train_PB_covs_thinned)\n\nCoefficients:\n                                   Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)                      -7.497e+01  1.843e+01  -4.067 4.76e-05 ***\nBIO5_Max_Temp_Warmest_Month      -1.271e+00  1.212e+00  -1.048   0.2945    \nI(BIO5_Max_Temp_Warmest_Month^2)  1.113e-02  1.964e-02   0.567   0.5708    \nBIO6_Min_Temp_Coldest_Month      -1.028e+00  1.908e-01  -5.386 7.21e-08 ***\nI(BIO6_Min_Temp_Coldest_Month^2)  1.392e-01  1.287e-02  10.816  &lt; 2e-16 ***\nBIO12_Annual_Precipitation        1.044e-03  1.938e-03   0.539   0.5901    \nI(BIO12_Annual_Precipitation^2)  -1.393e-06  6.913e-07  -2.016   0.0438 *  \nBIO15_Precip_Seasonality          1.885e+00  2.375e-01   7.939 2.04e-15 ***\nI(BIO15_Precip_Seasonality^2)    -8.166e-03  1.268e-03  -6.439 1.20e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 8758.5  on 11463  degrees of freedom\nResidual deviance: 5526.5  on 11455  degrees of freedom\nAIC: 5544.5\n\nNumber of Fisher Scoring iterations: 6\n\n\nCode\n# These response curves don't look very helpful\ndismo::response(glm_model_2)",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#model-effect-evaluation",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#model-effect-evaluation",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Model effect evaluation",
-    "text": "Model effect evaluation\nHere we use a function presented in an EcoCommons Australia notebook to evaluate the model performance. The notebook can be found on their GitHub: https://github.com/EcoCommonsAustralia/notebooks/tree/main/notebooks.\n\n\nCode\n# Function to plot effect size graph\nplot_effect_size &lt;- function(glm_model) {\n  # Check if required libraries are installed\n  if (!requireNamespace(\"ggplot2\", quietly = TRUE)) {\n    stop(\"Please install the 'ggplot2' package to use this function.\")\n  }\n  library(ggplot2)\n\n  # Extract effect sizes (coefficients) from the model\n  coefs &lt;- summary(glm_model)$coefficients\n  effect_sizes &lt;- data.frame(\n    Variable = rownames(coefs)[-1],  # Exclude the intercept\n    Effect_Size = coefs[-1, \"Estimate\"],\n    Std_Error = coefs[-1, \"Std. Error\"]\n  )\n\n  # Sort by effect size\n  effect_sizes &lt;- effect_sizes[order(-abs(effect_sizes$Effect_Size)), ]\n\n  # Plot the effect sizes with error bars\n  ggplot(effect_sizes, aes(x = reorder(Variable, Effect_Size), y = Effect_Size)) +\n    geom_bar(stat = \"identity\", fill = \"#11aa96\") +\n    geom_errorbar(aes(ymin = Effect_Size - Std_Error, ymax = Effect_Size + Std_Error), width = 0.2) +\n    coord_flip() +\n    labs(\n      title = \"Effect Sizes of Variables\",\n      x = \"Variable\",\n      y = \"Effect Size (Coefficient Estimate)\"\n    ) +\n    theme_minimal()\n}",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#use-the-function-to-check-the-effect-sizes",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#use-the-function-to-check-the-effect-sizes",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Use the function to check the effect sizes",
-    "text": "Use the function to check the effect sizes\nWe need to be careful when interpreting the effect sizes of models with quadratic terms however, as the response curve depends on the linear and the quadratic term.\n\n\nCode\n# Example usage of effect size plot\nplot_effect_size(glm_model_1)\n\n\n\n\n\n\n\n\n\nCode\nplot_effect_size(glm_model_2)",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#response-curves",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#response-curves",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Response curves",
-    "text": "Response curves\nAgain, we can use a function from the EcoCommons notebook to plot the response curves from the model, although for quadratics we need to adjust the function or use something else.\n\n\nCode\nplot_species_response &lt;- function(glm_model, predictors, data) {\n  # Check if required libraries are installed\n  if (!requireNamespace(\"ggplot2\", quietly = TRUE) || !requireNamespace(\"gridExtra\", quietly = TRUE)) {\n    stop(\"Please install the 'ggplot2' and 'gridExtra' packages to use this function.\")\n  }\n  library(ggplot2)\n  library(gridExtra)\n\n  # Create empty list to store response plots\n  response_plots &lt;- list()\n\n  # Loop through each predictor variable\n  for (predictor in predictors) {\n    # Create new data frame to vary predictor while keeping others constant\n    pred_range &lt;- seq(\n      min(data[[predictor]], na.rm = TRUE),\n      max(data[[predictor]], na.rm = TRUE),\n      length.out = 100\n    )\n    const_data &lt;- data[1, , drop = FALSE]  # Use first row to keep other predictors constant\n    response_data &lt;- const_data[rep(1, 100), ]  # Duplicate the row\n    response_data[[predictor]] &lt;- pred_range\n\n    # Predict probabilities\n    predicted_response &lt;- predict(glm_model, newdata = response_data, type = \"response\")\n\n    # Create data frame for plotting\n    plot_data &lt;- data.frame(\n      Predictor_Value = pred_range,\n      Predicted_Probability = predicted_response\n    )\n\n    # Add presence and absence data\n    presence_absence_data &lt;- data.frame(\n      Predictor_Value = data[[predictor]],\n      Presence_Absence = data$Presence\n    )\n\n    # Generate the response plot\n    p &lt;- ggplot() +\n      \n      geom_line(data = plot_data, \n                aes(x = Predictor_Value, y = Predicted_Probability), \n                color = \"#61c6fa\", linewidth = 1) +\n      \n      geom_point(data = presence_absence_data[presence_absence_data$Presence_Absence == 1, ], \n                 aes(x = Predictor_Value, y = Presence_Absence), \n                 color = \"#11aa96\", alpha = 0.6) +\n      \n      geom_point(data = presence_absence_data[presence_absence_data$Presence_Absence == 0, ], \n                 aes(x = Predictor_Value, y = Presence_Absence), \n                 color = \"#f6aa70\", alpha = 0.6) +\n      \n      labs(x = predictor, y = NULL) +\n      theme_minimal() +\n      theme(axis.title.y = element_blank())\n\n    # Store the plot in the list\n    response_plots[[predictor]] &lt;- p\n  }\n\n  # Arrange all plots in one combined plot with a single shared y-axis label\n  grid.arrange(\n    grobs = response_plots,\n    ncol = 3,\n    left = \"Predicted Probability / Presence-Absence\"\n  )\n}",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#use-the-response-curve-function",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#use-the-response-curve-function",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Use the response curve function",
-    "text": "Use the response curve function\n\n\nCode\npredictors &lt;- c(\"BIO5_Max_Temp_Warmest_Month\", \n                \"BIO6_Min_Temp_Coldest_Month\", \n                \"BIO12_Annual_Precipitation\", \n                \"BIO15_Precip_Seasonality\")\n\nplot_species_response(glm_model_1, predictors, train_PB_covs_thinned)\n\n\n\nAttaching package: 'gridExtra'\n\n\nThe following object is masked from 'package:randomForest':\n\n    combine\n\n\nThe following object is masked from 'package:dplyr':\n\n    combine\n\n\n\n\n\n\n\n\n\n\nModel 1 partial responses\n\n\nCode\n# Plot the partial responses\npartial_response(glm_model_1, predictors = train_PB_covs_thinned[,predictors], main='GLM')\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCode\n# Plot inflated response curves:\ninflated_response(glm_model_1, predictors = train_PB_covs_thinned[,predictors], method = \"stat3\", lwd = 3, main='GLM') \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nModel 2 partial responses\n\n\nCode\n# Plot the partial responses\npartial_response(glm_model_2, predictors = train_PB_covs_thinned[,predictors], main='GLM')\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCode\n# Plot inflated response curves:\ninflated_response(glm_model_2, predictors = train_PB_covs_thinned[,predictors], method = \"stat3\", lwd = 3, main='GLM')",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#glm-predictions-to-current-environment",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#glm-predictions-to-current-environment",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "GLM predictions to current environment",
-    "text": "GLM predictions to current environment\n\nModel 1\n\n\nCode\n# Predict the presence probability across the entire raster extent\npredicted_raster_model_1 &lt;- predicts::predict(covs_current_expert, glm_model_1, type = \"response\")\n\n# Plot the species distribution raster\nplot(\n  predicted_raster_model_1,\n  range = c(0, 1),  # Set min and max values for the color scale\n  main = \"Relative Probability of Occurrence of Koalas in SEQ - GLM 1\"\n)\n\n\n\n\n\n\n\n\n\n\n\nModel 2\n\n\nCode\n# Predict the presence probability across the entire raster extent\npredicted_raster_model_2 &lt;- predicts::predict(covs_current_expert, glm_model_2, type = \"response\")\n\n# Plot the species distribution raster\nplot(\n  predicted_raster_model_2,\n  range = c(0, 1),  # Set min and max values for the color scale\n  main = \"Relative Probability of Occurrence of Koalas in SEQ - GLM 2\"\n)",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#data-preparation",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#data-preparation",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Data preparation",
-    "text": "Data preparation\n\n\n\n\n\n\n\n\n\n\nCalculate the case weights (down/up-weighting)\nBecause we have a ‘class imbalance’ (uneven number of presences and background points), we are making their ‘weight’ in the model equal.\n\n\nCode\npresNum &lt;- as.numeric(table(train_PB_covs_thinned$Presence)[\"1\"]) # number of presences\nbgNum &lt;- as.numeric(table(train_PB_covs_thinned$Presence)[\"0\"]) # number of backgrounds\nweight &lt;- ifelse(train_PB_covs_thinned$Presence == 1, 1, presNum / bgNum) # down-weighting\n\n\n\n\nPrepare for fitting the RF model(s)\n\n\nCode\n# If wanting to fit a classification model\n# Convert the response to factor for producing class relative likelihood\ntrain_PB_covs_thinned$Presence_Factor &lt;- as.factor(train_PB_covs_thinned$Presence)\n\n# For down-sampling, the number of background (0s) in each bootstrap sample should the same as presences\n# (1s). For this, we use sampsize argument to do this.\n# We need to choose the SMALLER number out of the two classes\nsample_size &lt;- c(\"0\" = bgNum, \"1\" = bgNum)\nsample_size &lt;- c(bgNum)",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#random-forest-model---expert-covariates",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#random-forest-model---expert-covariates",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Random Forest Model - expert covariates",
-    "text": "Random Forest Model - expert covariates\n\nClassification or regression model?\n\n\nCode\n# # Specify the model formula - classification\n# model_formula &lt;- as.formula(Presence_Factor ~ \n#                               BIO5_Max_Temp_Warmest_Month + \n#                               BIO6_Min_Temp_Coldest_Month + \n#                               BIO12_Annual_Precipitation + \n#                               BIO15_Precip_Seasonality)\n\n# Specify the model formula - regression\nmodel_formula &lt;- as.formula(Presence ~ \n                              BIO5_Max_Temp_Warmest_Month + \n                              BIO6_Min_Temp_Coldest_Month + \n                              BIO12_Annual_Precipitation + \n                              BIO15_Precip_Seasonality)\n\n\n\n\nFit the random forest model\nThis will throw a warning as we only have two unique values (0s and 1s), but in our case that is fine, and you can ignore the warning.\n\n\nCode\nrf_1 &lt;- randomForest::randomForest(formula = model_formula,\n                                   data = train_PB_covs_thinned,\n                                   weights = weight,\n                                   ntree = 1000,\n                                   sampsize = sample_size,\n                                   replace = T, \n                                   importance=TRUE)\n\n\nWarning in randomForest.default(m, y, ...): The response has five or fewer\nunique values.  Are you sure you want to do regression?\n\n\n\n\nCheck the model results\n\n\nCode\n# Model summary\nrf_1\n\n\n\nCall:\n randomForest(formula = model_formula, data = train_PB_covs_thinned,      weights = weight, ntree = 1000, sampsize = sample_size, replace = T,      importance = TRUE) \n               Type of random forest: regression\n                     Number of trees: 1000\nNo. of variables tried at each split: 1\n\n          Mean of squared residuals: 0.08394254\n                    % Var explained: 24.64\n\n\nCode\n# Variable importance:\nimportance(rf_1)\n\n\n                              %IncMSE IncNodePurity\nBIO5_Max_Temp_Warmest_Month  97.30508      70.28901\nBIO6_Min_Temp_Coldest_Month 113.83596     103.48376\nBIO12_Annual_Precipitation   78.26095      82.27573\nBIO15_Precip_Seasonality     79.29062      47.90045\n\n\nCode\n# Plot variable importance\nvarImpPlot(rf_1, type = 1)\n\n\n\n\n\n\n\n\n\nCode\n# Look at single trees:\nhead(getTree(rf_1,1,T))\n\n\n\n  \n\n\n\n\n\nPartial dependence plots\n\n\nCode\n# Now, we plot response curves in the same way as we did for GLMs above:\npartial_response(rf_1, predictors = train_PB_covs_thinned[,predictors], main='Random Forest')\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCode\n# Plot inflated response curves:\ninflated_response(rf_1, predictors = train_PB_covs_thinned[,predictors], method = \"stat3\", lwd = 3, main='Random Forest') \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRandom Forest predictions\n\n\nCode\n# Predict the presence probability across the entire raster extent\npredicted_raster_RF_1 &lt;- predicts::predict(covs_current_expert, rf_1, type = \"response\")\n\n# Plot the species distribution raster\nplot(\n  predicted_raster_RF_1,\n  range = c(0, 1),  # Set min and max values for the color scale\n  main = \"Relative Probability of Occurrence of Koalas in SEQ - RF 1\"\n)\n\n\n\n\n\n\n\n\n\nCode\nwriteRaster(predicted_raster_RF_1, \n            filename = \"outputs/current_distribution_RF_1.tif\", \n            overwrite = TRUE)",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#run-the-model-for-every-fold-and-evaluate",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#run-the-model-for-every-fold-and-evaluate",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Run the model for every fold and evaluate",
-    "text": "Run the model for every fold and evaluate\n\nModel evaluation - metrics\nTypically, it helps to evaluate your model with several metrics that describe different features of model performance and prediction. Here, we define a function to feed in a model prediction and calculate several evaluation metrics.\nThe metrics are:\n-Area under the receiver operating characteristic curve (AUC ROC)\nHigher values of this (closer to 1) suggest a model is good at distinguishing presence points from the background.\n-Continuous boyce index\nHigher values of this (closer to 1) suggest a model is good at predicting higher suitability at spots where there were presences.\n\n\nCode\n# Start a dataframe to save results\neval_df &lt;- data.frame(fold = numeric(),\n                      ROC = numeric(),\n                      boyce = numeric())\n\nfor(f in seq_along(spfolds)) {\n  \n  # Subset the training and testing data (spatial cross validation) (for the fth fold)\n  \n  train_PB_covs_scv &lt;- train_PB_covs_thinned[spfolds[[f]][[1]], ]\n  test_PB_covs_scv &lt;- train_PB_covs_thinned[spfolds[[f]][[2]], ]\n  \n  glm_model_1 &lt;- glm(Presence ~ \n                     BIO5_Max_Temp_Warmest_Month + \n                     BIO6_Min_Temp_Coldest_Month + \n                     BIO12_Annual_Precipitation + \n                     BIO15_Precip_Seasonality,\n                   data=train_PB_covs_scv,\n                   family = binomial(link = \"logit\"))\n  \n    # Predict to the testing data of fold f\n  test_PB_covs_scv$pred &lt;- predict(glm_model_1, newdata = test_PB_covs_scv, type = \"response\")\n\n  # Evaluate prediction on test set\n  ROC = precrec::auc(precrec::evalmod(scores = test_PB_covs_scv$pred, labels = test_PB_covs_scv$Presence))[1,4]\n \n  boyce = ecospat::ecospat.boyce(fit = test_PB_covs_scv$pred, \n                                 obs = test_PB_covs_scv$pred[which(test_PB_covs_scv$Presence==1)], \n                                 nclass = 0, # Calculate continuous index\n                                 method = \"pearson\",\n                                 PEplot = F)[[\"cor\"]]\n  \n  # Add results to dataframe\n  eval_df &lt;- eval_df %&gt;% add_row(fold = f, ROC = ROC, boyce = boyce)\n\n  \n}\n\n\n\n\nSummarise the evaluation metrics\n\n\nCode\n# Mean AUC & boyce\neval_df %&gt;% \n  summarise(mean_AUC = mean(ROC),\n            mean_boyce = mean(boyce),\n            sd_AUC = sd(ROC),\n            sd_boyce = sd(boyce))",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#run-the-rf-model-for-every-fold-and-evaluate",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#run-the-rf-model-for-every-fold-and-evaluate",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Run the RF model for every fold and evaluate",
-    "text": "Run the RF model for every fold and evaluate\n\n\nCode\n# Start a dataframe to save results\neval_df.RF &lt;- data.frame(fold = numeric(),\n                      ROC = numeric(),\n                      boyce = numeric())\n\nfor(f in seq_along(spfolds)) {\n  \n  # Subset the training and testing data (spatial cross validation) (for the fth fold)\n  \n  train_PB_covs_scv &lt;- train_PB_covs_thinned[spfolds[[f]][[1]], ]\n  test_PB_covs_scv &lt;- train_PB_covs_thinned[spfolds[[f]][[2]], ]\n  \n  presNum &lt;- as.numeric(table(train_PB_covs_scv$Presence)[\"1\"]) # number of presences\n  bgNum &lt;- as.numeric(table(train_PB_covs_scv$Presence)[\"0\"]) # number of backgrounds\n  weight &lt;- ifelse(train_PB_covs_scv$Presence == 1, 1, presNum / bgNum) # down-weighting\n  \n  sample_size &lt;- c(\"0\" = bgNum, \"1\" = bgNum)\n  sample_size &lt;- c(bgNum)\n\n  \n  rf_1 &lt;- randomForest::randomForest(formula = model_formula,\n                                   data = train_PB_covs_scv,\n                                   weights = weight,\n                                   ntree = 1000,\n                                   sampsize = sample_size,\n                                   replace = T, \n                                   importance=TRUE)\n  \n  \n    # Predict to the testing data of fold f\n  test_PB_covs_scv$pred &lt;- predict(rf_1, newdata = test_PB_covs_scv, type = \"response\")\n\n  # Evaluate prediction on test set\n  ROC = precrec::auc(precrec::evalmod(scores = test_PB_covs_scv$pred, labels = test_PB_covs_scv$Presence))[1,4]\n \n  boyce = ecospat::ecospat.boyce(fit = test_PB_covs_scv$pred, \n                                 obs = test_PB_covs_scv$pred[which(test_PB_covs_scv$Presence==1)], \n                                 nclass = 0, # Calculate continuous index\n                                 method = \"pearson\",\n                                 PEplot = F)[[\"cor\"]]\n  \n  # Add results to dataframe\n  eval_df.RF &lt;- eval_df.RF %&gt;% add_row(fold = f, ROC = ROC, boyce = boyce)\n\n  \n}\n\n\nWarning in randomForest.default(m, y, ...): The response has five or fewer\nunique values.  Are you sure you want to do regression?\nWarning in randomForest.default(m, y, ...): The response has five or fewer\nunique values.  Are you sure you want to do regression?\nWarning in randomForest.default(m, y, ...): The response has five or fewer\nunique values.  Are you sure you want to do regression?\nWarning in randomForest.default(m, y, ...): The response has five or fewer\nunique values.  Are you sure you want to do regression?\nWarning in randomForest.default(m, y, ...): The response has five or fewer\nunique values.  Are you sure you want to do regression?",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#summarise-the-evaluation-metrics-1",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#summarise-the-evaluation-metrics-1",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Summarise the evaluation metrics",
-    "text": "Summarise the evaluation metrics\n\n\nCode\n# Mean AUC & boyce\neval_df.RF %&gt;% \n  summarise(mean_AUC = mean(ROC),\n            mean_boyce = mean(boyce),\n            sd_AUC = sd(ROC),\n            sd_boyce = sd(boyce))",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#load-future-environmental-data",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#load-future-environmental-data",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Load future environmental data",
-    "text": "Load future environmental data\n\n\nCode\ncovs_future &lt;- rast(\"Data/Environmental_variables/future_bioclim.2090.SSP370.tif\")\nnames(covs_future) &lt;- layer_names\ncovs_future\n\n\nclass       : SpatRaster \ndimensions  : 47, 55, 19  (nrow, ncol, nlyr)\nresolution  : 5123.954, 5123.954  (x, y)\nextent      : 1621552, 1903370, -3349594, -3108768  (xmin, xmax, ymin, ymax)\ncoord. ref. : GDA94 / Geoscience Australia Lambert (EPSG:3112) \nsource      : future_bioclim.2090.SSP370.tif \nnames       : BIO1_~_Temp, BIO2_~Range, BIO3_~ality, BIO4_~ality, BIO5_~Month, BIO6_~Month, ... \nmin values  :   0.8177757,   0.3121004,    1.564732,    12.43535,    1.130271,   0.4521889, ... \nmax values  :  24.5521488,  14.5486765,   50.989292,   528.63293,   37.389927,  15.7586107, ... \n\n\nCode\ncovs_future &lt;- terra::mask(covs_future, covs_current) # Crop to SEQ extent\n\ncovs_future_expert &lt;- subset(covs_future, names(covs_future) %in% c(\"BIO5_Max_Temp_Warmest_Month\", \n                                                                    \"BIO6_Min_Temp_Coldest_Month\", \n                                                                    \"BIO12_Annual_Precipitation\", \n                                                                    \"BIO15_Precip_Seasonality\"))",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#plot-the-future-rasters",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#plot-the-future-rasters",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Plot the future rasters",
-    "text": "Plot the future rasters\n\n\nCode\nfor(i in 1:nlyr(covs_future)) {\n  terra::plot(covs_future[[i]], main = names(covs_future)[[i]])\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCode\n# Plot to compare the difference between the current and future rasters\n\nplot(covs_future_expert - covs_current_expert)",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#test-the-environmental-distance-between-current-data-and-future-conditions",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#test-the-environmental-distance-between-current-data-and-future-conditions",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Test the environmental distance between current data and future conditions",
-    "text": "Test the environmental distance between current data and future conditions\n\n\nCode\nmess &lt;- predicts::mess(covs_future_expert, \n                       train_PB_covs_thinned[, c(\"BIO5_Max_Temp_Warmest_Month\", \n                                            \"BIO6_Min_Temp_Coldest_Month\", \n                                            \"BIO12_Annual_Precipitation\", \n                                            \"BIO15_Precip_Seasonality\")])\n\nplot(mess, axes = F)\n\n\n\n\n\n\n\n\n\nCode\nr_mess_mask &lt;- mess &lt; 0\nplot(r_mess_mask, axes=F)\n\n\n\n\n\n\n\n\n\nTest which areas you might mask out because they are ‘novel’ in environmental space and therefore require model extrapolation.\n\n\nCode\nanalog_fut &lt;- predicted_raster_model_1\n\nvalues(analog_fut)[values(mess)&lt;0] &lt;- NA\n\nplot(analog_fut, \n     range = c(0, 1),  # Set min and max values for the color scale\n     main = \"Koala relative occurrence in regions with analogue conditions\")\n\n\n\n\n\n\n\n\n\nCode\nnovel_fut &lt;- predicted_raster_model_1\n\nvalues(novel_fut)[values(mess)&gt;0] &lt;- NA\n\nplot(novel_fut, \n     range = c(0, 1),  # Set min and max values for the color scale\n     main = \"Koala relative occurrence in regions with novel conditions\")",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#model-1-1",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#model-1-1",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Model 1",
-    "text": "Model 1\n\n\nCode\n# Predict the presence probability across the entire raster extent\npredicted_raster_model_1 &lt;- predict(covs_future_expert, glm_model_1, type = \"response\")\n\n# Plot the species distribution raster\nplot(\n  predicted_raster_model_1,\n  range = c(0, 1),  # Set min and max values for the color scale\n  main = \"Relative Probability of Occurrence of Koalas in SEQ - GLM1\"\n)",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#model-2-1",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#model-2-1",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Model 2",
-    "text": "Model 2\n\n\nCode\n# Predict the presence probability across the entire raster extent\npredicted_raster_model_2 &lt;- predict(covs_future_expert, glm_model_2, type = \"response\")\n\n# Plot the species distribution raster\nplot(\n  predicted_raster_model_2,\n  range = c(0, 1),  # Set min and max values for the color scale\n  main = \"Relative Probability of Occurrence of Koalas in SEQ - GLM2\"\n)",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#random-forest-future-predictions",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#random-forest-future-predictions",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Random Forest future predictions",
-    "text": "Random Forest future predictions\n\nModel 1\n\n\nCode\n# Predict the presence probability across the entire raster extent\npredicted_raster_RF_1 &lt;- predicts::predict(covs_future_expert, rf_1, type = \"response\", na.rm=TRUE)\n\n# Plot the species distribution raster\nplot(\n  predicted_raster_RF_1,\n  range = c(0, 1),  # Set min and max values for the color scale\n  main = \"Relative Probability of Occurrence of Koalas in SEQ - RF\"\n)",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#presenting-predictions-with-uncertainty",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#presenting-predictions-with-uncertainty",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Presenting predictions with uncertainty",
-    "text": "Presenting predictions with uncertainty\nThere are many sources of model uncertainty that should be explored and ideally, presented alongside model predictions.\nOne that we’ll focus on here is climate scenario uncertainty. We do so by fitting a second model to future climate data from a lower emission shared socioeconomic path scenario (SSP 1.26).",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#load-future-environmental-data-ssp-1.26",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#load-future-environmental-data-ssp-1.26",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Load future environmental data (SSP 1.26)",
-    "text": "Load future environmental data (SSP 1.26)\n\n\nCode\ncovs_future_SSP126 &lt;- rast(\"Data/Environmental_variables/future_bioclim.2090.SSP126.tif\")\nnames(covs_future_SSP126) &lt;- layer_names\ncovs_future_SSP126\n\n\nclass       : SpatRaster \ndimensions  : 47, 55, 19  (nrow, ncol, nlyr)\nresolution  : 5123.954, 5123.954  (x, y)\nextent      : 1621552, 1903370, -3349594, -3108768  (xmin, xmax, ymin, ymax)\ncoord. ref. : GDA94 / Geoscience Australia Lambert (EPSG:3112) \nsource      : future_bioclim.2090.SSP126.tif \nnames       : BIO1_~_Temp, BIO2_~Range, BIO3_~ality, BIO4_~ality, BIO5_~Month, BIO6_~Month, ... \nmin values  :   0.7471204,   0.3128485,    1.585051,    12.19436,    1.046093,   0.3754203, ... \nmax values  :  22.4384842,  14.8543510,   51.254021,   544.83429,   35.546104,  13.5217409, ... \n\n\nCode\ncovs_future_SSP126_expert &lt;- subset(covs_future_SSP126, names(covs_future_SSP126) %in% c(\"BIO5_Max_Temp_Warmest_Month\", \n                                                                                          \"BIO6_Min_Temp_Coldest_Month\", \n                                                                                          \"BIO12_Annual_Precipitation\", \n                                                                                          \"BIO15_Precip_Seasonality\"))\n\n\nPlot to compare the variables across the two scenarios\n\n\nCode\nplot(covs_future_expert)\n\n\n\n\n\n\n\n\n\nCode\nplot(covs_future_SSP126_expert)",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#glm-future-predictions-ssp-1.26",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#glm-future-predictions-ssp-1.26",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "GLM future predictions (SSP 1.26)",
-    "text": "GLM future predictions (SSP 1.26)\n\nModel 1\n\n\nCode\n# Predict the presence probability across the entire raster extent\npredicted_raster_model_1_SSP126 &lt;- predict(covs_future_SSP126_expert, glm_model_1, type = \"response\")\n\n# Plot the species distribution raster\nplot(\n  predicted_raster_model_1,\n  range = c(0,1),\n  main = \"SSP 3.70\"\n)\n\n\n\n\n\n\n\n\n\nCode\nplot(\n  predicted_raster_model_1_SSP126,\n  range = c(0,1),\n  main = \"SSP 1.26\"\n)",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Modelling_and_validation.html#model-uncertainty",
-    "href": "Session 3/ICCB_Modelling_and_validation.html#model-uncertainty",
-    "title": "ICCB Species distribution modelling and validation",
-    "section": "Model uncertainty",
-    "text": "Model uncertainty\nAnother element of uncertainty that can be represented is model uncertainty, or the standard error around the coefficient estimates.\n\n\nCode\n# Extract standard errors of coefficients\n\ncoef_se &lt;- summary(glm_model_1)$coefficients[, \"Std. Error\"]\n\nprint(coef_se)\n\n\n                (Intercept) BIO5_Max_Temp_Warmest_Month \n               1.6960955169                0.0612124929 \nBIO6_Min_Temp_Coldest_Month  BIO12_Annual_Precipitation \n               0.0324663917                0.0003209716 \n   BIO15_Precip_Seasonality \n               0.0133672918 \n\n\n\n\nCode\ncovs_df &lt;- as.data.frame(covs_future_expert, na.rm = FALSE)\n\npred_link &lt;- predict(glm_model_1, newdata = covs_df, type = \"link\", se.fit = TRUE)\n\n# Linear predictor (eta)\neta &lt;- pred_link$fit\nse_eta &lt;- pred_link$se.fit\n\n# Confidence intervals (95%)\nz &lt;- 1.96\neta_lower &lt;- eta - z * se_eta\neta_upper &lt;- eta + z * se_eta\n\n# Transform back to response scale\nlinkinv &lt;- glm_model_1$family$linkinv\npredicted &lt;- linkinv(eta)\nlower_ci &lt;- linkinv(eta_lower)\nupper_ci &lt;- linkinv(eta_upper)\n\n\n# Add to covs_df\ncovs_df$predicted &lt;- predicted\ncovs_df$lower_ci &lt;- lower_ci\ncovs_df$upper_ci &lt;- upper_ci\n\n\npredicted_r &lt;- setValues(rast(covs_future_expert, nlyr = 1), predicted)\nlower_ci_r &lt;- setValues(rast(covs_future_expert, nlyr = 1), lower_ci)\nupper_ci_r &lt;- setValues(rast(covs_future_expert, nlyr = 1), upper_ci)\n\n# Step 2: Name the layers\nnames(predicted_r) &lt;- \"predicted\"\nnames(lower_ci_r) &lt;- \"lower_CI\"\nnames(upper_ci_r) &lt;- \"upper_CI\"\n\nprediction_w_uncertainty &lt;- c(predicted_r, lower_ci_r, upper_ci_r)\n\nplot(prediction_w_uncertainty, range = c(0, 1))",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species distribution modelling and validation"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Species_data.html",
-    "href": "Session 3/ICCB_Species_data.html",
-    "title": "ICCB Species data download",
+    "objectID": "Session 3/Data/Environmental_variables/QLD_State_Mask.html",
+    "href": "Session 3/Data/Environmental_variables/QLD_State_Mask.html",
+    "title": "ICCB - Open Geospatial Tools",
     "section": "",
-    "text": "Code\n# install.packages(\"galah\")",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species data download"
-    ]
+    "text": "&lt;!DOCTYPE qgis PUBLIC ‘http://mrcc.com/qgis.dtd’ ‘SYSTEM’&gt;  Mainland  ENG dataset\n\nMainlands - Queensland\n\nThis dataset depicts the land extent of continental Queensland. The boundary of the area shown coincides with theFrameworkBoundaries dataset.\nUSER NOTICE This feature class will be no longer updated after April 26th, 2024. New feature classes have been created to replace it. This feature class will be removed after June 1st without notification. To provide digital data depicting the land extent of continental Queensland for use in land administration, topographic mapping and in the production of navigational and web based mapping applications.  Queensland coastline mean high water state border mainland BOUNDARIES coastline mean high water state border mainland   BOUNDARIES    \n\n\n  &lt;city&gt;&lt;/city&gt;\n  &lt;administrativearea&gt;&lt;/administrativearea&gt;\n  &lt;postalcode&gt;&lt;/postalcode&gt;\n  &lt;country&gt;&lt;/country&gt;\n&lt;/contactAddress&gt;\n&lt;name&gt;Resources, Georesources, SI, SD, SDM, Senior Spatial Information Officer&lt;/name&gt;\n&lt;organization&gt;Department of Resources&lt;/organization&gt;\n&lt;position&gt;Senior Spatial Information Officer, Spatial Data Management, Spatial Data, Spatial Information&lt;/position&gt;\n&lt;voice&gt;(07) 3330 4738&lt;/voice&gt;\n&lt;fax&gt;&lt;/fax&gt;\n&lt;email&gt;SIIMTopoDataManagement@resources.qld.gov.au&lt;/email&gt;\n&lt;role&gt;Point of contact&lt;/role&gt;\n    This dataset is GDA2020 compatible. The source data, and therefore the captured features, are georeferenced as GDA94 (horizontal only). The horizontal accuracy of the geo-referencing and/or data collection method for this example is greater than the datum offset between GDA94 and GDA2020 (1.8 meters). The resulting dataset has been nominated as a low-accuracy GDA2020 dataset. As this data has not been directly captured in GDA2020, nor transformed to GDA2020, the resulting data is ‘GDA2020 Compatible’ not ‘GDA2020 Compliant’. This dataset was derived from and is coincident with the FrameworkBoundaries_Queensland dataset. Within the FrameworkBoundaries_Queensland dataset., the coastline was digitized from the most current imagery by defining mean high water from sand coloration and debris lines. Where available, the highest astronomical tide line generated from LiDAR was used to help define the line. Were the line is obscured by vegetation, in particular mangroves; the seaward edge of the vegetation is adopted. The coastline feature does not cross the entrances to large inland waterbodies. In these instances, a feature type Junction is used to seamlessly connect the coastline. The state border was captured and coincides with the position as shown by the Queensland Digital Cadastral Database, Feature Types: Mainland - The area of continental Queensland. Data source: Queensland Digital Cadastral Database  Features have been captured or updated from the best available imagery or data sources, with an attribute within the data describing the source and reliability. Unrestricted to all levels of government and community. Data is available to all government agencies, community groups and individuals. Dataset is available through physical supply and may be made available via web delivery tools, for example, through DNRME’s internet sites. The State of Queensland (Department of Resources) � State of Queensland (Department of Resources) 2023 This material is licensed under a Creative Commons - Attribution 4.0 International licence. ? The Department of Resources requests attribution in the following manner: � State of Queensland (Department of Resources) 2021. Updated data available at http://qldspatial.information.qld.gov.au/catalogue/ .    GEOGCRS[“GDA94”,DATUM[“Geocentric Datum of Australia 1994”,ELLIPSOID[“GRS 1980”,6378137,298.257222101,LENGTHUNIT[“metre”,1]]],PRIMEM[“Greenwich”,0,ANGLEUNIT[“degree”,0.0174532925199433]],CS[ellipsoidal,2],AXIS[“geodetic latitude (Lat)”,north,ORDER[1],ANGLEUNIT[“degree”,0.0174532925199433]],AXIS[“geodetic longitude (Lon)”,east,ORDER[2],ANGLEUNIT[“degree”,0.0174532925199433]],USAGE[SCOPE[“Horizontal component of 3D system.”],AREA[“Australia including Lord Howe Island, Macquarie Island, Ashmore and Cartier Islands, Christmas Island, Cocos (Keeling) Islands, Norfolk Island. All onshore and offshore.”],BBOX[-60.55,93.41,-8.47,173.34]],ID[“EPSG”,4283]] +proj=longlat +ellps=GRS80 +no_defs 3415 4283 EPSG:4283 GDA94 longlat EPSG:7019 true       2018-05-21T14:00:00Z           \n\n\n\n Back to top"
   },
   {
-    "objectID": "Session 3/ICCB_Species_data.html#install-packages",
-    "href": "Session 3/ICCB_Species_data.html#install-packages",
-    "title": "ICCB Species data download",
+    "objectID": "Session 3/session_3_home.html",
+    "href": "Session 3/session_3_home.html",
+    "title": "Session 3",
     "section": "",
-    "text": "Code\n# install.packages(\"galah\")",
+    "text": "Download a PDF of the slides",
     "crumbs": [
-      "Session 3",
-      "ICCB Species data download"
+      "Session 3"
     ]
   },
   {
-    "objectID": "Session 3/ICCB_Species_data.html#import-packages",
-    "href": "Session 3/ICCB_Species_data.html#import-packages",
-    "title": "ICCB Species data download",
-    "section": "Import packages",
-    "text": "Import packages\n\n\nCode\nlibrary(dplyr)\n\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\n\nCode\nlibrary(purrr)\nlibrary(ggplot2)\nlibrary(galah)\n\n\ngalah: version 2.1.1\nℹ Default node set to ALA (ala.org.au).\nℹ See all supported GBIF nodes with `show_all(atlases)`.\nℹ To change nodes, use e.g. `galah_config(atlas = \"GBIF\")`.\n\n\n\nAttaching package: 'galah'\n\n\nThe following object is masked from 'package:dplyr':\n\n    desc\n\n\nThe following object is masked from 'package:stats':\n\n    filter\n\n\nCode\nlibrary(terra)\n\n\nterra 1.8.50\n\n\nCode\nlibrary(sf)\n\n\nLinking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE\n\n\nCode\nlibrary(predicts)\nlibrary(tidyterra)\n\n\n\nAttaching package: 'tidyterra'\n\nThe following object is masked from 'package:stats':\n\n    filter",
+    "objectID": "Session 3/session_3_home.html#slides",
+    "href": "Session 3/session_3_home.html#slides",
+    "title": "Session 3",
+    "section": "",
+    "text": "Download a PDF of the slides",
     "crumbs": [
-      "Session 3",
-      "ICCB Species data download"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Species_data.html#to-cite-the-galah-package",
-    "href": "Session 3/ICCB_Species_data.html#to-cite-the-galah-package",
-    "title": "ICCB Species data download",
-    "section": "To cite the galah package",
-    "text": "To cite the galah package\n\n\nCode\n# Package citation\ncitation(package = \"galah\")\n\n\nTo cite galah in publications use:\n\n  Westgate M, Kellie D, Stevenson M, Newman P (2025). _galah:\n  Biodiversity Data from the GBIF Node Network_. R package version\n  2.1.1, &lt;https://CRAN.R-project.org/package=galah&gt;.\n\nA BibTeX entry for LaTeX users is\n\n  @Manual{,\n    title = {galah: Biodiversity Data from the GBIF Node Network},\n    author = {Martin Westgate and Dax Kellie and Matilda Stevenson and Peggy Newman},\n    year = {2025},\n    note = {R package version 2.1.1},\n    url = {https://CRAN.R-project.org/package=galah},\n  }",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species data download"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Species_data.html#load-south-east-queensland-seq-boundary",
-    "href": "Session 3/ICCB_Species_data.html#load-south-east-queensland-seq-boundary",
-    "title": "ICCB Species data download",
-    "section": "Load South East Queensland (SEQ) boundary",
-    "text": "Load South East Queensland (SEQ) boundary\nWe made this boundary in the ‘ICCB_Environmental_data.qmd’ script. Also load local government area polygons (LGAs) just for plotting.\n\n\nCode\nSEQ_extent.vect &lt;- vect(\"Data/Environmental_variables/SEQ_extent.shp\")\n\n# Define an sf object as well\nSEQ_extent &lt;- st_as_sf(SEQ_extent.vect, \n                        coords = c(\"x\", \"y\"), \n                        crs = 3112)\n                        \n\n\n# Load the study area shapefile\nLGA &lt;- st_read(\"Data/Environmental_variables/Local_Government_Areas.shp\")\n\n\nReading layer `Local_Government_Areas' from data source \n  `/Users/scottforrest/Library/CloudStorage/OneDrive-QueenslandUniversityofTechnology/PhD - Scott Forrest/GIT/ICCB_geospatial_tools_conservation/Session 3/Data/Environmental_variables/Local_Government_Areas.shp' \n  using driver `ESRI Shapefile'\nSimple feature collection with 78 features and 8 fields\nGeometry type: MULTIPOLYGON\nDimension:     XY\nBounding box:  xmin: 137.9946 ymin: -29.17927 xmax: 153.5519 ymax: -9.087991\nGeodetic CRS:  GDA94\n\n\nCode\n# Check the coordinate reference system (CRS)\nst_crs(LGA)\n\n\nCoordinate Reference System:\n  User input: GDA94 \n  wkt:\nGEOGCRS[\"GDA94\",\n    DATUM[\"Geocentric Datum of Australia 1994\",\n        ELLIPSOID[\"GRS 1980\",6378137,298.257222101,\n            LENGTHUNIT[\"metre\",1]]],\n    PRIMEM[\"Greenwich\",0,\n        ANGLEUNIT[\"degree\",0.0174532925199433]],\n    CS[ellipsoidal,2],\n        AXIS[\"geodetic latitude (Lat)\",north,\n            ORDER[1],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        AXIS[\"geodetic longitude (Lon)\",east,\n            ORDER[2],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n    USAGE[\n        SCOPE[\"Horizontal component of 3D system.\"],\n        AREA[\"Australia including Lord Howe Island, Macquarie Island, Ashmore and Cartier Islands, Christmas Island, Cocos (Keeling) Islands, Norfolk Island. All onshore and offshore.\"],\n        BBOX[-60.55,93.41,-8.47,173.34]],\n    ID[\"EPSG\",4283]]\n\n\nCode\n# Convert to WGS84\nLGA &lt;- LGA %&gt;% st_transform(3112)\n\n# Select local govt. areas for South East Queensland\nLGA_SEQ &lt;- LGA %&gt;% \n  filter(lga %in% c(\"Brisbane City\", \n                    \"Moreton Bay City\", \n                    \"Logan City\", \n                    \"Ipswich City\", \n                    \"Redland City\", \n                    \"Scenic Rim Regional\", \n                    \"Somerset Regional\", \n                    \"Lockyer Valley Regional\", \n                    \"Gold Coast City\", \n                    \"Sunshine Coast Regional\", \n                    \"Toowoomba Regional\", \n                    \"Noosa Shire\"))",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species data download"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Species_data.html#atlas-of-living-australia-using-galah-package",
-    "href": "Session 3/ICCB_Species_data.html#atlas-of-living-australia-using-galah-package",
-    "title": "ICCB Species data download",
-    "section": "Atlas of Living Australia using “galah” package",
-    "text": "Atlas of Living Australia using “galah” package\nTo access records from the ALA, you will need to be registered.\nThere are two registration options:\n\nIf you are affiliated with an Australian institution, you should be able to register for ALA through your institution. Find your institution in the list of institutions when you select ‘Login’ on the ALA website. Follow the prompts to enter your institution email and password. If your institution is not listed, you will need to register for an ALA account.\nIf you are not affiliated with an Australian institution, you will need to register for an ALA account. You can do this by selecting ‘Register’ on the ALA website. Follow the prompts to enter your email and password.\n\n\n\nCode\ngalah_config(atlas = \"ALA\",\n             # username = \"scott.forrest@hdr.qut.edu.au\",\n             email = \"scott.forrest@hdr.qut.edu.au\"\n             # password = \"Password\"\n             )",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species data download"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Species_data.html#download-koala-data-from-ala",
-    "href": "Session 3/ICCB_Species_data.html#download-koala-data-from-ala",
-    "title": "ICCB Species data download",
-    "section": "Download koala data from ALA",
-    "text": "Download koala data from ALA\nUsually you would check that the CRS for the occurrences is the same as the shapefile. However, we know that the `galah’ package operates in WGS84.\n\n\nCode\nkoala_occurrences &lt;- galah_call() %&gt;% \n  galah_identify(\"Phascolarctos cinereus\") %&gt;% \n  galah_filter(\n    stateProvince == \"Queensland\",\n    occurrenceStatus == \"PRESENT\"\n  ) %&gt;% \n  atlas_occurrences()\n\n\nRequest for 93456 occurrences placed in queue\nCurrent queue length: 1\n\n\n-----\n\n\nDownloading",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species data download"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Species_data.html#clean-koala-data",
-    "href": "Session 3/ICCB_Species_data.html#clean-koala-data",
-    "title": "ICCB Species data download",
-    "section": "Clean koala data",
-    "text": "Clean koala data\n\n\nCode\n# Create a map using ggplot2\nggplot() +\n  geom_sf(data = LGA, color = \"black\") +\n  geom_point(data = koala_occurrences,\n             aes(x = decimalLongitude,\n                 y = decimalLatitude),\n             color = \"blue\", size = 0.5) + # Add points for occurrences\n  ggtitle(\"Koala occurrences across Queensland\") +             # Add title\n  theme_bw()\n\n\nWarning: Removed 215 rows containing missing values or values outside the scale range\n(`geom_point()`).",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species data download"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Species_data.html#filter-by-seq-region",
-    "href": "Session 3/ICCB_Species_data.html#filter-by-seq-region",
-    "title": "ICCB Species data download",
-    "section": "Filter by SEQ region",
-    "text": "Filter by SEQ region\n\n\nCode\n# Check for missing values in decimalLongitude and decimalLatitude\npaste0(\"Number of NAs in 'longitude' \", sum(is.na(koala_occurrences$decimalLongitude)))\n\n\n[1] \"Number of NAs in 'longitude' 215\"\n\n\nCode\npaste0(\"Number of NAs in 'latitude' \", sum(is.na(koala_occurrences$decimalLatitude)))\n\n\n[1] \"Number of NAs in 'latitude' 215\"\n\n\nCode\nkoala_occ_sf &lt;- koala_occurrences %&gt;% \n  drop_na(decimalLongitude, decimalLatitude) %&gt;% # remove NA values\n  st_as_sf(coords = c(\"decimalLongitude\", \"decimalLatitude\"), \n           crs = 4326) %&gt;%\n  st_transform(3112) %&gt;% # Transform to the same CRS as SEQ_extent\n  st_intersection(SEQ_extent) %&gt;% # Mask to extent\n  distinct() # drop any duplicated records\n\n\nWarning: attribute variables are assumed to be spatially constant throughout\nall geometries",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species data download"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Species_data.html#plot-the-filtered-data",
-    "href": "Session 3/ICCB_Species_data.html#plot-the-filtered-data",
-    "title": "ICCB Species data download",
-    "section": "Plot the filtered data",
-    "text": "Plot the filtered data\n\n\nCode\n# Create a map using ggplot2\nggplot() +\n  geom_sf(data = SEQ_extent.vect, fill = \"purple3\", alpha = 0.5, color = \"black\", size = 0.2) +\n  geom_sf(data = koala_occ_sf,                           # Add koala presence locations\n          aes(geometry = geometry),\n             color = \"blue\", size = 0.5) +               # Add points for occurrences\n  ggtitle(\"Koala occurrences in South East Queensland\") +      # Add title\n  theme_bw()",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species data download"
-    ]
-  },
-  {
-    "objectID": "Session 3/ICCB_Species_data.html#save-koala-presences-and-background-points",
-    "href": "Session 3/ICCB_Species_data.html#save-koala-presences-and-background-points",
-    "title": "ICCB Species data download",
-    "section": "Save koala presences and background points",
-    "text": "Save koala presences and background points\nThis ensures quick upload in the future and that these records can be used among models.\n\n\nCode\nwriteVector(koala_occ.vect, \"Data/Biological_records/SEQ_koala_occurrences.shp\", overwrite = T)\n\nwriteVector(background, \"Data/Biological_records/background_points_2.5k_random.shp\", overwrite = T)",
-    "crumbs": [
-      "Session 3",
-      "ICCB Species data download"
+      "Session 3"
     ]
   },
   {
@@ -626,7 +191,107 @@
     "href": "Session 4/session_4_home.html",
     "title": "Session 4",
     "section": "",
-    "text": "# Load required packages\nlibrary(terra)\nlibrary(viridisLite)\nlibrary(prioritizr)\nlibrary(raster)\nlibrary(sf)",
+    "text": "Code\nif (!require(remotes))\n  install.packages(\"remotes\")\nremotes::install_github(\"dirkschumacher/rcbc\")",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#install-the-rcbc-package-for-the-cbc-optimization-solver",
+    "href": "Session 4/session_4_home.html#install-the-rcbc-package-for-the-cbc-optimization-solver",
+    "title": "Session 4",
+    "section": "",
+    "text": "Code\nif (!require(remotes))\n  install.packages(\"remotes\")\nremotes::install_github(\"dirkschumacher/rcbc\")",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#install-packages",
+    "href": "Session 4/session_4_home.html#install-packages",
+    "title": "Session 4",
+    "section": "Install packages",
+    "text": "Install packages\n\n\nCode\n# Load required packages\nlibrary(terra)\nlibrary(viridisLite)\nlibrary(prioritizr)\nlibrary(raster)\nlibrary(sf)\nlibrary(rcbc)",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#load-spatial-data",
+    "href": "Session 4/session_4_home.html#load-spatial-data",
+    "title": "Session 4",
+    "section": "Load Spatial Data",
+    "text": "Load Spatial Data\n\n\nCode\n# Load the Planning unit\nPU &lt;- terra::rast(\"data/otherdata/PlanningUnits.tif\")\nplot(PU, col = viridisLite::mako(n = 1))\n\n\n\n\n\n\n\n\n\n\n\nCode\n# Get the file names of the testing data\nspp.list &lt;- list.files(path = \"data/SpeciesDistributions/\", full.names = TRUE, recursive = TRUE, pattern = \".tif$\")\n\n\n\nLoad current species distribution\n\n\nCode\nspp &lt;- rast(spp.list[grep(\"current\", spp.list)])\nnew_names &lt;- tools::file_path_sans_ext(basename(spp.list[grep(\"current\", spp.list)]))\nnames(spp) &lt;- new_names\nplot(spp, axes = FALSE, col = viridisLite::mako(n = 100, direction = -1), main = names(spp))\n\n\n\n\n\n\n\n\n\n\n\nLoad future species distribution\n\n\nCode\nspp &lt;- rast(spp.list[grep(\"future\", spp.list)])\nnew_names &lt;- tools::file_path_sans_ext(basename(spp.list[grep(\"future\", spp.list)]))\nnames(spp) &lt;- new_names\nplot(spp, axes = FALSE, col = viridisLite::mako(n = 100, direction = -1), main = names(spp))\n\n\n\n\n\n\n\n\n\n\n\nLoad protected areas, urban centers, and cost layer\n\n\nCode\nPA &lt;- rast(\"data/otherdata/protected_areas.tif\")\nplot(PA, axes = FALSE, col = viridisLite::mako(n = 100, direction = -1), main = \"Protected Areas (I & II)\")\n\n\n\n\n\n\n\n\n\nCode\nurban &lt;- rast(\"data/otherdata/urban_centers.tif\")\nplot(urban, axes = FALSE, col = viridisLite::mako(n = 100, direction = -1), main = \"Urban Centers\")\n\n\n\n\n\n\n\n\n\nCode\nhfp &lt;- rast(\"data/otherdata/cost_hfp2013.tif\")\nplot(hfp, axes = FALSE, col = viridisLite::mako(n = 10, direction = -1), main = \"Global human footprint\")",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#define-budget",
+    "href": "Session 4/session_4_home.html#define-budget",
+    "title": "Session 4",
+    "section": "Define Budget",
+    "text": "Define Budget\n\n\nCode\nbudget.area &lt;- round(0.3 * length(cells(PU)))",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#scenario-1-basic-shortfall-objective",
+    "href": "Session 4/session_4_home.html#scenario-1-basic-shortfall-objective",
+    "title": "Session 4",
+    "section": "Scenario 1: Basic Shortfall Objective",
+    "text": "Scenario 1: Basic Shortfall Objective\n\n\nCode\np &lt;- problem(PU, spp) %&gt;% \n  add_min_shortfall_objective(budget = budget.area) %&gt;%\n  add_relative_targets(targets = 1) %&gt;% \n  add_default_solver() %&gt;%\n  add_proportion_decisions()\n\ns1 &lt;- solve(p)\nplot(s1, main = \"Scenario 1\")",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#scenario-2-lock-out-urban-areas",
+    "href": "Session 4/session_4_home.html#scenario-2-lock-out-urban-areas",
+    "title": "Session 4",
+    "section": "Scenario 2: Lock Out Urban Areas",
+    "text": "Scenario 2: Lock Out Urban Areas\n\n\nCode\np &lt;- problem(PU, spp) %&gt;% \n  add_min_shortfall_objective(budget = budget.area) %&gt;%\n  add_relative_targets(targets = 1) %&gt;%\n  add_proportion_decisions() %&gt;%\n  add_locked_out_constraints(urban) %&gt;%\n  add_default_solver()\n\ns2 &lt;- solve(p)\nplot(s2, main = \"Scenario 2 - lock out\")",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#scenario-3-lock-in-protected-areas",
+    "href": "Session 4/session_4_home.html#scenario-3-lock-in-protected-areas",
+    "title": "Session 4",
+    "section": "Scenario 3: Lock In Protected Areas",
+    "text": "Scenario 3: Lock In Protected Areas\n\n\nCode\np &lt;- problem(PU, spp) %&gt;% \n  add_min_shortfall_objective(budget = budget.area) %&gt;%\n  add_relative_targets(targets = 1) %&gt;%\n  add_proportion_decisions() %&gt;%\n  add_locked_in_constraints(PA) %&gt;%\n  add_locked_out_constraints(urban) %&gt;%\n  add_default_solver()\n\ns3 &lt;- solve(p)\nplot(s3, main = \"Scenario 3 - lock in\")",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#scenario-4-penalize-human-footprint",
+    "href": "Session 4/session_4_home.html#scenario-4-penalize-human-footprint",
+    "title": "Session 4",
+    "section": "Scenario 4: Penalize Human Footprint",
+    "text": "Scenario 4: Penalize Human Footprint\n\n\nCode\np &lt;- problem(PU, spp) %&gt;% \n  add_min_shortfall_objective(budget = budget.area) %&gt;%\n  add_relative_targets(targets = 1) %&gt;%\n  add_linear_penalties(penalty = 1, data = hfp) %&gt;%\n  add_proportion_decisions() %&gt;%\n  add_locked_in_constraints(PA) %&gt;%\n  add_locked_out_constraints(urban) %&gt;%\n  add_default_solver()\n\ns4 &lt;- solve(p)\nplot(s4, main = \"Scenario 4 - apply penalty\")",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#plot-all-scenarios-side-by-side",
+    "href": "Session 4/session_4_home.html#plot-all-scenarios-side-by-side",
+    "title": "Session 4",
+    "section": "Plot All Scenarios Side by Side",
+    "text": "Plot All Scenarios Side by Side\n\n\nCode\npar(mfrow = c(2, 2), mar = c(3, 3, 3, 1))\nplot(s1, main = \"Scenario 1\")\nplot(s2, main = \"Scenario 2 - lock out\")\nplot(s3, main = \"Scenario 3 - lock in\")\nplot(s4, main = \"Scenario 4 - apply penalty\")\n\n\n\n\n\n\n\n\n\nCode\npar(mfrow = c(1, 1))",
+    "crumbs": [
+      "Session 4"
+    ]
+  },
+  {
+    "objectID": "Session 4/session_4_home.html#evaluate-metrics",
+    "href": "Session 4/session_4_home.html#evaluate-metrics",
+    "title": "Session 4",
+    "section": "Evaluate Metrics",
+    "text": "Evaluate Metrics\n\n\nCode\nrpz_target_spp_s1 &lt;- eval_target_coverage_summary(p, s1) \nmean(rpz_target_spp_s1$relative_held)\n\n\n[1] 0.3464172\n\n\nCode\nmean(rpz_target_spp_s1$relative_shortfall)\n\n\n[1] 0.6535828\n\n\nCode\nrpz_target_spp_s2 &lt;- eval_target_coverage_summary(p, s2) \nmean(rpz_target_spp_s2$relative_held)\n\n\n[1] 0.3440511\n\n\nCode\nmean(rpz_target_spp_s2$relative_shortfall)\n\n\n[1] 0.6559489\n\n\nCode\nrpz_target_spp_s3 &lt;- eval_target_coverage_summary(p, s3) \nmean(rpz_target_spp_s3$relative_held)\n\n\n[1] 0.3294218\n\n\nCode\nmean(rpz_target_spp_s3$relative_shortfall)\n\n\n[1] 0.6705782\n\n\nCode\nrpz_target_spp_s4 &lt;- eval_target_coverage_summary(p, s4) \nmean(rpz_target_spp_s4$relative_held)\n\n\n[1] 0.1013999\n\n\nCode\nmean(rpz_target_spp_s4$relative_shortfall)\n\n\n[1] 0.8986001",
     "crumbs": [
       "Session 4"
     ]
@@ -643,7 +308,7 @@
     "href": "Session 3/ICCB_Environmental_data.html",
     "title": "ICCB Environmental data download",
     "section": "",
-    "text": "Code\nlibrary(terra)\n\n\nterra 1.8.50\n\n\nCode\nlibrary(dplyr)\n\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:terra':\n\n    intersect, union\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\n\nCode\nlibrary(sf)\n\n\nLinking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE\n\n\nCode\nlibrary(ggplot2)",
+    "text": "Code\nlibrary(terra)\nlibrary(dplyr)\nlibrary(sf)\nlibrary(ggplot2)",
     "crumbs": [
       "Session 3",
       "ICCB Environmental data download"
@@ -654,7 +319,7 @@
     "href": "Session 3/ICCB_Environmental_data.html#import-packages",
     "title": "ICCB Environmental data download",
     "section": "",
-    "text": "Code\nlibrary(terra)\n\n\nterra 1.8.50\n\n\nCode\nlibrary(dplyr)\n\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:terra':\n\n    intersect, union\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\n\nCode\nlibrary(sf)\n\n\nLinking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE\n\n\nCode\nlibrary(ggplot2)",
+    "text": "Code\nlibrary(terra)\nlibrary(dplyr)\nlibrary(sf)\nlibrary(ggplot2)",
     "crumbs": [
       "Session 3",
       "ICCB Environmental data download"
@@ -665,7 +330,7 @@
     "href": "Session 3/ICCB_Environmental_data.html#load-south-east-queensland-seq-boundary",
     "title": "ICCB Environmental data download",
     "section": "Load South East Queensland (SEQ) boundary",
-    "text": "Load South East Queensland (SEQ) boundary\nWe start by defining our study area, which is the South East Queensland (SEQ) region. We will use the Local Government Areas (LGA) shapefile to define the extent of SEQ.\nhttps://qldspatial.information.qld.gov.au/catalogue/custom/detail.page?fid={3F3DBD69-647B-4833-B0A5-CC43D5E70699}\n\n\nCode\n# Load the study area shapefile\nLGA &lt;- st_read(\"Data/Environmental_variables/Local_Government_Areas.shp\")\n\n\nReading layer `Local_Government_Areas' from data source \n  `/Users/scottforrest/Library/CloudStorage/OneDrive-QueenslandUniversityofTechnology/PhD - Scott Forrest/GIT/ICCB_geospatial_tools_conservation/Session 3/Data/Environmental_variables/Local_Government_Areas.shp' \n  using driver `ESRI Shapefile'\nSimple feature collection with 78 features and 8 fields\nGeometry type: MULTIPOLYGON\nDimension:     XY\nBounding box:  xmin: 137.9946 ymin: -29.17927 xmax: 153.5519 ymax: -9.087991\nGeodetic CRS:  GDA94\n\n\nCode\n# Check the coordinate reference system (CRS)\nst_crs(LGA)\n\n\nCoordinate Reference System:\n  User input: GDA94 \n  wkt:\nGEOGCRS[\"GDA94\",\n    DATUM[\"Geocentric Datum of Australia 1994\",\n        ELLIPSOID[\"GRS 1980\",6378137,298.257222101,\n            LENGTHUNIT[\"metre\",1]]],\n    PRIMEM[\"Greenwich\",0,\n        ANGLEUNIT[\"degree\",0.0174532925199433]],\n    CS[ellipsoidal,2],\n        AXIS[\"geodetic latitude (Lat)\",north,\n            ORDER[1],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        AXIS[\"geodetic longitude (Lon)\",east,\n            ORDER[2],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n    USAGE[\n        SCOPE[\"Horizontal component of 3D system.\"],\n        AREA[\"Australia including Lord Howe Island, Macquarie Island, Ashmore and Cartier Islands, Christmas Island, Cocos (Keeling) Islands, Norfolk Island. All onshore and offshore.\"],\n        BBOX[-60.55,93.41,-8.47,173.34]],\n    ID[\"EPSG\",4283]]\n\n\nCode\n# Convert to WGS84\nLGA &lt;- LGA %&gt;% st_transform(3112)\n\n# Select local govt. areas for South East Queensland\nLGA_SEQ &lt;- LGA %&gt;% \n  filter(lga %in% c(\"Brisbane City\", \n                    \"Moreton Bay City\", \n                    \"Logan City\", \n                    \"Ipswich City\", \n                    \"Redland City\", \n                    \"Scenic Rim Regional\", \n                    \"Somerset Regional\", \n                    \"Lockyer Valley Regional\", \n                    \"Gold Coast City\", \n                    \"Sunshine Coast Regional\", \n                    \"Toowoomba Regional\", \n                    \"Noosa Shire\"))\n\nggplot() +\n  geom_sf(data = LGA, color = \"black\") +\n  geom_sf(data = LGA_SEQ, fill = \"purple3\", alpha = 0.5, color = \"black\", size = 0.2) +\n  theme_minimal() +\n  theme(legend.position = \"none\") +\n  labs(title = \"Local Government Areas Queensland (SEQ in purple)\")\n\n\n\n\n\n\n\n\n\nCode\nggplot() +\n  geom_sf(data = LGA_SEQ, fill = \"purple3\", alpha = 0.5, color = \"black\", size = 0.2) +\n  theme_minimal() +\n  theme(legend.position = \"none\") +\n  labs(title = \"Local Government Areas South East Queensland (SEQ)\")",
+    "text": "Load South East Queensland (SEQ) boundary\nWe start by defining our study area, which is the South East Queensland (SEQ) region. We will use the Local Government Areas (LGA) shapefile to define the extent of SEQ.\nhttps://qldspatial.information.qld.gov.au/catalogue/custom/detail.page?fid={3F3DBD69-647B-4833-B0A5-CC43D5E70699}\n\n\nCode\n# Load the study area shapefile\nLGA &lt;- st_read(\"Data/Environmental_variables/Local_Government_Areas.shp\")\n\n\nReading layer `Local_Government_Areas' from data source \n  `/Users/scottforrest/Library/CloudStorage/OneDrive-QueenslandUniversityofTechnology/PhD - Scott Forrest/GIT/ICCB_geospatial_tools_conservation/Session 3/Data/Environmental_variables/Local_Government_Areas.shp' \n  using driver `ESRI Shapefile'\nSimple feature collection with 78 features and 8 fields\nGeometry type: MULTIPOLYGON\nDimension:     XY\nBounding box:  xmin: 137.9946 ymin: -29.17927 xmax: 153.5519 ymax: -9.087991\nGeodetic CRS:  GDA94\n\n\nCode\n# Check the coordinate reference system (CRS)\nst_crs(LGA)\n\n\nCoordinate Reference System:\n  User input: GDA94 \n  wkt:\nGEOGCRS[\"GDA94\",\n    DATUM[\"Geocentric Datum of Australia 1994\",\n        ELLIPSOID[\"GRS 1980\",6378137,298.257222101,\n            LENGTHUNIT[\"metre\",1]]],\n    PRIMEM[\"Greenwich\",0,\n        ANGLEUNIT[\"degree\",0.0174532925199433]],\n    CS[ellipsoidal,2],\n        AXIS[\"geodetic latitude (Lat)\",north,\n            ORDER[1],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        AXIS[\"geodetic longitude (Lon)\",east,\n            ORDER[2],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n    USAGE[\n        SCOPE[\"Horizontal component of 3D system.\"],\n        AREA[\"Australia including Lord Howe Island, Macquarie Island, Ashmore and Cartier Islands, Christmas Island, Cocos (Keeling) Islands, Norfolk Island. All onshore and offshore.\"],\n        BBOX[-60.55,93.41,-8.47,173.34]],\n    ID[\"EPSG\",4283]]\n\n\nCode\n# Convert to WGS84\nLGA &lt;- LGA %&gt;% st_transform(7856)\n\n# Select local govt. areas for South East Queensland\nLGA_SEQ &lt;- LGA %&gt;% \n  filter(lga %in% c(\"Brisbane City\", \n                    \"Moreton Bay City\", \n                    \"Logan City\", \n                    \"Ipswich City\", \n                    \"Redland City\", \n                    \"Scenic Rim Regional\", \n                    \"Somerset Regional\", \n                    \"Lockyer Valley Regional\", \n                    \"Gold Coast City\", \n                    \"Sunshine Coast Regional\", \n                    \"Toowoomba Regional\", \n                    \"Noosa Shire\"))\n\nggplot() +\n  geom_sf(data = LGA, color = \"black\") +\n  geom_sf(data = LGA_SEQ, fill = \"purple3\", alpha = 0.5, color = \"black\", size = 0.2) +\n  theme_minimal() +\n  theme(legend.position = \"none\") +\n  labs(title = \"Local Government Areas Queensland (SEQ in purple)\")\n\n\n\n\n\n\n\n\n\nCode\nggplot() +\n  geom_sf(data = LGA_SEQ, fill = \"purple3\", alpha = 0.5, color = \"black\", size = 0.2) +\n  theme_minimal() +\n  theme(legend.position = \"none\") +\n  labs(title = \"Local Government Areas South East Queensland (SEQ)\")",
     "crumbs": [
       "Session 3",
       "ICCB Environmental data download"
@@ -687,7 +352,7 @@
     "href": "Session 3/ICCB_Environmental_data.html#save-seq-extent-for-other-scripts",
     "title": "ICCB Environmental data download",
     "section": "Save SEQ extent for other scripts",
-    "text": "Save SEQ extent for other scripts\n\n\nCode\n# Convert our SEQ extent to a SpatExtent object by converting to a SpatVector\nSEQ_extent.vect &lt;- terra::vect(SEQ_extent)\n\nwriteVector(SEQ_extent.vect, \"Data/Environmental_variables/SEQ_extent.shp\", overwrite = T)",
+    "text": "Save SEQ extent for other scripts\n\n\nCode\n# Convert our SEQ extent to a SpatExtent object by converting to a SpatVector\nSEQ_extent.vect &lt;- terra::vect(SEQ_extent)\n\n# Write the SEQ extent to a shapefile\nwriteVector(SEQ_extent.vect, \"Data/Environmental_variables/SEQ_extent.shp\", overwrite = T)",
     "crumbs": [
       "Session 3",
       "ICCB Environmental data download"
@@ -698,18 +363,18 @@
     "href": "Session 3/ICCB_Environmental_data.html#load-current-environmental-data",
     "title": "ICCB Environmental data download",
     "section": "Load current environmental data",
-    "text": "Load current environmental data\nLayers were made available to us by the EcoCommons team and were created by Toombs and Ma (2025):\nToombs, N., and Ma S., 2025, A High-Resolution Dataset of 19 Bioclimatic Indices over Australia, Climate Projections and Services – Queensland Treasury, Brisbane, Queensland. [https://longpaddock.qld.gov.au/qld-future-climate/data-info/tern/]\n\n\nCode\nfiles &lt;- list.files(\"Data/Environmental_variables/Current_climate_QLD\", \n             pattern = \".tif$\", \n             full.names = TRUE)\n\n# Load all bioclim rasters\ncurrent_bioclim &lt;- lapply(files, terra::rast) \n\n# Make into one raster stack\ncurrent_bioclim &lt;- rast(current_bioclim)\n\nplot(current_bioclim)\n\n\n\n\n\n\n\n\n\nCode\n# Examine the resolution\ncurrent_bioclim\n\n\nclass       : SpatRaster \ndimensions  : 681, 841, 19  (nrow, ncol, nlyr)\nresolution  : 0.05, 0.05  (x, y)\nextent      : 111.975, 154.025, -44.025, -9.975  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 (EPSG:4326) \nsources     : bioclim_01.tif  \n              bioclim_02.tif  \n              bioclim_03.tif  \n              ... and 16 more sources\nnames       : bioclim_01, bioclim_02, bioclim_03, bioclim_04, bioclim_05, bioclim_06, ... \n\n\nCode\n# Check the CRS\ncrs(current_bioclim)\n\n\n[1] \"GEOGCRS[\\\"WGS 84\\\",\\n    ENSEMBLE[\\\"World Geodetic System 1984 ensemble\\\",\\n        MEMBER[\\\"World Geodetic System 1984 (Transit)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G730)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G873)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1150)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1674)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1762)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G2139)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G2296)\\\"],\\n        ELLIPSOID[\\\"WGS 84\\\",6378137,298.257223563,\\n            LENGTHUNIT[\\\"metre\\\",1]],\\n        ENSEMBLEACCURACY[2.0]],\\n    PRIMEM[\\\"Greenwich\\\",0,\\n        ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n    CS[ellipsoidal,2],\\n        AXIS[\\\"geodetic latitude (Lat)\\\",north,\\n            ORDER[1],\\n            ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n        AXIS[\\\"geodetic longitude (Lon)\\\",east,\\n            ORDER[2],\\n            ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n    USAGE[\\n        SCOPE[\\\"Horizontal component of 3D system.\\\"],\\n        AREA[\\\"World.\\\"],\\n        BBOX[-90,-180,90,180]],\\n    ID[\\\"EPSG\\\",4326]]\"\n\n\nCode\n# Update CRS \ncurrent_bioclim &lt;- terra::project(current_bioclim, \"EPSG:3112\")\n\n# Our resolution is now ~5km by 5km\ncurrent_bioclim\n\n\nclass       : SpatRaster \ndimensions  : 770, 924, 19  (nrow, ncol, nlyr)\nresolution  : 5123.954, 5123.954  (x, y)\nextent      : -2477612, 2256922, -5117358, -1171913  (xmin, xmax, ymin, ymax)\ncoord. ref. : GDA94 / Geoscience Australia Lambert (EPSG:3112) \nsource(s)   : memory\nnames       : bioclim_01, bioclim_02, bioclim_03, bioclim_04, bioclim_05, bioclim_06, ... \nmin values  :   5.030256,   5.511227,   34.70108,   105.4365,   16.72381,  -4.999238, ... \nmax values  :  29.429586,  16.877110,   61.76879,   680.1939,   42.44056,  23.001247, ...",
+    "text": "Load current environmental data\nLayers were made available to us by the EcoCommons team and were created by Toombs and Ma (2025):\nToombs, N., and Ma S., 2025, A High-Resolution Dataset of 19 Bioclimatic Indices over Australia, Climate Projections and Services – Queensland Treasury, Brisbane, Queensland. [https://longpaddock.qld.gov.au/qld-future-climate/data-info/tern/]\n\n\nCode\nfiles &lt;- list.files(\"Data/Environmental_variables/Current_climate_QLD\", \n             pattern = \".tif$\", \n             full.names = TRUE)\n\n# Load all bioclim rasters\ncurrent_bioclim &lt;- lapply(files, terra::rast) \n\n# Make into one raster stack\ncurrent_bioclim &lt;- rast(current_bioclim)\n\n# Plot the current bioclimatic variables\nplot(current_bioclim)\n\n\n\n\n\n\n\n\n\nCode\n# Examine the resolution\ncurrent_bioclim\n\n\nclass       : SpatRaster \ndimensions  : 681, 841, 19  (nrow, ncol, nlyr)\nresolution  : 0.05, 0.05  (x, y)\nextent      : 111.975, 154.025, -44.025, -9.975  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 (EPSG:4326) \nsources     : bioclim_01.tif  \n              bioclim_02.tif  \n              bioclim_03.tif  \n              ... and 16 more sources\nnames       : bioclim_01, bioclim_02, bioclim_03, bioclim_04, bioclim_05, bioclim_06, ... \n\n\nCode\n# Check the CRS\ncrs(current_bioclim)\n\n\n[1] \"GEOGCRS[\\\"WGS 84\\\",\\n    ENSEMBLE[\\\"World Geodetic System 1984 ensemble\\\",\\n        MEMBER[\\\"World Geodetic System 1984 (Transit)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G730)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G873)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1150)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1674)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1762)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G2139)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G2296)\\\"],\\n        ELLIPSOID[\\\"WGS 84\\\",6378137,298.257223563,\\n            LENGTHUNIT[\\\"metre\\\",1]],\\n        ENSEMBLEACCURACY[2.0]],\\n    PRIMEM[\\\"Greenwich\\\",0,\\n        ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n    CS[ellipsoidal,2],\\n        AXIS[\\\"geodetic latitude (Lat)\\\",north,\\n            ORDER[1],\\n            ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n        AXIS[\\\"geodetic longitude (Lon)\\\",east,\\n            ORDER[2],\\n            ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n    USAGE[\\n        SCOPE[\\\"Horizontal component of 3D system.\\\"],\\n        AREA[\\\"World.\\\"],\\n        BBOX[-90,-180,90,180]],\\n    ID[\\\"EPSG\\\",4326]]\"\n\n\nCode\n# Update CRS to EPSG:7856 (GDA2020 / MGA zone 56)\ncurrent_bioclim &lt;- terra::project(current_bioclim, \"EPSG:7856\")\n\n# Our resolution is now ~5km by 5km\ncurrent_bioclim\n\n\nclass       : SpatRaster \ndimensions  : 834, 898, 19  (nrow, ncol, nlyr)\nresolution  : 5590.925, 5590.925  (x, y)\nextent      : -4407995, 612655.7, 4234346, 8897178  (xmin, xmax, ymin, ymax)\ncoord. ref. : GDA2020 / MGA zone 56 (EPSG:7856) \nsource(s)   : memory\nnames       : bioclim_01, bioclim_02, bioclim_03, bioclim_04, bioclim_05, bioclim_06, ... \nmin values  :   5.182303,   5.520304,   35.25507,   105.7126,   16.82971,  -4.954343, ... \nmax values  :  29.453394,  16.870607,   61.84691,   680.0889,   42.45033,  22.998774, ...",
     "crumbs": [
       "Session 3",
       "ICCB Environmental data download"
     ]
   },
   {
-    "objectID": "Session 3/ICCB_Environmental_data.html#mask-to-seq-extent",
-    "href": "Session 3/ICCB_Environmental_data.html#mask-to-seq-extent",
+    "objectID": "Session 3/ICCB_Environmental_data.html#mask-and-crop-to-seq-extent",
+    "href": "Session 3/ICCB_Environmental_data.html#mask-and-crop-to-seq-extent",
     "title": "ICCB Environmental data download",
-    "section": "Mask to SEQ extent",
-    "text": "Mask to SEQ extent\n\n\nCode\ncurrent_bioclim &lt;- terra::mask(current_bioclim, SEQ_extent.vect)\n\n# You can see that this has masked the area but the extent is still the same\nplot(current_bioclim[[1]])\n\n\n\n\n\n\n\n\n\nCode\ncurrent_bioclim &lt;- terra::crop(current_bioclim, SEQ_extent.vect)\n\nplot(current_bioclim)\n\n\n\n\n\n\n\n\n\nCode\n# Save the current environmental covariates\nwriteRaster(current_bioclim, \n            filename = \"Data/Environmental_variables/current_bioclim.tif\",\n            overwrite = T)",
+    "section": "Mask and crop to SEQ extent",
+    "text": "Mask and crop to SEQ extent\n\n\nCode\n# Mask the current bioclimatic variables to the SEQ extent\ncurrent_bioclim &lt;- terra::mask(current_bioclim, SEQ_extent.vect)\n\n# Crop to the SEQ region\ncurrent_bioclim &lt;- terra::crop(current_bioclim, SEQ_extent.vect)\n\n# Plot all current bioclimatic variables\nplot(current_bioclim)\n\n\n\n\n\n\n\n\n\nCode\n# Save the current environmental covariates\nwriteRaster(current_bioclim,\n            filename = \"Data/Environmental_variables/SEQ_current_bioclim.tif\",\n            overwrite = T)",
     "crumbs": [
       "Session 3",
       "ICCB Environmental data download"
@@ -720,18 +385,18 @@
     "href": "Session 3/ICCB_Environmental_data.html#load-future-environmental-data",
     "title": "ICCB Environmental data download",
     "section": "Load future environmental data",
-    "text": "Load future environmental data\nHere we load outputs from a moderate-high emissions shared socio-economic path scenario (SSP 3.70) for the year 2090 (2080 - 2099).\n\n\nCode\nfiles &lt;- list.files(\"Data/Environmental_variables/Future_climate_SSP370_2090\", \n             pattern = \".tif$\", \n             full.names = TRUE)\n\n# Load all bioclim rasters\nfuture_bioclim &lt;- lapply(files, terra::rast) \n\n# Make into one raster stack\nfuture_bioclim &lt;- rast(future_bioclim)\n\nplot(future_bioclim)\n\n\n\n\n\n\n\n\n\nCode\n# Examine the resolution\nfuture_bioclim\n\n\nclass       : SpatRaster \ndimensions  : 681, 841, 19  (nrow, ncol, nlyr)\nresolution  : 0.05, 0.05  (x, y)\nextent      : 111.975, 154.025, -44.025, -9.975  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 (EPSG:4326) \nsources     : bioclim_01.tif  \n              bioclim_02.tif  \n              bioclim_03.tif  \n              ... and 16 more sources\nnames       : bioclim_01, bioclim_02, bioclim_03, bioclim_04, bioclim_05, bioclim_06, ... \n\n\nCode\n# Check the CRS\ncrs(future_bioclim)\n\n\n[1] \"GEOGCRS[\\\"WGS 84\\\",\\n    ENSEMBLE[\\\"World Geodetic System 1984 ensemble\\\",\\n        MEMBER[\\\"World Geodetic System 1984 (Transit)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G730)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G873)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1150)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1674)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1762)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G2139)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G2296)\\\"],\\n        ELLIPSOID[\\\"WGS 84\\\",6378137,298.257223563,\\n            LENGTHUNIT[\\\"metre\\\",1]],\\n        ENSEMBLEACCURACY[2.0]],\\n    PRIMEM[\\\"Greenwich\\\",0,\\n        ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n    CS[ellipsoidal,2],\\n        AXIS[\\\"geodetic latitude (Lat)\\\",north,\\n            ORDER[1],\\n            ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n        AXIS[\\\"geodetic longitude (Lon)\\\",east,\\n            ORDER[2],\\n            ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n    USAGE[\\n        SCOPE[\\\"Horizontal component of 3D system.\\\"],\\n        AREA[\\\"World.\\\"],\\n        BBOX[-90,-180,90,180]],\\n    ID[\\\"EPSG\\\",4326]]\"\n\n\nCode\n# Update CRS \nfuture_bioclim &lt;- terra::project(future_bioclim, \"EPSG:3112\")\n\n# Our resolution is now ~5km by 5km\nfuture_bioclim\n\n\nclass       : SpatRaster \ndimensions  : 770, 924, 19  (nrow, ncol, nlyr)\nresolution  : 5123.954, 5123.954  (x, y)\nextent      : -2477612, 2256922, -5117358, -1171913  (xmin, xmax, ymin, ymax)\ncoord. ref. : GDA94 / Geoscience Australia Lambert (EPSG:3112) \nsource(s)   : memory\nnames       : bioclim_01, bioclim_02, bioclim_03, bioclim_04, bioclim_05, bioclim_06, ... \nmin values  :    0.00000,     0.0000,    0.00000,     0.0000,    0.00000,  -2.320518, ... \nmax values  :   32.99174,    16.1037,   66.06882,   706.0898,   46.24387,  25.877970, ...",
+    "text": "Load future environmental data\nHere we load outputs from a moderate-high emissions shared socio-economic path scenario (SSP 3.70) for the year 2090 (2080 - 2099).\n\n\nCode\nfiles &lt;- list.files(\"Data/Environmental_variables/Future_climate_SSP370_2090\", \n             pattern = \".tif$\", \n             full.names = TRUE)\n\n# Load all bioclim rasters\nfuture_bioclim &lt;- lapply(files, terra::rast) \n\n# Make into one raster stack\nfuture_bioclim &lt;- rast(future_bioclim)\n\n# Plot the future bioclimatic variables\nplot(future_bioclim)\n\n\n\n\n\n\n\n\n\nCode\n# Examine the resolution\nfuture_bioclim\n\n\nclass       : SpatRaster \ndimensions  : 681, 841, 19  (nrow, ncol, nlyr)\nresolution  : 0.05, 0.05  (x, y)\nextent      : 111.975, 154.025, -44.025, -9.975  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 (EPSG:4326) \nsources     : bioclim_01.tif  \n              bioclim_02.tif  \n              bioclim_03.tif  \n              ... and 16 more sources\nnames       : bioclim_01, bioclim_02, bioclim_03, bioclim_04, bioclim_05, bioclim_06, ... \n\n\nCode\n# Check the CRS\ncrs(future_bioclim)\n\n\n[1] \"GEOGCRS[\\\"WGS 84\\\",\\n    ENSEMBLE[\\\"World Geodetic System 1984 ensemble\\\",\\n        MEMBER[\\\"World Geodetic System 1984 (Transit)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G730)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G873)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1150)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1674)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1762)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G2139)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G2296)\\\"],\\n        ELLIPSOID[\\\"WGS 84\\\",6378137,298.257223563,\\n            LENGTHUNIT[\\\"metre\\\",1]],\\n        ENSEMBLEACCURACY[2.0]],\\n    PRIMEM[\\\"Greenwich\\\",0,\\n        ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n    CS[ellipsoidal,2],\\n        AXIS[\\\"geodetic latitude (Lat)\\\",north,\\n            ORDER[1],\\n            ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n        AXIS[\\\"geodetic longitude (Lon)\\\",east,\\n            ORDER[2],\\n            ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n    USAGE[\\n        SCOPE[\\\"Horizontal component of 3D system.\\\"],\\n        AREA[\\\"World.\\\"],\\n        BBOX[-90,-180,90,180]],\\n    ID[\\\"EPSG\\\",4326]]\"\n\n\nCode\n# Update CRS \nfuture_bioclim &lt;- terra::project(future_bioclim, \"EPSG:7856\")\n\n# Our resolution is now ~5km by 5km\nfuture_bioclim\n\n\nclass       : SpatRaster \ndimensions  : 834, 898, 19  (nrow, ncol, nlyr)\nresolution  : 5590.925, 5590.925  (x, y)\nextent      : -4407995, 612655.7, 4234346, 8897178  (xmin, xmax, ymin, ymax)\ncoord. ref. : GDA2020 / MGA zone 56 (EPSG:7856) \nsource(s)   : memory\nnames       : bioclim_01, bioclim_02, bioclim_03, bioclim_04, bioclim_05, bioclim_06, ... \nmin values  :    0.00000,    0.00000,     0.0000,     0.0000,    0.00000,  -2.243844, ... \nmax values  :   33.02249,   16.09955,    66.1461,   706.1523,   46.24717,  25.827158, ...",
     "crumbs": [
       "Session 3",
       "ICCB Environmental data download"
     ]
   },
   {
-    "objectID": "Session 3/ICCB_Environmental_data.html#mask-to-seq-extent-1",
-    "href": "Session 3/ICCB_Environmental_data.html#mask-to-seq-extent-1",
+    "objectID": "Session 3/ICCB_Environmental_data.html#mask-to-seq-extent",
+    "href": "Session 3/ICCB_Environmental_data.html#mask-to-seq-extent",
     "title": "ICCB Environmental data download",
     "section": "Mask to SEQ extent",
-    "text": "Mask to SEQ extent\n\n\nCode\nfuture_bioclim &lt;- terra::subst(from = 0, to = NA, future_bioclim) # Set all values of 0 to NA\n\nfuture_bioclim &lt;- terra::mask(future_bioclim, SEQ_extent.vect)\n\n# You can see that this has masked the area but the extent is still the same\nplot(future_bioclim[[1]])\n\n\n\n\n\n\n\n\n\nCode\nfuture_bioclim &lt;- terra::crop(future_bioclim, SEQ_extent.vect)\n\nplot(future_bioclim[[1]])\n\n\n\n\n\n\n\n\n\nCode\n# Save the future environmental covariates\nwriteRaster(future_bioclim, \n            filename = \"Data/Environmental_variables/future_bioclim.2090.SSP370.tif\",\n            overwrite = T)",
+    "text": "Mask to SEQ extent\nWe can see that for these layers the water surrounding Australia is not NA, but are values of 0. In some cells this introduces an artifact on the coastline where the values in some cells are an average between realistic values and 0, which results in cells with unusual and unrealistic values. We will do our best to mask these out.\n\n\nCode\n# First mask and crop by the SEQ extent\nfuture_bioclim &lt;- terra::mask(future_bioclim, SEQ_extent.vect) \nfuture_bioclim &lt;- terra::crop(future_bioclim, SEQ_extent.vect)\n\n# Plot one of the variables - max temp of the warmest month\nplot(future_bioclim[[5]], main = \"Future BIO5\")\n\n\n\n\n\n\n\n\n\nWe can clearly see the artifacts in BIO5, which are not present in the current layers.\n\n\nCode\nplot(current_bioclim[[5]], main = \"Current BIO5\")\n\n\n\n\n\n\n\n\n\nIf we plot a histogram of the values we can see where we can set a threshold to exclude those lower values on the coastline. We tested values to ensure that we were removing as many of the dodgy values at the coast whilst retaining all real values, and the best balance was 28 degrees.\nUnfortunately now we have slightly fewer cells on the coastline, but as these were artifacts we don’t have the true data for those cells anyway.\n\n\nCode\n# plot the distribution of values in BIO5\nhist(future_bioclim[[5]], breaks = 100)\n\n\n\n\n\n\n\n\n\nCode\n# create a mask for the artifacts, which we will apply across all of the layers\nartifact_mask &lt;- future_bioclim[[5]] &gt; 28\nnames(artifact_mask) &lt;- \"artifact_mask\"\n\n# plot the artifact mask\nplot(artifact_mask)\n\n\n\n\n\n\n\n\n\nCode\n# plot the updated future BIO5 layer\nplot(future_bioclim[[5]], main = \"Future BIO5 - unmasked\")\n\n\n\n\n\n\n\n\n\nCode\n# set all artifact values to NA (across all layers)\nfuture_bioclim &lt;- terra::mask(future_bioclim, artifact_mask, maskvalues = 0) # Set all values of 0 to NA\n\n# plot the updated future BIO5 layer\nplot(future_bioclim[[5]], main = \"Future BIO5 - masked\")\n\n\n\n\n\n\n\n\n\nCode\nplot(current_bioclim[[5]], main = \"Current BIO5\")\n\n\n\n\n\n\n\n\n\nCode\n# this removes those lower values\nhist(future_bioclim[[5]], breaks = 100)\n\n\n\n\n\n\n\n\n\nNow that we have applied the artifact mask across all layers, they look better.\n\n\nCode\nplot(future_bioclim)\n\n\n\n\n\n\n\n\n\nNow we can save the future environmental covariates for SEQ.\n\n\nCode\n# Save the cropped and masked future environmental covariates\nwriteRaster(future_bioclim,\n            filename = \"Data/Environmental_variables/SEQ_future_bioclim.2090.SSP370.tif\",\n            overwrite = T)",
     "crumbs": [
       "Session 3",
       "ICCB Environmental data download"
@@ -742,41 +407,340 @@
     "href": "Session 3/ICCB_Environmental_data.html#load-future-environmental-data-2",
     "title": "ICCB Environmental data download",
     "section": "Load future environmental data 2",
-    "text": "Load future environmental data 2\nHere we load outputs from a low emissions shared socio-economic path scenario (SSP 1.26) for the year 2090 (2080 - 2099).\n\n\nCode\nfiles &lt;- list.files(\"Data/Environmental_variables/Future_climate_SSP126_2090\", \n             pattern = \".tif$\", \n             full.names = TRUE)\n\n# Load all bioclim rasters\nfuture_bioclim &lt;- lapply(files, terra::rast) \n\n# Make into one raster stack\nfuture_bioclim &lt;- rast(future_bioclim)\n\nplot(future_bioclim)\n\n\n\n\n\n\n\n\n\nCode\n# Examine the resolution\nfuture_bioclim\n\n\nclass       : SpatRaster \ndimensions  : 681, 841, 19  (nrow, ncol, nlyr)\nresolution  : 0.05, 0.05  (x, y)\nextent      : 111.975, 154.025, -44.025, -9.975  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 (EPSG:4326) \nsources     : bioclim_01.tif  \n              bioclim_02.tif  \n              bioclim_03.tif  \n              ... and 16 more sources\nnames       : bioclim_01, bioclim_02, bioclim_03, bioclim_04, bioclim_05, bioclim_06, ... \nmin values  :    0.00000,    0.00000,     0.0000,         ? ,         ? ,         ? , ... \nmax values  :   30.47033,   16.75114,    63.2751,         ? ,         ? ,         ? , ... \n\n\nCode\n# Check the CRS\ncrs(future_bioclim)\n\n\n[1] \"GEOGCRS[\\\"WGS 84\\\",\\n    ENSEMBLE[\\\"World Geodetic System 1984 ensemble\\\",\\n        MEMBER[\\\"World Geodetic System 1984 (Transit)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G730)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G873)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1150)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1674)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1762)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G2139)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G2296)\\\"],\\n        ELLIPSOID[\\\"WGS 84\\\",6378137,298.257223563,\\n            LENGTHUNIT[\\\"metre\\\",1]],\\n        ENSEMBLEACCURACY[2.0]],\\n    PRIMEM[\\\"Greenwich\\\",0,\\n        ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n    CS[ellipsoidal,2],\\n        AXIS[\\\"geodetic latitude (Lat)\\\",north,\\n            ORDER[1],\\n            ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n        AXIS[\\\"geodetic longitude (Lon)\\\",east,\\n            ORDER[2],\\n            ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n    USAGE[\\n        SCOPE[\\\"Horizontal component of 3D system.\\\"],\\n        AREA[\\\"World.\\\"],\\n        BBOX[-90,-180,90,180]],\\n    ID[\\\"EPSG\\\",4326]]\"\n\n\nCode\n# Update CRS \nfuture_bioclim &lt;- terra::project(future_bioclim, \"EPSG:3112\")\n\n# Our resolution is now ~5km by 5km\nfuture_bioclim\n\n\nclass       : SpatRaster \ndimensions  : 770, 924, 19  (nrow, ncol, nlyr)\nresolution  : 5123.954, 5123.954  (x, y)\nextent      : -2477612, 2256922, -5117358, -1171913  (xmin, xmax, ymin, ymax)\ncoord. ref. : GDA94 / Geoscience Australia Lambert (EPSG:3112) \nsource(s)   : memory\nnames       : bioclim_01, bioclim_02, bioclim_03, bioclim_04, bioclim_05, bioclim_06, ... \nmin values  :    0.00000,    0.00000,    0.00000,     0.0000,    0.00000,  -4.138016, ... \nmax values  :   30.75635,   16.89703,   63.40196,   687.5078,   43.83433,  24.002493, ...",
+    "text": "Load future environmental data 2\nHere we load outputs from a low emissions shared socio-economic path scenario (SSP 1.26) for the year 2090 (2080 - 2099).\n\n\nCode\nfiles &lt;- list.files(\"Data/Environmental_variables/Future_climate_SSP126_2090\", \n             pattern = \".tif$\", \n             full.names = TRUE)\n\n# Load all bioclim rasters\nfuture_bioclim &lt;- lapply(files, terra::rast) \n\n# Make into one raster stack\nfuture_bioclim &lt;- rast(future_bioclim)\n\nplot(future_bioclim)\n\n\n\n\n\n\n\n\n\nCode\n# Examine the resolution\nfuture_bioclim\n\n\nclass       : SpatRaster \ndimensions  : 681, 841, 19  (nrow, ncol, nlyr)\nresolution  : 0.05, 0.05  (x, y)\nextent      : 111.975, 154.025, -44.025, -9.975  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 (EPSG:4326) \nsources     : bioclim_01.tif  \n              bioclim_02.tif  \n              bioclim_03.tif  \n              ... and 16 more sources\nnames       : bioclim_01, bioclim_02, bioclim_03, bioclim_04, bioclim_05, bioclim_06, ... \nmin values  :    0.00000,    0.00000,     0.0000,         ? ,         ? ,         ? , ... \nmax values  :   30.47033,   16.75114,    63.2751,         ? ,         ? ,         ? , ... \n\n\nCode\n# Check the CRS\ncrs(future_bioclim)\n\n\n[1] \"GEOGCRS[\\\"WGS 84\\\",\\n    ENSEMBLE[\\\"World Geodetic System 1984 ensemble\\\",\\n        MEMBER[\\\"World Geodetic System 1984 (Transit)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G730)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G873)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1150)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1674)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G1762)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G2139)\\\"],\\n        MEMBER[\\\"World Geodetic System 1984 (G2296)\\\"],\\n        ELLIPSOID[\\\"WGS 84\\\",6378137,298.257223563,\\n            LENGTHUNIT[\\\"metre\\\",1]],\\n        ENSEMBLEACCURACY[2.0]],\\n    PRIMEM[\\\"Greenwich\\\",0,\\n        ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n    CS[ellipsoidal,2],\\n        AXIS[\\\"geodetic latitude (Lat)\\\",north,\\n            ORDER[1],\\n            ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n        AXIS[\\\"geodetic longitude (Lon)\\\",east,\\n            ORDER[2],\\n            ANGLEUNIT[\\\"degree\\\",0.0174532925199433]],\\n    USAGE[\\n        SCOPE[\\\"Horizontal component of 3D system.\\\"],\\n        AREA[\\\"World.\\\"],\\n        BBOX[-90,-180,90,180]],\\n    ID[\\\"EPSG\\\",4326]]\"\n\n\nCode\n# Update CRS \nfuture_bioclim &lt;- terra::project(future_bioclim, \"EPSG:7856\")\n\n# Our resolution is now ~5km by 5km\nfuture_bioclim\n\n\nclass       : SpatRaster \ndimensions  : 834, 898, 19  (nrow, ncol, nlyr)\nresolution  : 5590.925, 5590.925  (x, y)\nextent      : -4407995, 612655.7, 4234346, 8897178  (xmin, xmax, ymin, ymax)\ncoord. ref. : GDA2020 / MGA zone 56 (EPSG:7856) \nsource(s)   : memory\nnames       : bioclim_01, bioclim_02, bioclim_03, bioclim_04, bioclim_05, bioclim_06, ... \nmin values  :    0.00000,    0.00000,    0.00000,     0.0000,    0.00000,  -4.081378, ... \nmax values  :   30.78085,   16.89395,   63.34254,   687.5474,   43.83962,  23.968334, ...",
     "crumbs": [
       "Session 3",
       "ICCB Environmental data download"
     ]
   },
   {
-    "objectID": "Session 3/ICCB_Environmental_data.html#mask-to-seq-extent-2",
-    "href": "Session 3/ICCB_Environmental_data.html#mask-to-seq-extent-2",
+    "objectID": "Session 3/ICCB_Environmental_data.html#mask-to-seq-extent-1",
+    "href": "Session 3/ICCB_Environmental_data.html#mask-to-seq-extent-1",
     "title": "ICCB Environmental data download",
     "section": "Mask to SEQ extent",
-    "text": "Mask to SEQ extent\n\n\nCode\nfuture_bioclim &lt;- terra::subst(from = 0, to = NA, future_bioclim) # Set all values of 0 to NA\n\nfuture_bioclim &lt;- terra::mask(future_bioclim, SEQ_extent.vect)\n\n# You can see that this has masked the area but the extent is still the same\nplot(future_bioclim[[1]])\n\n\n\n\n\n\n\n\n\nCode\nfuture_bioclim &lt;- terra::crop(future_bioclim, SEQ_extent.vect)\n\nplot(future_bioclim)\n\n\n\n\n\n\n\n\n\nCode\n# Save the future environmental covariates\nwriteRaster(future_bioclim, \n            filename = \"Data/Environmental_variables/future_bioclim.2090.SSP126.tif\",\n            overwrite = T)",
+    "text": "Mask to SEQ extent\nWe will crop and mask the future bioclimatic variables to the SEQ extent, and apply the artifact mask as we did for the SSP 3.70 layers.\n\n\nCode\n# First mask and crop by the SEQ extent\nfuture_bioclim &lt;- terra::mask(future_bioclim, SEQ_extent.vect) \nfuture_bioclim &lt;- terra::crop(future_bioclim, SEQ_extent.vect)\n\n# set all artifact values to NA\nfuture_bioclim &lt;- terra::mask(future_bioclim, artifact_mask, maskvalues = 0) # Set all values of 0 to NA\nplot(future_bioclim[[5]])\n\n\n\n\n\n\n\n\n\nCode\nplot(future_bioclim)\n\n\n\n\n\n\n\n\n\nCode\n# Save the future environmental covariates\nwriteRaster(future_bioclim,\n            filename = \"Data/Environmental_variables/SEQ_future_bioclim.2090.SSP126.tif\",\n            overwrite = T)",
     "crumbs": [
       "Session 3",
       "ICCB Environmental data download"
     ]
   },
   {
-    "objectID": "Session 3/session_3_home.html",
-    "href": "Session 3/session_3_home.html",
-    "title": "Session 3",
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html",
+    "href": "Session 3/ICCB_Modelling_and_validation.html",
+    "title": "ICCB Species distribution modelling",
     "section": "",
-    "text": "Landing page for Session 3.",
+    "text": "Up to date references can be downloaded from: https://paperpile.com/eb/EnPQSBmTeb\nWe wrote this script drawing on some of the following resources:",
     "crumbs": [
-      "Session 3"
+      "Session 3",
+      "ICCB Species distribution modelling"
     ]
   },
   {
-    "objectID": "Session 3/session_3_home.html#slides",
-    "href": "Session 3/session_3_home.html#slides",
-    "title": "Session 3",
-    "section": "Slides",
-    "text": "Slides\nDownload a PDF of the slides",
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#import-packages",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#import-packages",
+    "title": "ICCB Species distribution modelling",
+    "section": "Import packages",
+    "text": "Import packages\n\n\nCode\n# general R functions\nlibrary(tidyverse)\nlibrary(RColorBrewer)\n\n# for downloading species data\nlibrary(galah)\n\n# for general spatial operations\nlibrary(terra)\nlibrary(sf)\nlibrary(tidyterra)\n\n# for SDM analyses\nlibrary(predicts)\nlibrary(blockCV)\nlibrary(ecospat)\nlibrary(usdm)\nlibrary(precrec)\nlibrary(corrplot)",
     "crumbs": [
-      "Session 3"
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#load-south-east-queensland-seq-boundary",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#load-south-east-queensland-seq-boundary",
+    "title": "ICCB Species distribution modelling",
+    "section": "Load South East Queensland (SEQ) boundary",
+    "text": "Load South East Queensland (SEQ) boundary\nWe start by defining our study area, which is the South East Queensland (SEQ) region. In a previous session we used the Local Government Areas (LGA) shapefile to define the extent of SEQ.\nWhat we’ll load is a polygon of our boundary which becomes our model domain.\nFor our coordinate reference system throughout, we’ll be using GDA2020 / MGA zone 56, which is identified by the EPSG code 7856.\n\n\nCode\nSEQ_extent.vect &lt;- vect(\"Data/Environmental_variables/seq_boundary.gpkg\")\n\n# Define an sf object as well (used later)\nSEQ_extent &lt;- st_as_sf(SEQ_extent.vect, \n                        coords = c(\"x\", \"y\"), \n                        crs = 7856)\n\nplot(SEQ_extent.vect)",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#random-background-sampling",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#random-background-sampling",
+    "title": "ICCB Species distribution modelling",
+    "section": "Random background sampling",
+    "text": "Random background sampling\nWe need to load a template grid for creating background points. This matches the grid our covariates are on, which we’ll load soon.\nWe’re using a function from the predicts package for this.\n\n\nCode\ndomain &lt;- rast(\"Data/Environmental_variables/SEQ_current_bioclim.tif\")\n\n# Make a blank raster of all 1s of the same dimensions as our covariate grid\ndomain &lt;- domain[[1]]\ndomain &lt;- ifel(is.na(domain), NA, 1) # Set all values to 1 except for NA values (which are outside the SEQ extent\n\nnames(domain) &lt;- \"SEQ_extent\"\n\nplot(domain, main = \"SEQ extent for background sampling\")\n\n\n\n\n\n\n\n\n\nCode\n# Set the location and number of background points\n# The mask means that any NA (not SEQ) locations do not include background points\nbackground &lt;- predicts::backgroundSample(mask = domain, \n                                         n = 2500)\n\n# Convert to terra SpatVector object\nbackground &lt;- terra::vect(background[,1:2], crs = \"EPSG:7856\")\n\n# Convert background points (SpatVector) to data frame\nbackground_df &lt;- as.data.frame(geom(background))\n\nkoala_occ.vect &lt;- vect(koala_occ_sf)\n\n# Plot the presences (blue) and the background points (grey)\nggplot() +\n  geom_sf(data = SEQ_extent, fill = \"purple3\", alpha = 0.5, color = \"black\", size = 0.2) +\n  geom_spatvector(data = background,                           # Add koala presence locations\n             color = \"gray\", cex = 0.5) +               # Add points for occurrences\n  geom_spatvector(data = koala_occ.vect, \n                  aes(geometry = geometry), \n                  color = \"blue\", cex = 0.5) + # Add background points\n  ggtitle(\"Koala occurrences (blue) and background points (grey) in South East Queensland\") +      # Add title\n  theme_bw()\n\n\n\n\n\n\n\n\n\n\nCombine koala presence and background points as dataframes\n\n\nCode\n# Make a dataframe of just x, y and presence\nkoala_occ_df &lt;- koala_occ_sf %&gt;%\n  dplyr::mutate(x = sf::st_coordinates(.)[,1],\n                y = sf::st_coordinates(.)[,2]) %&gt;%\n                st_drop_geometry() %&gt;% \n  dplyr::select(x,y) %&gt;% \n  mutate(Presence = 1)\n  \nhead(koala_occ_df)\n\n\n\n  \n\n\n\nCode\nbackground_df &lt;- background %&gt;% \n  as.data.frame(geom = \"XY\") %&gt;% \n  dplyr::select(x,y) %&gt;% \n  mutate(Presence = 0)\n\nhead(background_df)\n\n\n\n  \n\n\n\nCode\n# Combine to one dataframe\npr_bg &lt;- rbind(koala_occ_df, background_df)",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#covariate-to-account-for-sampling-bias",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#covariate-to-account-for-sampling-bias",
+    "title": "ICCB Species distribution modelling",
+    "section": "Covariate to account for sampling bias",
+    "text": "Covariate to account for sampling bias\n\nCHARLOTTE PLEASE CHECK PARAGRAPH, and add any relevant refs\nAs these data were collected from a wide number of sources, we have to consider whether any of the data, such as that which was opportunistically collected (Kéry et al. 2010), might be biased towards areas of higher human activity. This is a common issue in species occurrence data and is typpically called smapling bias or preferential sampling, and occurs because areas that are more accessible or have higher human activity are more likely to be opportunistically sampled (Conn, Thorson, and Johnson 2017).\nThis means that if there are environmental variables that happen correlated with human activity (which is often the case, humans also select for environmental features), it will appear that these variables are more influential than they actually are, because we associating that environmental covariate with ‘more’ presence records.\nThere are several different ways to account for this when modelling (Pennino et al. 2019; Mäkinen, Merow, and Jetz 2024; Dubos et al. 2022). Some of the common approaches include:\n\nSampling pseudo-absences where there are more points where there is higher sampling effort\nUsing a covariate to attempt to capture the sampling bias, such as human population density or distance to roads\nUsing a model or model structure that explicitly accounts for sampling bias, such as including a spatial random effect\n\nIn our case, we have will use a covariate for the Global Human Footprint Index (HFP) , which is a measure of human impact on the environment. This is a raster layer with continuous (percentage values) that we will use to account for sampling bias in our model.\nYou will be able to see Brisbane as the largest area of human footprint, Moreton Bay to the right, the Gold Coast to the south, the Sunshine Coast to the north, and Toowoomba to the west (about 2 hours drive).\n\n\nCode\nhuman_footprint &lt;- rast(\"Data/Environmental_variables/cost_hfp2013.tif\")\nnames(human_footprint) &lt;- \"human_footprint\"\n\n# Update CRS to EPSG:7856 (GDA2020 / MGA zone 56)\nhuman_footprint &lt;- terra::project(human_footprint, \"EPSG:7856\")\n\n# Resample to match the extent and resolution of the covariates\nhuman_footprint &lt;- resample(human_footprint, covs_current_expert, method = \"bilinear\")\n\n# Mask to SEQ extent\nhuman_footprint &lt;- terra::mask(human_footprint, covs_current_expert[[1]]) \n\nplot(human_footprint, main = \"Human Footprint Index\")\n\n\n\n\n\n\n\n\n\nAlthough this isn’t a thorough comparison, we can see that this variable is correlated with the presence of koalas.\n\n\nCode\nplot(human_footprint, main = \"Human Footprint Index\")\npoints(koala_occ_sf, col = \"red\", alpha = 0.1, pch = 20, cex = 0.5)\n\n\n\n\n\n\n\n\n\nYou would want to put some more thought into your own study and the best way to account for sampling bias, but in our case we will try using the human footprint index as a covariate in our model, and assess how our predictions change.\n\n\nAdd the human footprint layer to our covariates\n\n\nCode\ncovs_current_expert_HF &lt;- c(covs_current_expert, human_footprint)\nplot(covs_current_expert_HF)\n\n\n\n\n\n\n\n\n\n\n\nExtract environmental covariate values from presence and background locations (training locations)\nThis will create a dataframe where each row is a koala presence or background location and each column is a value for our four bioclimatic variables at that location.\nWe use a function from terra for this.\n\n\nCode\n# this will give us the covariate values for each presence and background point\nPB_covs &lt;- terra::extract(\n  x = covs_current_expert_HF,   # Raster with environmental variables\n  y = pr_bg[, c(\"x\", \"y\")],  # Dataframe with x, y and presence\n  ID = FALSE                 # Don't return an ID column for each location\n)\n\ntrain_PB_covs &lt;- cbind(pr_bg, PB_covs) # Combine the presence column with the covariate values\n\n# drop any NAs\ntrain_PB_covs &lt;- train_PB_covs %&gt;% drop_na()\n\nhead(train_PB_covs)",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#thin-the-koala-presence-points-for-tutorial-only",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#thin-the-koala-presence-points-for-tutorial-only",
+    "title": "ICCB Species distribution modelling",
+    "section": "Thin the koala presence points (for tutorial only)",
+    "text": "Thin the koala presence points (for tutorial only)\nWe now thin the presences to reduce the number of points to a manageable size for plotting and modelling. This is just for the purpose of this tutorial, and is done here to make the tutorial run faster and to make the plots clearer. There are some reasons you would want to thin (such as bias correction), but you would want to carefully consider whether this is appropriate for your modelling.\nWe only thin the presence points as the background points are already limited by the number of cells in the SEQ region.\n\n\nCode\ntrain_PB_covs_pres &lt;- train_PB_covs %&gt;% filter(Presence == 1)\ntrain_PB_covs_bg &lt;- train_PB_covs %&gt;% filter(Presence == 0)\n\n# Thin the presences - 10000 presence points\ntrain_PB_covs_pres_thinned &lt;- train_PB_covs_pres[sample(nrow(train_PB_covs_pres), 10000), ]\n\n# Combine back into both presence and background\ntrain_PB_covs_thinned &lt;- rbind(train_PB_covs_pres_thinned, train_PB_covs_bg, make.row.names = FALSE)",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#check-correlation-and-multicollinearity-of-covariates",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#check-correlation-and-multicollinearity-of-covariates",
+    "title": "ICCB Species distribution modelling",
+    "section": "Check correlation and multicollinearity of covariates",
+    "text": "Check correlation and multicollinearity of covariates\nAlthough we’ve narrowed down our covariates already based on discussion with experts, there’s a chance that our remaining variables might be correlated or collinear. This would cause issues with models, particularly because we’re hoping to predict our model into the future. We’re going to inspect our covariates for signs of correlation and multicolinearity.\nThere are several different methods for creating correlation plots, we just show two.\n\nCorrelation plot from the ecospat package\n\n\nCode\n# use the dataframe we just created, dropping the x, y, and presence columns (1-3)\necospat::ecospat.cor.plot(train_PB_covs_thinned[, -1:-3])\n\n\n\n\n\n\n\n\n\nWhat the correlation test plot suggests is that we have some correlated covariates. Particularly our Bio6 and Bio12.\nOften a rule of thumb of ~ 0.7 correlation is used to decide what a ‘too correlated’ covariate pair are (REF). In practice, it’s important to think carefully before dropping covariates.\n\n\nVariance Inflation Factor (VIF)\nIf you find corrplot is hard for you to use to make decisions, we can also look at the Variance Inflation Factor (VIF). VIF is another statistical measure used to detect multicollinearity in a set of explanatory (independent) variables in a regression model.\nInterpretation:\n\nVIF = 1: No correlation\nVIF &gt; 1 and &lt;= 5: Moderate correlation; may not require corrective action.\nVIF &gt; 5: Indicates high correlation. Multicollinearity may be problematic, and further investigation is recommended.\nVIF &gt; 10: Strong multicollinearity. The variable is highly collinear with others, and steps should be taken to address this.\n\n\n\nCode\nusdm::vifstep(covs_current_expert_HF) # Variance Inflation Factor and test for multicollinearity\n\n\nNo variable from the 5 input variables has collinearity problem. \n\nThe linear correlation coefficients ranges between: \nmin correlation ( BIO15_Precip_Seasonality ~ BIO6_Min_Temp_Coldest_Month ):  -0.1420642 \nmax correlation ( BIO12_Annual_Precipitation ~ BIO6_Min_Temp_Coldest_Month ):  0.8762638 \n\n---------- VIFs of the remained variables -------- \n                    Variables      VIF\n1 BIO5_Max_Temp_Warmest_Month 2.658798\n2 BIO6_Min_Temp_Coldest_Month 5.916991\n3  BIO12_Annual_Precipitation 7.552088\n4    BIO15_Precip_Seasonality 1.330505\n5             human_footprint 1.551557",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#scaling-the-covariates",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#scaling-the-covariates",
+    "title": "ICCB Species distribution modelling",
+    "section": "Scaling the covariates",
+    "text": "Scaling the covariates\nIt is common to scale the covariates before fitting a model. This is because some models, such as Generalised Linear Models (GLMs), can be sensitive to the scale of the covariates. Scaling the covariates can also make the coefficients more interpretable comparable, as they are now on similar scales to each other.\nA typical scaling approach is to subtract the mean and divide by the standard deviation of each covariate, which is also known as z-scaling, and after this operation, all covariates will have a mean of 0 and a standard deviation of 1.\nWe can use base R to scale the covariates, and the default is to centre (subtract the mean) and scale (divide by the standard deviation).\n\n\nCode\n# pull out just the covariate values from the dataframe\ncovariate_values &lt;- train_PB_covs_thinned[, -1:-3]\n\n# scale the covariates - returns a matrix\nscaled_covariates &lt;- base::scale(covariate_values, \n                                 center = TRUE, \n                                 scale = TRUE)\n\n# convert back to a dataframe (and remove row names)\nscaled_covariates_df &lt;- data.frame(scaled_covariates)\n\nhead(scaled_covariates_df)\n\n\n\n  \n\n\n\nCode\n# Add the presence column back to the scaled covariates\ntrain_PB_covs_thinned_scaled &lt;- cbind(train_PB_covs_thinned[, 1:3], scaled_covariates_df)\n\n\nThe scaling operation also returns the particular scaling values that were used, which is helpful for generating predictions later on. We can access these using the attributes of the returned dataframe. We only need the scaling factor, as we will rescale the coefficients before generating predictions.\n\n\nCode\n# Get the attributes of the scaled covariates\nscaled_attributes &lt;- attributes(scaled_covariates)\nscaled_attributes$`scaled:scale` # the SD/scaling factor of each covariate\n\n\nBIO5_Max_Temp_Warmest_Month BIO6_Min_Temp_Coldest_Month \n                  0.9809104                   1.7530776 \n BIO12_Annual_Precipitation    BIO15_Precip_Seasonality \n                228.2151437                   3.2637999 \n            human_footprint \n                 11.1026101",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#null-model",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#null-model",
+    "title": "ICCB Species distribution modelling",
+    "section": "Null model",
+    "text": "Null model\nNull model: no explanatory variables or predictors are included.\nIt is always helpful to create a null model as a benchmark to assess how the inclusion of explanatory variables improves the model.\n\n\nCode\n# Fit a null model with only the intercept\nnull_model &lt;- glm(Presence ~ 1,\n                  data = train_PB_covs_thinned_scaled,\n                  family = binomial(link = \"logit\"))\n\n# Check the model results\nsummary(null_model)\n\n\n\nCall:\nglm(formula = Presence ~ 1, family = binomial(link = \"logit\"), \n    data = train_PB_covs_thinned_scaled)\n\nCoefficients:\n            Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)  2.10046    0.03028   69.37   &lt;2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 7734  on 11223  degrees of freedom\nResidual deviance: 7734  on 11223  degrees of freedom\nAIC: 7736\n\nNumber of Fisher Scoring iterations: 4",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#glm---expert-variables-with-linear-terms",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#glm---expert-variables-with-linear-terms",
+    "title": "ICCB Species distribution modelling",
+    "section": "GLM - expert variables with linear terms",
+    "text": "GLM - expert variables with linear terms\nIn this model, we include linear terms for the covariates. You can also do things like add quadratic terms to account for non-linear relationships between the predictors and the response variable. This increases the complexity of the model and allows for more flexibility in fitting the data.\nYou can also try fitting the model with and without the scaled covariates. The z- and p-values of each covariate should be the same (but not for the intercept and centering the covariates affects that), as well as the AIC.\n\n\nCode\nglm_model &lt;- glm(Presence ~\n                     BIO5_Max_Temp_Warmest_Month +\n                     BIO6_Min_Temp_Coldest_Month +\n                     BIO12_Annual_Precipitation +\n                     BIO15_Precip_Seasonality +\n                     human_footprint,\n                   data=train_PB_covs_thinned_scaled,\n                   family = binomial(link = \"logit\"))\n\n# Check the model results\nsummary(glm_model)\n\n\n\nCall:\nglm(formula = Presence ~ BIO5_Max_Temp_Warmest_Month + BIO6_Min_Temp_Coldest_Month + \n    BIO12_Annual_Precipitation + BIO15_Precip_Seasonality + human_footprint, \n    family = binomial(link = \"logit\"), data = train_PB_covs_thinned_scaled)\n\nCoefficients:\n                            Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)                  3.50063    0.07449  46.996  &lt; 2e-16 ***\nBIO5_Max_Temp_Warmest_Month -0.42735    0.05567  -7.676 1.64e-14 ***\nBIO6_Min_Temp_Coldest_Month  0.42248    0.07457   5.665 1.47e-08 ***\nBIO12_Annual_Precipitation  -0.07054    0.07762  -0.909    0.363    \nBIO15_Precip_Seasonality     0.69618    0.04488  15.511  &lt; 2e-16 ***\nhuman_footprint              1.39543    0.06765  20.628  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 7734.0  on 11223  degrees of freedom\nResidual deviance: 4458.5  on 11218  degrees of freedom\nAIC: 4470.5\n\nNumber of Fisher Scoring iterations: 7",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#model-effect-evaluation",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#model-effect-evaluation",
+    "title": "ICCB Species distribution modelling",
+    "section": "Model effect evaluation",
+    "text": "Model effect evaluation\nHere we use a function presented in an EcoCommons Australia notebook to evaluate the model performance. The notebook can be found on their GitHub: https://github.com/EcoCommonsAustralia/notebooks/tree/main/notebooks.\n\n\nCode\n# Function to plot effect size graph\nplot_effect_size &lt;- function(glm_model) {\n  # Check if required libraries are installed\n  if (!requireNamespace(\"ggplot2\", quietly = TRUE)) {\n    stop(\"Please install the 'ggplot2' package to use this function.\")\n  }\n  library(ggplot2)\n\n  # Extract effect sizes (coefficients) from the model\n  coefs &lt;- summary(glm_model)$coefficients\n  effect_sizes &lt;- data.frame(\n    Variable = rownames(coefs)[-1],  # Exclude the intercept\n    Effect_Size = coefs[-1, \"Estimate\"],\n    Std_Error = coefs[-1, \"Std. Error\"]\n  )\n\n  # Sort by effect size\n  effect_sizes &lt;- effect_sizes[order(-abs(effect_sizes$Effect_Size)), ]\n\n  # Plot the effect sizes with error bars\n  ggplot(effect_sizes, aes(x = reorder(Variable, Effect_Size), y = Effect_Size)) +\n    geom_hline(yintercept = 0, linetype = \"dashed\", color = \"black\", alpha = 0.5) +\n    geom_point(stat = \"identity\", colour = \"#11aa96\") +\n    geom_errorbar(aes(ymin = Effect_Size - Std_Error, ymax = Effect_Size + Std_Error), \n                  colour = \"#11aa96\", width = 0.1) +\n    coord_flip() +\n    labs(\n      title = \"Effect Sizes of Variables\",\n      x = \"Variable\",\n      y = \"Effect Size (Coefficient Estimate)\"\n    ) +\n    theme_bw()\n}\n\n\nRun the function on the covariates used in the model.\nInterestingly, the human footprint index has the largest effect size, followed by the annual precipitation and the minimum temperature of the coldest month, both of which were positive. The maximum temperature of the warmest month has a negative coefficient, which suggests that koalas are less likely to be found in areas with higher temperatures during the warmest month.\n\n\nCode\nplot_effect_size(glm_model)",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#response-curves",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#response-curves",
+    "title": "ICCB Species distribution modelling",
+    "section": "Response curves",
+    "text": "Response curves\nAgain, we can use a function from the EcoCommons notebook to plot the response curves from the model.\n\n\nCode\nplot_species_response &lt;- function(glm_model, predictors, data) {\n  # Check if required libraries are installed\n  if (!requireNamespace(\"ggplot2\", quietly = TRUE) || !requireNamespace(\"gridExtra\", quietly = TRUE)) {\n    stop(\"Please install the 'ggplot2' and 'gridExtra' packages to use this function.\")\n  }\n  library(ggplot2)\n  library(gridExtra)\n\n  # Create empty list to store response plots\n  response_plots &lt;- list()\n\n  # Loop through each predictor variable\n  for (predictor in predictors) {\n    # Create new data frame to vary predictor while keeping others constant\n    pred_range &lt;- seq(\n      min(data[[predictor]], na.rm = TRUE),\n      max(data[[predictor]], na.rm = TRUE),\n      length.out = 100\n    )\n    const_data &lt;- data[1, , drop = FALSE]  # Use first row to keep other predictors constant\n    response_data &lt;- const_data[rep(1, 100), ]  # Duplicate the row\n    response_data[[predictor]] &lt;- pred_range\n\n    # Predict probabilities\n    predicted_response &lt;- predict(glm_model, newdata = response_data, type = \"response\")\n\n    # Create data frame for plotting\n    plot_data &lt;- data.frame(\n      Predictor_Value = pred_range,\n      Predicted_Probability = predicted_response\n    )\n\n    # Add presence and absence data\n    presence_absence_data &lt;- data.frame(\n      Predictor_Value = data[[predictor]],\n      Presence_Absence = data$Presence\n    )\n\n    # Generate the response plot\n    p &lt;- ggplot() +\n\n      geom_line(data = plot_data,\n                aes(x = Predictor_Value, y = Predicted_Probability),\n                color = \"#61c6fa\", linewidth = 1) +\n\n      geom_point(data = presence_absence_data[presence_absence_data$Presence_Absence == 1, ],\n                 aes(x = Predictor_Value, y = Presence_Absence),\n                 color = \"#11aa96\", alpha = 0.2) +\n\n      geom_point(data = presence_absence_data[presence_absence_data$Presence_Absence == 0, ],\n                 aes(x = Predictor_Value, y = Presence_Absence),\n                 color = \"#f6aa70\", alpha = 0.2) +\n\n      labs(x = predictor, y = NULL) +\n      theme_bw() +\n      theme(axis.title.y = element_blank())\n\n    # Store the plot in the list\n    response_plots[[predictor]] &lt;- p\n  }\n\n  # Arrange all plots in one combined plot with a single shared y-axis label\n  grid.arrange(\n    grobs = response_plots,\n    ncol = 3,\n    left = \"Predicted Probability / Presence-Absence\"\n  )\n}\n\n\n\nPlot the response curves\n\n\nCode\n# get the names of the covariates in the model (drop the intercept)\npredictors &lt;- names(glm_model$coefficients)[-1]\n\n# Plot the response curves for the predictors in the model\nplot_species_response(glm_model, predictors, train_PB_covs_thinned_scaled)\n\n\n\n\n\n\n\n\n\n\n\nScale the raster layers with the same scaling as the covariates\n\n\nCode\n# Scale your prediction rasters using the same scaling parameters\ncovs_current_expert_HF_scaled &lt;- scale(covs_current_expert_HF, \n                                   center = attr(scaled_covariates, \"scaled:center\"),\n                                   scale = attr(scaled_covariates, \"scaled:scale\"))\n\n# plot to check the scaling worked\nplot(covs_current_expert_HF_scaled)",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#glm-predictions-to-current-environment",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#glm-predictions-to-current-environment",
+    "title": "ICCB Species distribution modelling",
+    "section": "GLM predictions to current environment",
+    "text": "GLM predictions to current environment\n\nModel 1\n\n\nCode\n# Predict the presence probability across the entire raster extent\npredicted_current_biased &lt;- predicts::predict(covs_current_expert_HF_scaled, glm_model, type = \"response\")\n\n# Plot the species distribution raster\nplot(\n  predicted_current_biased,\n  range = c(0, 1),  # Set min and max values for the color scale\n  main = \"Climatic Suitability of Koalas in SEQ (biased)\"\n)",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#accounting-for-the-sampling-bias",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#accounting-for-the-sampling-bias",
+    "title": "ICCB Species distribution modelling",
+    "section": "Accounting for the sampling bias",
+    "text": "Accounting for the sampling bias\nWhat we did above did not account for the sampling bias, as the predictions we generated maintained the bias process. We need to instead set the human footprint index to a constant value across the entire extent, which represents if the process that produces the bias is the same everywhere.\nThe approach that we’ve taken is not perfect, and would require some thinking and investigation, but it illustrates the potential impact of sampling bias and how you might account for it.\n\n\nCode\n# pull out the scaled human footprint index layer\nconstant_HF &lt;- covs_current_expert_HF_scaled[[5]]\n\n# Set the human footprint index to a constant value across the entire extent\n# Mean value of the human footprint index\nconstant_HF[] &lt;- mean(constant_HF[], na.rm = TRUE)\n# mask to the extent of the covariates\nconstant_HF &lt;- terra::mask(constant_HF, covs_current_expert_HF_scaled[[5]])\n\n# add the constant human footprint back into the raster layers\ncovs_current_expert_constHF_scaled &lt;- c(covs_current_expert_HF_scaled[[1:4]], constant_HF)\n\n# check the new human footprint layer\nplot(covs_current_expert_constHF_scaled)\n\n\n\n\n\n\n\n\n\nGenerate predictions with the constant human footprint layer\n\n\nCode\n# Predict the presence probability across the entire raster extent\npredicted_current &lt;- predicts::predict(covs_current_expert_constHF_scaled, glm_model, type = \"response\")\n\n# Plot the species distribution raster\nplot(\n  predicted_current,\n  range = c(0, 1),  # Set min and max values for the color scale\n  main = \"Climatic Suitability of Koalas in SEQ\"\n)",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#run-the-model-for-every-fold-and-evaluate",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#run-the-model-for-every-fold-and-evaluate",
+    "title": "ICCB Species distribution modelling",
+    "section": "Run the model for every fold and evaluate",
+    "text": "Run the model for every fold and evaluate\n\nModel evaluation - metrics\nTypically, it helps to evaluate your model with several metrics that describe different features of model performance and prediction. Here, we define a function to feed in a model prediction and calculate several evaluation metrics.\nThe metrics are:\nArea under the receiver operating characteristic curve (AUC ROC)\n\nHigher values of this (closer to 1) suggest a model is good at distinguishing presence points from the background.\n\nContinuous boyce index\n\nHigher values of this (closer to 1) suggest a model is good at predicting higher suitability at spots where there were presences.\n\n\n\nCode\n# Start a dataframe to save results\neval_df &lt;- data.frame(fold = numeric(),\n                      ROC = numeric(),\n                      boyce = numeric())\n\nfor(f in seq_along(spfolds)) {\n\n  # Subset the training and testing data (spatial cross validation) (for the fth fold)\n\n  train_PB_covs_scv &lt;- train_PB_covs_thinned[spfolds[[f]][[1]], ]\n  test_PB_covs_scv &lt;- train_PB_covs_thinned[spfolds[[f]][[2]], ]\n\n  glm_model_fold &lt;- glm(Presence ~\n                          BIO5_Max_Temp_Warmest_Month +\n                          BIO6_Min_Temp_Coldest_Month +\n                          BIO12_Annual_Precipitation +\n                          BIO15_Precip_Seasonality +\n                          human_footprint,\n                        data=train_PB_covs_scv,\n                        family = binomial(link = \"logit\"))\n\n    # Predict to the testing data of fold f\n  test_PB_covs_scv$pred &lt;- predict(glm_model_fold, newdata = test_PB_covs_scv, type = \"response\")\n\n  # Evaluate prediction on test set\n  ROC = precrec::auc(precrec::evalmod(scores = test_PB_covs_scv$pred, labels = test_PB_covs_scv$Presence))[1,4]\n\n  boyce = ecospat::ecospat.boyce(fit = test_PB_covs_scv$pred,\n                                 obs = test_PB_covs_scv$pred[which(test_PB_covs_scv$Presence==1)],\n                                 nclass = 0, # Calculate continuous index\n                                 method = \"pearson\",\n                                 PEplot = F)[[\"cor\"]]\n\n  # Add results to dataframe\n  eval_df &lt;- eval_df %&gt;% add_row(fold = f, ROC = ROC, boyce = boyce)\n\n}\n\n\n\n\nSummarise the evaluation metrics\n\n\nCode\n# Mean AUC & boyce\neval_df %&gt;%\n  summarise(mean_AUC = mean(ROC),\n            mean_boyce = mean(boyce),\n            sd_AUC = sd(ROC),\n            sd_boyce = sd(boyce))",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#load-future-environmental-data",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#load-future-environmental-data",
+    "title": "ICCB Species distribution modelling",
+    "section": "Load future environmental data",
+    "text": "Load future environmental data\n\n\nCode\ncovs_future_SSP370 &lt;- rast(\"Data/Environmental_variables/SEQ_future_bioclim.2090.SSP370.tif\")\nnames(covs_future_SSP370) &lt;- layer_names\ncovs_future_SSP370\n\n\nclass       : SpatRaster \ndimensions  : 44, 51, 19  (nrow, ncol, nlyr)\nresolution  : 5590.925, 5590.925  (x, y)\nextent      : 271609.2, 556746.4, 6862081, 7108082  (xmin, xmax, ymin, ymax)\ncoord. ref. : GDA2020 / MGA zone 56 (EPSG:7856) \nsource      : SEQ_future_bioclim.2090.SSP370.tif \nnames       : BIO1_~_Temp, BIO2_~Range, BIO3_~ality, BIO4_~ality, BIO5_~Month, BIO6_~Month, ... \nmin values  :    19.07255,     6.59230,    38.32245,    301.0822,    28.04017,    6.774293, ... \nmax values  :    24.52122,    14.53494,    50.96117,    530.5290,    37.41868,   15.740561, ... \n\n\nCode\ncovs_future_SSP370 &lt;- terra::mask(covs_future_SSP370, covs_current) # Crop to SEQ extent using current layers\n\ncovs_future_SSP370_expert &lt;- subset(covs_future_SSP370, \n                                    names(covs_future_SSP370) %in% c(\"BIO5_Max_Temp_Warmest_Month\",\n                                                                     \"BIO6_Min_Temp_Coldest_Month\",\n                                                                     \"BIO12_Annual_Precipitation\",\n                                                                     \"BIO15_Precip_Seasonality\"))",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#plot-the-future-rasters",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#plot-the-future-rasters",
+    "title": "ICCB Species distribution modelling",
+    "section": "Plot the future rasters",
+    "text": "Plot the future rasters\n\n\nCode\nplot(covs_future_SSP370_expert)\n\n\n\n\n\n\n\n\n\n\nCompare the current and future rasters\n\n\nCode\nplot(covs_future_SSP370_expert - covs_current_expert)",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#test-the-environmental-distance-between-current-data-and-future-conditions",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#test-the-environmental-distance-between-current-data-and-future-conditions",
+    "title": "ICCB Species distribution modelling",
+    "section": "Test the environmental distance between current data and future conditions",
+    "text": "Test the environmental distance between current data and future conditions\n\n\nCode\nmess &lt;- predicts::mess(covs_future_SSP370_expert,\n                       train_PB_covs_thinned[, c(\"BIO5_Max_Temp_Warmest_Month\",\n                                                 \"BIO6_Min_Temp_Coldest_Month\",\n                                                 \"BIO12_Annual_Precipitation\",\n                                                 \"BIO15_Precip_Seasonality\")])\n\nplot(mess)\n\n\n\n\n\n\n\n\n\nCode\nr_mess_mask &lt;- mess &lt; 0\nplot(r_mess_mask)\n\n\n\n\n\n\n\n\n\nTest which areas you might mask out because they are ‘novel’ in environmental space and therefore require model extrapolation.\n\n\nCode\nanalog_fut &lt;- predicted_current\n\nvalues(analog_fut)[values(mess)&lt;0] &lt;- NA\n\nplot(analog_fut,\n     range = c(0, 1),  # Set min and max values for the color scale\n     main = \"Koala relative occurrence in regions with analogue conditions\")\n\n\n\n\n\n\n\n\n\nCode\nnovel_fut &lt;- predicted_current\n\nvalues(novel_fut)[values(mess)&gt;0] &lt;- NA\n\nplot(novel_fut,\n     range = c(0, 1),  # Set min and max values for the color scale\n     main = \"Koala relative occurrence in regions with novel conditions\")",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#scale-future-layers-and-add-human-footprint",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#scale-future-layers-and-add-human-footprint",
+    "title": "ICCB Species distribution modelling",
+    "section": "Scale future layers and add human footprint",
+    "text": "Scale future layers and add human footprint\n\n\nCode\n# Scale the future covariates using the same scaling parameters as the training data\ncovs_future_SSP370_expert_scaled &lt;- scale(covs_future_SSP370_expert, \n                                   center = attr(scaled_covariates, \"scaled:center\")[-5],\n                                   scale = attr(scaled_covariates, \"scaled:scale\")[-5])\n\n# Add the human footprint layer to the future covariates\ncovs_future_SSP370_expert_HF_scaled &lt;- c(covs_future_SSP370_expert_scaled, constant_HF)",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#model-1-1",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#model-1-1",
+    "title": "ICCB Species distribution modelling",
+    "section": "Model 1",
+    "text": "Model 1\n\n\nCode\n# Predict the presence probability across the entire raster extent\npredicted_future370 &lt;- predict(covs_future_SSP370_expert_HF_scaled, glm_model, type = \"response\")\n\n# Plot the species distribution raster\nplot(\n  predicted_future370,\n  range = c(0, 1),  # Set min and max values for the color scale\n  main = \"Future Climatic Suitability of Koalas in SEQ - SSP370\"\n)",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#show-the-predictions-side-by-side",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#show-the-predictions-side-by-side",
+    "title": "ICCB Species distribution modelling",
+    "section": "Show the predictions side-by-side",
+    "text": "Show the predictions side-by-side\n\n\nCode\npar(mfrow = c(1, 2))\n\nplot(\n  predicted_current,\n  range = c(0, 1),\n  main = \"Current\"\n)\n\nplot(\n  predicted_future370,\n  range = c(0, 1),\n  main = \"Future (SSP 3.70)\"\n)",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#plot-the-different-between-current-and-future",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#plot-the-different-between-current-and-future",
+    "title": "ICCB Species distribution modelling",
+    "section": "Plot the different between current and future",
+    "text": "Plot the different between current and future\nRed is less suitable in the Future SSP370 scenario, and blue is more suitable in the Future SSP370 scenario.\n\n\nCode\n# return to single plotting\npar(mfrow = c(1, 1))\n\n# Create symmetric breaks centered at 0\nbreaks &lt;- seq(-1, 1, length.out = 101)\n\n# Create the color palette\ncols &lt;- colorRampPalette(c(\"red\", \"white\", \"blue\"))(100)\n\n\nplot(predicted_future370 - predicted_current,\n     main = \"Future (SSP370) - Current Predictions \",\n     col = cols,\n     range = c(-1, 1))",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#presenting-predictions-with-uncertainty",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#presenting-predictions-with-uncertainty",
+    "title": "ICCB Species distribution modelling",
+    "section": "Presenting predictions with uncertainty",
+    "text": "Presenting predictions with uncertainty\nThere are many sources of model uncertainty that should be explored and ideally, presented alongside model predictions.\nOne that we’ll focus on here is climate scenario uncertainty. We do so by fitting a second model to future climate data from a lower emission shared socioeconomic path scenario (SSP 1.26).",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#load-future-environmental-data-ssp-1.26",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#load-future-environmental-data-ssp-1.26",
+    "title": "ICCB Species distribution modelling",
+    "section": "Load future environmental data (SSP 1.26)",
+    "text": "Load future environmental data (SSP 1.26)\n\n\nCode\ncovs_future_SSP126 &lt;- rast(\"Data/Environmental_variables/SEQ_future_bioclim.2090.SSP126.tif\")\nnames(covs_future_SSP126) &lt;- layer_names\ncovs_future_SSP126\n\n\nclass       : SpatRaster \ndimensions  : 44, 51, 19  (nrow, ncol, nlyr)\nresolution  : 5590.925, 5590.925  (x, y)\nextent      : 271609.2, 556746.4, 6862081, 7108082  (xmin, xmax, ymin, ymax)\ncoord. ref. : GDA2020 / MGA zone 56 (EPSG:7856) \nsource      : SEQ_future_bioclim.2090.SSP126.tif \nnames       : BIO1_~_Temp, BIO2_~Range, BIO3_~ality, BIO4_~ality, BIO5_~Month, BIO6_~Month, ... \nmin values  :    17.11955,    6.654293,    39.11226,    298.1248,    26.08138,     3.96662, ... \nmax values  :    22.42196,   14.853741,    51.27921,    546.6645,    35.57761,    13.50076, ... \n\n\nCode\ncovs_future_SSP126_expert &lt;- subset(covs_future_SSP126, names(covs_future_SSP126) %in% c(\"BIO5_Max_Temp_Warmest_Month\",\n                                                                                          \"BIO6_Min_Temp_Coldest_Month\",\n                                                                                          \"BIO12_Annual_Precipitation\",\n                                                                                          \"BIO15_Precip_Seasonality\"))\n\nplot(covs_future_SSP126_expert) # to plot the layers\n\n\n\n\n\n\n\n\n\n\nPlot the difference between the two future scenarios\nThis is SSP370 - SSP126, so positive values indicate that the SSP370 scenario has higher values than the SSP126 scenario.\n\n\nCode\nterra::plot(covs_future_SSP370_expert - covs_future_SSP126_expert)",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#glm-future-predictions-ssp-1.26",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#glm-future-predictions-ssp-1.26",
+    "title": "ICCB Species distribution modelling",
+    "section": "GLM future predictions (SSP 1.26)",
+    "text": "GLM future predictions (SSP 1.26)\n\nModel 1\n\n\nCode\n# Scale the future covariates using the same scaling parameters as the training data\ncovs_future_SSP126_expert_scaled &lt;- scale(covs_future_SSP126_expert, \n                                   center = attr(scaled_covariates, \"scaled:center\")[-5],\n                                   scale = attr(scaled_covariates, \"scaled:scale\")[-5])\n\n# Add the human footprint layer to the future covariates\ncovs_future_SSP126_expert_HF_scaled &lt;- c(covs_future_SSP126_expert_scaled, constant_HF)\n\n# Predict the presence probability across the entire raster extent\npredicted_future126 &lt;- predict(covs_future_SSP126_expert_HF_scaled, glm_model, type = \"response\")",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#plot-the-different-between-current-and-future-ssp126",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#plot-the-different-between-current-and-future-ssp126",
+    "title": "ICCB Species distribution modelling",
+    "section": "Plot the different between current and future (SSP126)",
+    "text": "Plot the different between current and future (SSP126)\nRed is less suitable in the Future SSP126 scenario, and blue is more suitable in the Future SSP126 scenario.\n\n\nCode\n# return to single plotting\npar(mfrow = c(1, 1))\n\n# Create symmetric breaks centered at 0\nbreaks &lt;- seq(-1, 1, length.out = 101)\n\n# Create the color palette\ncols &lt;- colorRampPalette(c(\"red\", \"white\", \"blue\"))(100)\n\n\nplot(predicted_future126 - predicted_current,\n     main = \"Future (SSP370) - Current Predictions \",\n     col = cols,\n     range = c(-1, 1))",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#compare-the-two-future-predictions",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#compare-the-two-future-predictions",
+    "title": "ICCB Species distribution modelling",
+    "section": "Compare the two future predictions",
+    "text": "Compare the two future predictions\n\n\nCode\npar(mfrow = c(1, 2))\n\n# Plot the predicted suitability \nplot(\n  predicted_future126,\n  range = c(0,1),\n  main = \"Suitability SSP126\"\n)\n\nplot(\n  predicted_future370,\n  range = c(0,1),\n  main = \"Suitability SSP370\"\n)",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#plot-the-different-between-the-two-future-predictions",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#plot-the-different-between-the-two-future-predictions",
+    "title": "ICCB Species distribution modelling",
+    "section": "Plot the different between the two future predictions",
+    "text": "Plot the different between the two future predictions\nRed is less suitable in the Future SSP370 scenario than the SSP126 scenario, and blue is more suitable in Future SSP370 scenario than the SSP126 scenario.\n\n\nCode\n# return to single plotting\npar(mfrow = c(1, 1))\n\n# Create symmetric breaks centered at 0\nbreaks &lt;- seq(-1, 1, length.out = 101)\n\n# Create the color palette\ncols &lt;- colorRampPalette(c(\"red\", \"white\", \"blue\"))(100)\n\n\nplot(predicted_future370 - predicted_future126,\n     main = \"Future (SSP370) - Future (SSP126) Predictions \",\n     col = cols,\n     range = c(-1, 1))",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
+    ]
+  },
+  {
+    "objectID": "Session 3/ICCB_Modelling_and_validation.html#model-uncertainty",
+    "href": "Session 3/ICCB_Modelling_and_validation.html#model-uncertainty",
+    "title": "ICCB Species distribution modelling",
+    "section": "Model uncertainty",
+    "text": "Model uncertainty\nAnother element of uncertainty that can be represented is model uncertainty, or the standard error around the coefficient estimates.\n\n\nCode\n# Extract standard errors of coefficients\ncoef_se &lt;- summary(glm_model)$coefficients[, \"Std. Error\"]\nprint(coef_se)\n\n\n                (Intercept) BIO5_Max_Temp_Warmest_Month \n                 0.07448802                  0.05567149 \nBIO6_Min_Temp_Coldest_Month  BIO12_Annual_Precipitation \n                 0.07457315                  0.07762200 \n   BIO15_Precip_Seasonality             human_footprint \n                 0.04488347                  0.06764752 \n\n\n\n\nCode\ncovs_df &lt;- as.data.frame(covs_future_SSP126_expert_HF_scaled, na.rm = FALSE)\n\npred_link &lt;- predict(glm_model, newdata = covs_df, type = \"link\", se.fit = TRUE)\n\n# Linear predictor (eta)\neta &lt;- pred_link$fit\nse_eta &lt;- pred_link$se.fit\n\n# Confidence intervals (95%)\nz &lt;- 1.96\neta_lower &lt;- eta - z * se_eta\neta_upper &lt;- eta + z * se_eta\n\n# Transform back to response scale\nlinkinv &lt;- glm_model$family$linkinv\npredicted &lt;- linkinv(eta)\nlower_ci &lt;- linkinv(eta_lower)\nupper_ci &lt;- linkinv(eta_upper)\n\n\n# Add to covs_df\ncovs_df$predicted &lt;- predicted\ncovs_df$lower_ci &lt;- lower_ci\ncovs_df$upper_ci &lt;- upper_ci\n\n\npredicted_r &lt;- setValues(rast(covs_future_SSP126_expert_HF_scaled, nlyr = 1), predicted)\nlower_ci_r &lt;- setValues(rast(covs_future_SSP126_expert_HF_scaled, nlyr = 1), lower_ci)\nupper_ci_r &lt;- setValues(rast(covs_future_SSP126_expert_HF_scaled, nlyr = 1), upper_ci)\n\n# Step 2: Name the layers\nnames(predicted_r) &lt;- \"SSP126 Mean Estimate\"\nnames(lower_ci_r) &lt;- \"SSP126 Lower CI\"\nnames(upper_ci_r) &lt;- \"SSP126 Upper CI\"\n\nprediction_w_uncertainty &lt;- c(predicted_r, lower_ci_r, upper_ci_r)\n\nplot(prediction_w_uncertainty, range = c(0, 1))",
+    "crumbs": [
+      "Session 3",
+      "ICCB Species distribution modelling"
     ]
   },
   {
@@ -784,10 +748,67 @@
     "href": "Session 2/session_2_home.html",
     "title": "Session 2",
     "section": "",
-    "text": "Back to top",
+    "text": "This repository has all of the scripts and data for the ICCB 2025 workshop ‘Using downscaled climate projections in R’. The powerpoint slides include instructions for running through the scripts and pictures of what the output should look like.\n\n\nWe have provided data for three downscaled climate models. These models were downscaled from the CMIP6 GCMs (Global Climate Models) using the CCAM model to a 10km resolution over Australia. The model name refers to the CMIP6 GCM which acted as the host model and provided input to CCAM. Further information on the downscaling technique is available in Chapman et al. (2023) and information on the climate change impacts shown in these models is available in Chapman et al. (2024).\nWe have selected three models which represent the span from the full ensemble (set of all downscaled climate models): - ACCESS-ESM1-5 r6i1p1f1 - dry model - EC-Earth3 r1i1p1f1 - wet model - GFDL-ESM4 r1i1p1f1 - this model is close to the ensemble average for both temperature and precipitation changes at the end of the century\nWe have provided data for three climate change scenarios: - SSP126 - a low emission pathway, with on average 2°C of global warming at the end of century compared to pre-industrial times. - SSP245 - a medium emission pathway, with on average 3°C of warming. - SSP370 - a high emission pathway, with on average 4°C of warming.\nNote that there can be a great deal of variation within a model ensemble, and for each scenario there will be models that are warmer or cooler than the ensemble average.\n\n\n\n\nannual: annual average precipitation (mm/day) and temperature (celsius) for 1981 - 2100 for Queensland.\n\nmonthly: monthly pr (mm/day), tasmax and tasmin (celsius) for 1981 - 2100 for South-East Queensland.\n\nobs: observational data from the Australian Gridded Climate Dataset (AGCD). Variables include daily maximum and minimum temperature and precipitation for 1981 - 2020 at a 5km resolution. See Jones et al (2009) for further details.\n\nshp: Shapefiles for Queensland and the Sunshine Coast.\n\n\n\n\n\nICCB_Training.R: the training script. This is what will be used in the workshop.\n\nICCB_Training_complete.R: the training script with additional examples. Try not to look at these until you’ve had a go yourself!\n\nThe remaining scripts in this folder were used to prepare the workshop data and are included for interest only.\n\n\n\nFurther information on the models and datasets used here can be found in the following papers:\nChapman, S., Syktus, J., Trancoso, R., Thatcher, M., Toombs, N., Wong, K. K.-H., & Takbash, A. (2023). Evaluation of Dynamically Downscaled CMIP6-CCAM Models Over Australia. Earth’s Future, 11(11), e2023EF003548. https://doi.org/10.1029/2023EF003548\nChapman, S., Syktus, J., Trancoso, R., Toombs, N., & Eccles, R. (2024). Projected changes in mean climate and extremes from downscaled high-resolution CMIP6 simulations in Australia. Weather and Climate Extremes, 46, 100733. https://doi.org/10.1016/j.wace.2024.10073\nJones, D. A., Wang, W., & Fawcett, R. (2009). High-quality spatial climate data-sets for Australia. Australian Meteorlogical and Oceangraphic Journal, 58, 233–248.\n\n\n\nDownload a PDF of the slides",
     "crumbs": [
       "Session 2"
     ]
+  },
+  {
+    "objectID": "Session 2/session_2_home.html#models-and-climate-change-scenarios",
+    "href": "Session 2/session_2_home.html#models-and-climate-change-scenarios",
+    "title": "Session 2",
+    "section": "",
+    "text": "We have provided data for three downscaled climate models. These models were downscaled from the CMIP6 GCMs (Global Climate Models) using the CCAM model to a 10km resolution over Australia. The model name refers to the CMIP6 GCM which acted as the host model and provided input to CCAM. Further information on the downscaling technique is available in Chapman et al. (2023) and information on the climate change impacts shown in these models is available in Chapman et al. (2024).\nWe have selected three models which represent the span from the full ensemble (set of all downscaled climate models): - ACCESS-ESM1-5 r6i1p1f1 - dry model - EC-Earth3 r1i1p1f1 - wet model - GFDL-ESM4 r1i1p1f1 - this model is close to the ensemble average for both temperature and precipitation changes at the end of the century\nWe have provided data for three climate change scenarios: - SSP126 - a low emission pathway, with on average 2°C of global warming at the end of century compared to pre-industrial times. - SSP245 - a medium emission pathway, with on average 3°C of warming. - SSP370 - a high emission pathway, with on average 4°C of warming.\nNote that there can be a great deal of variation within a model ensemble, and for each scenario there will be models that are warmer or cooler than the ensemble average.",
+    "crumbs": [
+      "Session 2"
+    ]
+  },
+  {
+    "objectID": "Session 2/session_2_home.html#data",
+    "href": "Session 2/session_2_home.html#data",
+    "title": "Session 2",
+    "section": "",
+    "text": "annual: annual average precipitation (mm/day) and temperature (celsius) for 1981 - 2100 for Queensland.\n\nmonthly: monthly pr (mm/day), tasmax and tasmin (celsius) for 1981 - 2100 for South-East Queensland.\n\nobs: observational data from the Australian Gridded Climate Dataset (AGCD). Variables include daily maximum and minimum temperature and precipitation for 1981 - 2020 at a 5km resolution. See Jones et al (2009) for further details.\n\nshp: Shapefiles for Queensland and the Sunshine Coast.",
+    "crumbs": [
+      "Session 2"
+    ]
+  },
+  {
+    "objectID": "Session 2/session_2_home.html#scripts",
+    "href": "Session 2/session_2_home.html#scripts",
+    "title": "Session 2",
+    "section": "",
+    "text": "ICCB_Training.R: the training script. This is what will be used in the workshop.\n\nICCB_Training_complete.R: the training script with additional examples. Try not to look at these until you’ve had a go yourself!\n\nThe remaining scripts in this folder were used to prepare the workshop data and are included for interest only.",
+    "crumbs": [
+      "Session 2"
+    ]
+  },
+  {
+    "objectID": "Session 2/session_2_home.html#references",
+    "href": "Session 2/session_2_home.html#references",
+    "title": "Session 2",
+    "section": "",
+    "text": "Further information on the models and datasets used here can be found in the following papers:\nChapman, S., Syktus, J., Trancoso, R., Thatcher, M., Toombs, N., Wong, K. K.-H., & Takbash, A. (2023). Evaluation of Dynamically Downscaled CMIP6-CCAM Models Over Australia. Earth’s Future, 11(11), e2023EF003548. https://doi.org/10.1029/2023EF003548\nChapman, S., Syktus, J., Trancoso, R., Toombs, N., & Eccles, R. (2024). Projected changes in mean climate and extremes from downscaled high-resolution CMIP6 simulations in Australia. Weather and Climate Extremes, 46, 100733. https://doi.org/10.1016/j.wace.2024.10073\nJones, D. A., Wang, W., & Fawcett, R. (2009). High-quality spatial climate data-sets for Australia. Australian Meteorlogical and Oceangraphic Journal, 58, 233–248.",
+    "crumbs": [
+      "Session 2"
+    ]
+  },
+  {
+    "objectID": "Session 2/session_2_home.html#slides",
+    "href": "Session 2/session_2_home.html#slides",
+    "title": "Session 2",
+    "section": "",
+    "text": "Download a PDF of the slides",
+    "crumbs": [
+      "Session 2"
+    ]
+  },
+  {
+    "objectID": "Session 2/data/shp/QLD_State_Mask.html",
+    "href": "Session 2/data/shp/QLD_State_Mask.html",
+    "title": "ICCB - Open Geospatial Tools",
+    "section": "",
+    "text": "&lt;!DOCTYPE qgis PUBLIC ‘http://mrcc.com/qgis.dtd’ ‘SYSTEM’&gt;  Mainland  ENG dataset\n\nMainlands - Queensland\n\nThis dataset depicts the land extent of continental Queensland. The boundary of the area shown coincides with theFrameworkBoundaries dataset.\nUSER NOTICE This feature class will be no longer updated after April 26th, 2024. New feature classes have been created to replace it. This feature class will be removed after June 1st without notification. To provide digital data depicting the land extent of continental Queensland for use in land administration, topographic mapping and in the production of navigational and web based mapping applications.  Queensland coastline mean high water state border mainland BOUNDARIES coastline mean high water state border mainland   BOUNDARIES    \n\n\n  &lt;city&gt;&lt;/city&gt;\n  &lt;administrativearea&gt;&lt;/administrativearea&gt;\n  &lt;postalcode&gt;&lt;/postalcode&gt;\n  &lt;country&gt;&lt;/country&gt;\n&lt;/contactAddress&gt;\n&lt;name&gt;Resources, Georesources, SI, SD, SDM, Senior Spatial Information Officer&lt;/name&gt;\n&lt;organization&gt;Department of Resources&lt;/organization&gt;\n&lt;position&gt;Senior Spatial Information Officer, Spatial Data Management, Spatial Data, Spatial Information&lt;/position&gt;\n&lt;voice&gt;(07) 3330 4738&lt;/voice&gt;\n&lt;fax&gt;&lt;/fax&gt;\n&lt;email&gt;SIIMTopoDataManagement@resources.qld.gov.au&lt;/email&gt;\n&lt;role&gt;Point of contact&lt;/role&gt;\n    This dataset is GDA2020 compatible. The source data, and therefore the captured features, are georeferenced as GDA94 (horizontal only). The horizontal accuracy of the geo-referencing and/or data collection method for this example is greater than the datum offset between GDA94 and GDA2020 (1.8 meters). The resulting dataset has been nominated as a low-accuracy GDA2020 dataset. As this data has not been directly captured in GDA2020, nor transformed to GDA2020, the resulting data is ‘GDA2020 Compatible’ not ‘GDA2020 Compliant’. This dataset was derived from and is coincident with the FrameworkBoundaries_Queensland dataset. Within the FrameworkBoundaries_Queensland dataset., the coastline was digitized from the most current imagery by defining mean high water from sand coloration and debris lines. Where available, the highest astronomical tide line generated from LiDAR was used to help define the line. Were the line is obscured by vegetation, in particular mangroves; the seaward edge of the vegetation is adopted. The coastline feature does not cross the entrances to large inland waterbodies. In these instances, a feature type Junction is used to seamlessly connect the coastline. The state border was captured and coincides with the position as shown by the Queensland Digital Cadastral Database, Feature Types: Mainland - The area of continental Queensland. Data source: Queensland Digital Cadastral Database  Features have been captured or updated from the best available imagery or data sources, with an attribute within the data describing the source and reliability. Unrestricted to all levels of government and community. Data is available to all government agencies, community groups and individuals. Dataset is available through physical supply and may be made available via web delivery tools, for example, through DNRME’s internet sites. The State of Queensland (Department of Resources) � State of Queensland (Department of Resources) 2023 This material is licensed under a Creative Commons - Attribution 4.0 International licence. ? The Department of Resources requests attribution in the following manner: � State of Queensland (Department of Resources) 2021. Updated data available at http://qldspatial.information.qld.gov.au/catalogue/ .    GEOGCRS[“GDA94”,DATUM[“Geocentric Datum of Australia 1994”,ELLIPSOID[“GRS 1980”,6378137,298.257222101,LENGTHUNIT[“metre”,1]]],PRIMEM[“Greenwich”,0,ANGLEUNIT[“degree”,0.0174532925199433]],CS[ellipsoidal,2],AXIS[“geodetic latitude (Lat)”,north,ORDER[1],ANGLEUNIT[“degree”,0.0174532925199433]],AXIS[“geodetic longitude (Lon)”,east,ORDER[2],ANGLEUNIT[“degree”,0.0174532925199433]],USAGE[SCOPE[“Horizontal component of 3D system.”],AREA[“Australia including Lord Howe Island, Macquarie Island, Ashmore and Cartier Islands, Christmas Island, Cocos (Keeling) Islands, Norfolk Island. All onshore and offshore.”],BBOX[-60.55,93.41,-8.47,173.34]],ID[“EPSG”,4283]] +proj=longlat +ellps=GRS80 +no_defs 3415 4283 EPSG:4283 GDA94 longlat EPSG:7019 true       2018-05-21T14:00:00Z           \n\n\n\n Back to top"
   },
   {
     "objectID": "index.html",
@@ -809,135 +830,5 @@
     "title": "Session 1",
     "section": "",
     "text": "Landing page for Session 1.\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "Session 4/session_4_home.html#load-spatial-data",
-    "href": "Session 4/session_4_home.html#load-spatial-data",
-    "title": "Session 4",
-    "section": "Load Spatial Data",
-    "text": "Load Spatial Data\n\n# Load the Planning unit\nPU &lt;- terra::rast(\"data/otherdata/PlanningUnits.tif\")\nplot(PU, col = viridisLite::mako(n = 1))\n\n\n\n\n\n\n\n\n\n# Get the file names of the testing data\nspp.list &lt;- list.files(path = \"data/SpeciesDistributions/\", full.names = TRUE, recursive = TRUE, pattern = \".tif$\")\n\n\nLoad current species distribution\n\nspp &lt;- rast(spp.list[grep(\"current\", spp.list)])\nnew_names &lt;- tools::file_path_sans_ext(basename(spp.list[grep(\"current\", spp.list)]))\nnames(spp) &lt;- new_names\nplot(spp, axes = FALSE, col = viridisLite::mako(n = 100, direction = -1), main = names(spp))\n\n\n\n\n\n\n\n\n\n\nLoad future species distribution\n\nspp &lt;- rast(spp.list[grep(\"future\", spp.list)])\nnew_names &lt;- tools::file_path_sans_ext(basename(spp.list[grep(\"future\", spp.list)]))\nnames(spp) &lt;- new_names\nplot(spp, axes = FALSE, col = viridisLite::mako(n = 100, direction = -1), main = names(spp))\n\n\n\n\n\n\n\n\n\n\nLoad protected areas, urban centers, and cost layer\n\nPA &lt;- rast(\"data/otherdata/protected_areas.tif\")\nplot(PA, axes = FALSE, col = viridisLite::mako(n = 100, direction = -1), main = \"Protected Areas (I & II)\")\n\n\n\n\n\n\n\nurban &lt;- rast(\"data/otherdata/urban_centers.tif\")\nplot(urban, axes = FALSE, col = viridisLite::mako(n = 100, direction = -1), main = \"Urban Centers\")\n\n\n\n\n\n\n\nhfp &lt;- rast(\"data/otherdata/cost_hfp2013.tif\")\nplot(hfp, axes = FALSE, col = viridisLite::mako(n = 10, direction = -1), main = \"Global human footprint\")",
-    "crumbs": [
-      "Session 4"
-    ]
-  },
-  {
-    "objectID": "Session 4/session_4_home.html#define-budget",
-    "href": "Session 4/session_4_home.html#define-budget",
-    "title": "Session 4",
-    "section": "Define Budget",
-    "text": "Define Budget\n\nbudget.area &lt;- round(0.3 * length(cells(PU)))",
-    "crumbs": [
-      "Session 4"
-    ]
-  },
-  {
-    "objectID": "Session 4/session_4_home.html#scenario-1-basic-shortfall-objective",
-    "href": "Session 4/session_4_home.html#scenario-1-basic-shortfall-objective",
-    "title": "Session 4",
-    "section": "Scenario 1: Basic Shortfall Objective",
-    "text": "Scenario 1: Basic Shortfall Objective\n\np &lt;- problem(PU, spp) %&gt;% \n  add_min_shortfall_objective(budget = budget.area) %&gt;%\n  add_relative_targets(targets = 1) %&gt;% \n  add_default_solver() %&gt;%\n  add_proportion_decisions()\n\ns1 &lt;- solve(p)\nplot(s1, main = \"Scenario 1\")",
-    "crumbs": [
-      "Session 4"
-    ]
-  },
-  {
-    "objectID": "Session 4/session_4_home.html#scenario-2-lock-out-urban-areas",
-    "href": "Session 4/session_4_home.html#scenario-2-lock-out-urban-areas",
-    "title": "Session 4",
-    "section": "Scenario 2: Lock Out Urban Areas",
-    "text": "Scenario 2: Lock Out Urban Areas\n\np &lt;- problem(PU, spp) %&gt;% \n  add_min_shortfall_objective(budget = budget.area) %&gt;%\n  add_relative_targets(targets = 1) %&gt;%\n  add_proportion_decisions() %&gt;%\n  add_locked_out_constraints(urban) %&gt;%\n  add_default_solver()\n\ns2 &lt;- solve(p)\nplot(s2, main = \"Scenario 2 - lock out\")",
-    "crumbs": [
-      "Session 4"
-    ]
-  },
-  {
-    "objectID": "Session 4/session_4_home.html#scenario-3-lock-in-protected-areas",
-    "href": "Session 4/session_4_home.html#scenario-3-lock-in-protected-areas",
-    "title": "Session 4",
-    "section": "Scenario 3: Lock In Protected Areas",
-    "text": "Scenario 3: Lock In Protected Areas\n\np &lt;- problem(PU, spp) %&gt;% \n  add_min_shortfall_objective(budget = budget.area) %&gt;%\n  add_relative_targets(targets = 1) %&gt;%\n  add_proportion_decisions() %&gt;%\n  add_locked_in_constraints(PA) %&gt;%\n  add_locked_out_constraints(urban) %&gt;%\n  add_default_solver()\n\ns3 &lt;- solve(p)\nplot(s3, main = \"Scenario 3 - lock in\")",
-    "crumbs": [
-      "Session 4"
-    ]
-  },
-  {
-    "objectID": "Session 4/session_4_home.html#scenario-4-penalize-human-footprint",
-    "href": "Session 4/session_4_home.html#scenario-4-penalize-human-footprint",
-    "title": "Session 4",
-    "section": "Scenario 4: Penalize Human Footprint",
-    "text": "Scenario 4: Penalize Human Footprint\n\np &lt;- problem(PU, spp) %&gt;% \n  add_min_shortfall_objective(budget = budget.area) %&gt;%\n  add_relative_targets(targets = 1) %&gt;%\n  add_linear_penalties(penalty = 1, data = hfp) %&gt;%\n  add_proportion_decisions() %&gt;%\n  add_locked_in_constraints(PA) %&gt;%\n  add_locked_out_constraints(urban) %&gt;%\n  add_default_solver()\n\ns4 &lt;- solve(p)\nplot(s4, main = \"Scenario 4 - apply penalty\")",
-    "crumbs": [
-      "Session 4"
-    ]
-  },
-  {
-    "objectID": "Session 4/session_4_home.html#plot-all-scenarios-side-by-side",
-    "href": "Session 4/session_4_home.html#plot-all-scenarios-side-by-side",
-    "title": "Session 4",
-    "section": "Plot All Scenarios Side by Side",
-    "text": "Plot All Scenarios Side by Side\n\npar(mfrow = c(2, 2), mar = c(3, 3, 3, 1))\nplot(s1, main = \"Scenario 1\")\nplot(s2, main = \"Scenario 2 - lock out\")\nplot(s3, main = \"Scenario 3 - lock in\")\nplot(s4, main = \"Scenario 4 - apply penalty\")\n\n\n\n\n\n\n\npar(mfrow = c(1, 1))",
-    "crumbs": [
-      "Session 4"
-    ]
-  },
-  {
-    "objectID": "Session 4/session_4_home.html#evaluate-metrics",
-    "href": "Session 4/session_4_home.html#evaluate-metrics",
-    "title": "Session 4",
-    "section": "Evaluate Metrics",
-    "text": "Evaluate Metrics\n\nrpz_target_spp_s1 &lt;- eval_target_coverage_summary(p, s1) \nmean(rpz_target_spp_s1$relative_held)\n\n[1] 0.02279414\n\nmean(rpz_target_spp_s1$relative_shortfall)\n\n[1] 0.9772059\n\nrpz_target_spp_s2 &lt;- eval_target_coverage_summary(p, s2) \nmean(rpz_target_spp_s2$relative_held)\n\n[1] 0.3410345\n\nmean(rpz_target_spp_s2$relative_shortfall)\n\n[1] 0.6589655\n\nrpz_target_spp_s3 &lt;- eval_target_coverage_summary(p, s3) \nmean(rpz_target_spp_s3$relative_held)\n\n[1] 0.3294218\n\nmean(rpz_target_spp_s3$relative_shortfall)\n\n[1] 0.6705782\n\nrpz_target_spp_s4 &lt;- eval_target_coverage_summary(p, s4) \nmean(rpz_target_spp_s4$relative_held)\n\n[1] 0.1013999\n\nmean(rpz_target_spp_s4$relative_shortfall)\n\n[1] 0.8986001",
-    "crumbs": [
-      "Session 4"
-    ]
-  },
-  {
-    "objectID": "Session 2/session_2_home.html#working-with-multiple-models",
-    "href": "Session 2/session_2_home.html#working-with-multiple-models",
-    "title": "Session 2",
-    "section": "Working with multiple Models",
-    "text": "Working with multiple Models\n\npr_files &lt;- list.files(path = \"data/annual/\", pattern = \"pr\", full.names = TRUE)            # Lists all files, including all scenarios\npr_files &lt;- list.files(path = \"data/annual/\", pattern = \"pr.*ssp370\", full.names = TRUE)    # Lists files with only ssp370\n\n\npr_data = rast(pr_files)*365  # daily mean to annual total. CCAM has a 365 day calendar.\npr_data\n\nclass       : SpatRaster \nsize        : 205, 176, 360  (nrow, ncol, nlyr)\nresolution  : 0.1, 0.1  (x, y)\nextent      : 137.45, 155.05, -29.45, -8.95  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84) \nsource(s)   : memory\nvarname     : pr_annual (Seasonal average of Precipitation (Annual)) \nnames       : pr_annual_1, pr_annual_2, pr_annual_3, pr_annual_4, pr_annual_5, pr_annual_6, ... \nmin values  :      52.196,    48.72456,    85.55378,    54.58001,    150.5908,    117.2378, ... \nmax values  :    6151.675,  7233.45194,  5595.35947,  6152.59279,   5482.5640,   5449.5375, ... \ntime (days) : 1981-01-01 to 2100-01-01 (120 steps) \n\n\nRepeating the year names multiple times to correspond with multiple models\n\nyears = seq(1981,2100)\nyears_rep = rep(years, times =3)\nnames(pr_data) = years_rep\n\nCalculating the model average\n\npr_modavg = tapp(pr_data, years, fun = mean)\n\n# Calculating climatology for baseline (1981-2010)\npr_base = mean(pr_modavg[[1:30]])  # Converting from daily mean to annual mean\n\n# Calculating climatology for future (2071-2100)\npr_fut = mean(pr_modavg[[91:120]])  # Converting from daily mean to annual mean\n\nQ: Can you select the data based on the years instead?\nPlot historic and future rainfall\n\nlevelplot(pr_base)\n\n\n\n\n\n\n\nlevelplot(pr_fut)\n\n\n\n\n\n\n\n\nCutting data to Queensland\n\nqld_shp = vect('data/shp/QLD_State_Mask.shp')\npr_dif = pr_fut - pr_base\npr_dif_masked &lt;- crop(pr_dif, qld_shp, mask = TRUE)\nlevelplot(pr_dif_masked, margin = FALSE)\n\n\n\n\n\n\n\n\nPlotting the percent change\n\npr_pdif = (pr_fut - pr_base ) / pr_base *100  #Percent difference\npr_pdif_masked &lt;- crop(pr_pdif, qld_shp, mask = TRUE)\nlevelplot(pr_pdif_masked, margin = FALSE)\n\n\n\n\n\n\n\n\nSpecifying plotting bins and colours\n\nmy.at &lt;- seq(-20, 20, length.out = 10)\nmy.at = c(-Inf, my.at, Inf)\nlevelplot(pr_pdif_masked, margin = FALSE, at = my.at, cuts=11, pretty=T,\n                col.regions=((brewer.pal(11,\"RdBu\"))))\n\n\n\n\n\n\n\n\nQ. Can you modify this plot to show more infomation? Can you add a title and change the colours?\nWould showing multiple models on this plot help?\nQ. Can we compare the results from SSP370 to another Scenario?",
-    "crumbs": [
-      "Session 2"
-    ]
-  },
-  {
-    "objectID": "Session 2/session_2_home.html#models-and-climate-change-scenarios",
-    "href": "Session 2/session_2_home.html#models-and-climate-change-scenarios",
-    "title": "Session 2",
-    "section": "Models and climate change scenarios",
-    "text": "Models and climate change scenarios\nWe have provided data for three downscaled climate models. These models were downscaled from the CMIP6 GCMs (Global Climate Models) using the CCAM model to a 10km resolution over Australia. The model name refers to the CMIP6 GCM which acted as the host model and provided input to CCAM. Further information on the downscaling technique is available in Chapman et al. (2023) and information on the climate change impacts shown in these models is available in Chapman et al. (2024).\nWe have selected three models which represent the span from the full ensemble (set of all downscaled climate models): - ACCESS-ESM1-5 r6i1p1f1 - dry model - EC-Earth3 r1i1p1f1 - wet model - GFDL-ESM4 r1i1p1f1 - this model is close to the ensemble average for both temperature and precipitation changes at the end of the century\nWe have provided data for three climate change scenarios: - SSP126 - a low emission pathway, with on average 2°C of global warming at the end of century compared to pre-industrial times. - SSP245 - a medium emission pathway, with on average 3°C of warming. - SSP370 - a high emission pathway, with on average 4°C of warming.\nNote that there can be a great deal of variation within a model ensemble, and for each scenario there will be models that are warmer or cooler than the ensemble average.",
-    "crumbs": [
-      "Session 2"
-    ]
-  },
-  {
-    "objectID": "Session 2/session_2_home.html#data",
-    "href": "Session 2/session_2_home.html#data",
-    "title": "Session 2",
-    "section": "Data",
-    "text": "Data\n\nannual: annual average precipitation (mm/day) and temperature (celsius) for 1981 - 2100 for Queensland.\n\nmonthly: monthly pr (mm/day), tasmax and tasmin (celsius) for 1981 - 2100 for South-East Queensland.\n\nobs: observational data from the Australian Gridded Climate Dataset (AGCD). Variables include daily maximum and minimum temperature and precipitation for 1981 - 2020 at a 5km resolution. See Jones et al (2009) for further details.\n\nshp: Shapefiles for Queensland and the Sunshine Coast.",
-    "crumbs": [
-      "Session 2"
-    ]
-  },
-  {
-    "objectID": "Session 2/session_2_home.html#scripts",
-    "href": "Session 2/session_2_home.html#scripts",
-    "title": "Session 2",
-    "section": "Scripts",
-    "text": "Scripts\n\nICCB_Training.R: the training script. This is what will be used in the workshop.\n\nICCB_Training_complete.R: the training script with additional examples. Try not to look at these until you’ve had a go yourself!\n\nThe remaining scripts in this folder were used to prepare the workshop data and are included for interest only.",
-    "crumbs": [
-      "Session 2"
-    ]
-  },
-  {
-    "objectID": "Session 2/session_2_home.html#references",
-    "href": "Session 2/session_2_home.html#references",
-    "title": "Session 2",
-    "section": "References",
-    "text": "References\nFurther information on the models and datasets used here can be found in the following papers:\nChapman, S., Syktus, J., Trancoso, R., Thatcher, M., Toombs, N., Wong, K. K.-H., & Takbash, A. (2023). Evaluation of Dynamically Downscaled CMIP6-CCAM Models Over Australia. Earth’s Future, 11(11), e2023EF003548. https://doi.org/10.1029/2023EF003548\nChapman, S., Syktus, J., Trancoso, R., Toombs, N., & Eccles, R. (2024). Projected changes in mean climate and extremes from downscaled high-resolution CMIP6 simulations in Australia. Weather and Climate Extremes, 46, 100733. https://doi.org/10.1016/j.wace.2024.10073\nJones, D. A., Wang, W., & Fawcett, R. (2009). High-quality spatial climate data-sets for Australia. Australian Meteorlogical and Oceangraphic Journal, 58, 233–248.",
-    "crumbs": [
-      "Session 2"
-    ]
   }
 ]

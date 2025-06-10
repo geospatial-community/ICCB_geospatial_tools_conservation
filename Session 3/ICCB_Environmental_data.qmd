@@ -30,6 +30,8 @@ abstract: |
 ## Import packages
 
 ```{r}
+#| warning: false
+#| message: false
 
 library(terra)
 library(dplyr)
@@ -53,7 +55,7 @@ LGA <- st_read("Data/Environmental_variables/Local_Government_Areas.shp")
 st_crs(LGA)
 
 # Convert to WGS84
-LGA <- LGA %>% st_transform(3112)
+LGA <- LGA %>% st_transform(7856)
 
 # Select local govt. areas for South East Queensland
 LGA_SEQ <- LGA %>% 
@@ -85,6 +87,7 @@ ggplot() +
   labs(title = "Local Government Areas South East Queensland (SEQ)")
 
 ```
+
 ## Merge into a single polygon
 
 ```{r}
@@ -100,6 +103,7 @@ ggplot() +
   theme_bw() 
 
 ```
+
 ## Save SEQ extent for other scripts
 
 ```{r}
@@ -107,6 +111,7 @@ ggplot() +
 # Convert our SEQ extent to a SpatExtent object by converting to a SpatVector
 SEQ_extent.vect <- terra::vect(SEQ_extent)
 
+# Write the SEQ extent to a shapefile
 writeVector(SEQ_extent.vect, "Data/Environmental_variables/SEQ_extent.shp", overwrite = T)
 
 ```
@@ -116,7 +121,6 @@ writeVector(SEQ_extent.vect, "Data/Environmental_variables/SEQ_extent.shp", over
 Layers were made available to us by the EcoCommons team and were created by Toombs and Ma (2025):
 
 Toombs, N., and Ma S., 2025, A High-Resolution Dataset of 19 Bioclimatic Indices over Australia, Climate Projections and Services – Queensland Treasury, Brisbane, Queensland. [https://longpaddock.qld.gov.au/qld-future-climate/data-info/tern/]
-
 
 ```{r}
 
@@ -130,6 +134,7 @@ current_bioclim <- lapply(files, terra::rast)
 # Make into one raster stack
 current_bioclim <- rast(current_bioclim)
 
+# Plot the current bioclimatic variables
 plot(current_bioclim)
 
 # Examine the resolution
@@ -138,32 +143,34 @@ current_bioclim
 # Check the CRS
 crs(current_bioclim)
 
-# Update CRS 
-current_bioclim <- terra::project(current_bioclim, "EPSG:3112")
+# Update CRS to EPSG:7856 (GDA2020 / MGA zone 56)
+current_bioclim <- terra::project(current_bioclim, "EPSG:7856")
 
 # Our resolution is now ~5km by 5km
 current_bioclim
 
 ```
-## Mask to SEQ extent
+
+## Mask and crop to SEQ extent
 
 ```{r}
 
+# Mask the current bioclimatic variables to the SEQ extent
 current_bioclim <- terra::mask(current_bioclim, SEQ_extent.vect)
 
-# You can see that this has masked the area but the extent is still the same
-plot(current_bioclim[[1]])
-
+# Crop to the SEQ region
 current_bioclim <- terra::crop(current_bioclim, SEQ_extent.vect)
 
+# Plot all current bioclimatic variables
 plot(current_bioclim)
 
 # Save the current environmental covariates
-writeRaster(current_bioclim, 
-            filename = "Data/Environmental_variables/current_bioclim.tif",
+writeRaster(current_bioclim,
+            filename = "Data/Environmental_variables/SEQ_current_bioclim.tif",
             overwrite = T)
 
 ```
+
 ## Load future environmental data
 
 Here we load outputs from a moderate-high emissions shared socio-economic path scenario (SSP 3.70) for the year 2090 (2080 - 2099).
@@ -180,6 +187,7 @@ future_bioclim <- lapply(files, terra::rast)
 # Make into one raster stack
 future_bioclim <- rast(future_bioclim)
 
+# Plot the future bioclimatic variables
 plot(future_bioclim)
 
 # Examine the resolution
@@ -189,30 +197,82 @@ future_bioclim
 crs(future_bioclim)
 
 # Update CRS 
-future_bioclim <- terra::project(future_bioclim, "EPSG:3112")
+future_bioclim <- terra::project(future_bioclim, "EPSG:7856")
 
 # Our resolution is now ~5km by 5km
 future_bioclim
 
 ```
+
 ## Mask to SEQ extent
+
+We can see that for these layers the water surrounding Australia is not NA, but are values of 0. In some cells this introduces an artifact on the coastline where the values in some cells are an average between realistic values and 0, which results in cells with unusual and unrealistic values. We will do our best to mask these out.
 
 ```{r}
 
-future_bioclim <- terra::subst(from = 0, to = NA, future_bioclim) # Set all values of 0 to NA
-
-future_bioclim <- terra::mask(future_bioclim, SEQ_extent.vect)
-
-# You can see that this has masked the area but the extent is still the same
-plot(future_bioclim[[1]])
-
+# First mask and crop by the SEQ extent
+future_bioclim <- terra::mask(future_bioclim, SEQ_extent.vect) 
 future_bioclim <- terra::crop(future_bioclim, SEQ_extent.vect)
 
-plot(future_bioclim[[1]])
+# Plot one of the variables - max temp of the warmest month
+plot(future_bioclim[[5]], main = "Future BIO5")
 
-# Save the future environmental covariates
-writeRaster(future_bioclim, 
-            filename = "Data/Environmental_variables/future_bioclim.2090.SSP370.tif",
+```
+
+We can clearly see the artifacts in BIO5, which are not present in the current layers.
+
+```{r}
+
+plot(current_bioclim[[5]], main = "Current BIO5")
+
+```
+
+If we plot a histogram of the values we can see where we can set a threshold to exclude those lower values on the coastline. We tested values to ensure that we were removing as many of the dodgy values at the coast whilst retaining all real values, and the best balance was 28 degrees.
+
+Unfortunately now we have slightly fewer cells on the coastline, but as these were artifacts we don't have the true data for those cells anyway.
+
+```{r}
+
+# plot the distribution of values in BIO5
+hist(future_bioclim[[5]], breaks = 100)
+
+# create a mask for the artifacts, which we will apply across all of the layers
+artifact_mask <- future_bioclim[[5]] > 28
+names(artifact_mask) <- "artifact_mask"
+
+# plot the artifact mask
+plot(artifact_mask)
+
+# plot the updated future BIO5 layer
+plot(future_bioclim[[5]], main = "Future BIO5 - unmasked")
+
+# set all artifact values to NA (across all layers)
+future_bioclim <- terra::mask(future_bioclim, artifact_mask, maskvalues = 0) # Set all values of 0 to NA
+
+# plot the updated future BIO5 layer
+plot(future_bioclim[[5]], main = "Future BIO5 - masked")
+plot(current_bioclim[[5]], main = "Current BIO5")
+
+# this removes those lower values
+hist(future_bioclim[[5]], breaks = 100)
+
+```
+
+Now that we have applied the artifact mask across all layers, they look better.
+
+```{r}
+
+plot(future_bioclim)
+
+```
+
+Now we can save the future environmental covariates for SEQ.
+
+```{r}
+
+# Save the cropped and masked future environmental covariates
+writeRaster(future_bioclim,
+            filename = "Data/Environmental_variables/SEQ_future_bioclim.2090.SSP370.tif",
             overwrite = T)
 
 ```
@@ -242,30 +302,32 @@ future_bioclim
 crs(future_bioclim)
 
 # Update CRS 
-future_bioclim <- terra::project(future_bioclim, "EPSG:3112")
+future_bioclim <- terra::project(future_bioclim, "EPSG:7856")
 
 # Our resolution is now ~5km by 5km
 future_bioclim
 
 ```
+
 ## Mask to SEQ extent
+
+We will crop and mask the future bioclimatic variables to the SEQ extent, and apply the artifact mask as we did for the SSP 3.70 layers.
 
 ```{r}
 
-future_bioclim <- terra::subst(from = 0, to = NA, future_bioclim) # Set all values of 0 to NA
-
-future_bioclim <- terra::mask(future_bioclim, SEQ_extent.vect)
-
-# You can see that this has masked the area but the extent is still the same
-plot(future_bioclim[[1]])
-
+# First mask and crop by the SEQ extent
+future_bioclim <- terra::mask(future_bioclim, SEQ_extent.vect) 
 future_bioclim <- terra::crop(future_bioclim, SEQ_extent.vect)
+
+# set all artifact values to NA
+future_bioclim <- terra::mask(future_bioclim, artifact_mask, maskvalues = 0) # Set all values of 0 to NA
+plot(future_bioclim[[5]])
 
 plot(future_bioclim)
 
 # Save the future environmental covariates
-writeRaster(future_bioclim, 
-            filename = "Data/Environmental_variables/future_bioclim.2090.SSP126.tif",
+writeRaster(future_bioclim,
+            filename = "Data/Environmental_variables/SEQ_future_bioclim.2090.SSP126.tif",
             overwrite = T)
 
 ```

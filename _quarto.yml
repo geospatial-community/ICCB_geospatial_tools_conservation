@@ -44,6 +44,7 @@ website:
     - title: "Session 2"
       contents: 
         - Session 2/session_2_home.qmd
+        - Session 2/session_2_code.qmd
         
     - title: "Session 3"
       contents: 

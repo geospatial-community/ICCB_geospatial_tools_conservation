@@ -1,0 +1,86 @@
+<!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
+<qgis version="3.28.3-Firenze">
+  <identifier>Mainland</identifier>
+  <parentidentifier></parentidentifier>
+  <language>ENG</language>
+  <type>dataset</type>
+  <title>Mainlands - Queensland</title>
+  <abstract>This dataset depicts the land extent of continental Queensland. The boundary of the area shown coincides with theFrameworkBoundaries dataset.
+
+**USER NOTICE** This feature class will be no longer updated after April 26th, 2024. New feature classes have been created to replace it. This feature class will be removed after June 1st without notification. To provide digital data depicting the land extent of continental Queensland for use in land administration, topographic mapping and in the production of navigational and web based mapping applications.</abstract>
+  <keywords vocabulary="Search keys">
+    <keyword>Queensland</keyword>
+    <keyword>coastline</keyword>
+    <keyword>mean high water</keyword>
+    <keyword>state border</keyword>
+    <keyword>mainland</keyword>
+    <keyword>BOUNDARIES</keyword>
+    <keyword>coastline</keyword>
+    <keyword>mean high water</keyword>
+    <keyword>state border</keyword>
+    <keyword>mainland</keyword>
+  </keywords>
+  <keywords vocabulary="gmd:topicCategory">
+    <keyword>BOUNDARIES</keyword>
+  </keywords>
+  <contact>
+    <contactAddress>
+      <type></type>
+      <address></address>
+      <city></city>
+      <administrativearea></administrativearea>
+      <postalcode></postalcode>
+      <country></country>
+    </contactAddress>
+    <name>Resources, Georesources, SI, SD, SDM, Senior Spatial Information Officer</name>
+    <organization>Department of Resources</organization>
+    <position>Senior Spatial Information Officer, Spatial Data Management, Spatial Data, Spatial Information</position>
+    <voice>(07) 3330 4738</voice>
+    <fax></fax>
+    <email>SIIMTopoDataManagement@resources.qld.gov.au</email>
+    <role>Point of contact</role>
+  </contact>
+  <links>
+    <link description="" url="http://qldspatial.information.qld.gov.au/catalogue/custom/search.page?q=%22Mainlands - Queensland%22" name="Queensland Spatial Catalogue" type="SHP, TAB, FGDB, KMZ" format="" mimeType="" size=""/>
+  </links>
+  <history>This dataset is GDA2020 compatible. The source data, and therefore the captured features, are georeferenced as GDA94 (horizontal only). The horizontal accuracy of the geo-referencing and/or data collection method for this example is greater than the datum offset between GDA94 and GDA2020 (1.8 meters). The resulting dataset has been nominated as a low-accuracy GDA2020 dataset. As this data has not been directly captured in GDA2020, nor transformed to GDA2020, the resulting data is 'GDA2020 Compatible' not 'GDA2020 Compliant'. This dataset was derived from and is coincident with the FrameworkBoundaries_Queensland dataset. Within the FrameworkBoundaries_Queensland dataset., the coastline was digitized from the most current imagery by defining mean high water from sand coloration and debris lines. Where available, the highest astronomical tide line generated from LiDAR was used to help define the line. Were the line is obscured by vegetation, in particular mangroves; the seaward edge of the vegetation is adopted. The coastline feature does not cross the entrances to large inland waterbodies. In these instances, a feature type Junction is used to seamlessly connect the coastline. The state border was captured and coincides with the position as shown by the Queensland Digital Cadastral Database, Feature Types: Mainland - The area of continental Queensland.</history>
+  <history>Data source: Queensland Digital Cadastral Database</history>
+  <fees></fees>
+  <constraints type="Limitations of use">Features have been captured or updated from the best available imagery or data sources, with an attribute within the data describing the source and reliability.</constraints>
+  <constraints type="Security constraints">Unrestricted to all levels of government and community. Data is available to all government agencies, community groups and individuals. Dataset is available through physical supply and may be made available via web delivery tools, for example, through DNRME's internet sites.</constraints>
+  <rights>The State of Queensland (Department of Resources)</rights>
+  <rights>© State of Queensland (Department of Resources) 2023</rights>
+  <license>This material is licensed under a Creative Commons - Attribution 4.0 International licence. 
+?
+The Department of Resources requests attribution in the following manner:
+© State of Queensland (Department of Resources) 2021. Updated data available at http://qldspatial.information.qld.gov.au/catalogue/ .</license>
+  <encoding></encoding>
+  <crs>
+    <spatialrefsys nativeFormat="Wkt">
+      <wkt>GEOGCRS["GDA94",DATUM["Geocentric Datum of Australia 1994",ELLIPSOID["GRS 1980",6378137,298.257222101,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["Australia including Lord Howe Island, Macquarie Island, Ashmore and Cartier Islands, Christmas Island, Cocos (Keeling) Islands, Norfolk Island. All onshore and offshore."],BBOX[-60.55,93.41,-8.47,173.34]],ID["EPSG",4283]]</wkt>
+      <proj4>+proj=longlat +ellps=GRS80 +no_defs</proj4>
+      <srsid>3415</srsid>
+      <srid>4283</srid>
+      <authid>EPSG:4283</authid>
+      <description>GDA94</description>
+      <projectionacronym>longlat</projectionacronym>
+      <ellipsoidacronym>EPSG:7019</ellipsoidacronym>
+      <geographicflag>true</geographicflag>
+    </spatialrefsys>
+  </crs>
+  <extent>
+    <spatial maxx="155" dimensions="2" minx="138" maxz="0" crs="EPSG:4283" miny="-29.5" minz="0" maxy="-9"/>
+    <temporal>
+      <period>
+        <start>2018-05-21T14:00:00Z</start>
+        <end></end>
+      </period>
+    </temporal>
+    <temporal>
+      <period>
+        <start></start>
+        <end></end>
+      </period>
+    </temporal>
+  </extent>
+</qgis>

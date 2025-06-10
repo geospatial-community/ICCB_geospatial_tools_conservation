@@ -1,9 +1,28 @@
 ---
 title: "Session 3"
 author: "Charlotte Patterson, Scott Forrest"
+date: "`r Sys.Date()`"
+execute: 
+  cache: false
+toc: true
+number-sections: false
+format: 
+  html:
+    self-contained: true
+    code-fold: show
+    code-tools: true
+    df-print: paged
+    code-line-numbers: true
+    code-overflow: scroll
+    fig-format: png
+    fig-dpi: 300
+  pdf:
+    geometry: 
+      - top=30mm
+      - left=30mm
+editor:
+  source
 ---
-
-Landing page for Session 3.
 
 ## Slides
 

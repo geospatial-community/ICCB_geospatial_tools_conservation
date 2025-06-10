@@ -1,7 +1,42 @@
 ---
 title: "Session 4"
 author: "Brooke Williams, Caitie Kuemple"
+date: "`r Sys.Date()`"
+execute: 
+  cache: false
+toc: true
+number-sections: false
+format: 
+  html:
+    self-contained: true
+    code-fold: show
+    code-tools: true
+    df-print: paged
+    code-line-numbers: true
+    code-overflow: scroll
+    fig-format: png
+    fig-dpi: 300
+  pdf:
+    geometry: 
+      - top=30mm
+      - left=30mm
+editor:
+  source
+abstract: |
+  In this session we are using the prioritizr package to create a set of conservation scenarios for protecting the future distribution of koalas in the SEQ region. 
 ---
+
+## Install the rcbc package for the cbc optimization solver
+
+```{r}
+#| message: false
+#| warning: false
+if (!require(remotes))
+  install.packages("remotes")
+remotes::install_github("dirkschumacher/rcbc")
+```
+
+## Install packages
 
 ```{r setup}
 #| message: false
@@ -12,6 +47,7 @@ library(viridisLite)
 library(prioritizr)
 library(raster)
 library(sf)
+library(rcbc)
 ```
 
 ## Load Spatial Data
