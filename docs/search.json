@@ -125,7 +125,7 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "Maybe some info about contributors?\n\n\n\n Back to top"
+    "text": "This training course was organized by the Geospatial Share Community of Practice based in Australia.\nOur mission is to build a supportive and inclusive community where students, researchers, and professionals can grow their geospatial skills together. See the Geospatial Share website to see the other workshops and tutorials we have organized throughout the years."
   },
   {
     "objectID": "Session 5/docs/get-ready.html",
@@ -673,9 +673,9 @@
   {
     "objectID": "workshop_overview.html",
     "href": "workshop_overview.html",
-    "title": "Workshop overview",
+    "title": "Open Source Geospatial Tools for Conservation under Climate Change",
     "section": "",
-    "text": "Overview of the workshop\n\nHow it will run\nAccessing the repo\netc…\n\n\n\n\n Back to top"
+    "text": "This repo contains the materials for the ICCB workshop titled “Open Source Geospatial Tools for Conservation under Climate Change”."
   },
   {
     "objectID": "Session 4/session_4_home.html",
@@ -983,5 +983,82 @@
     "title": "Session 1",
     "section": "",
     "text": "Landing page for Session 1.\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "about.html#organizers",
+    "href": "about.html#organizers",
+    "title": "About",
+    "section": "Organizers",
+    "text": "Organizers\n\nMitch Rudge\nMitch created the GeoSpatial Share Community, completed his PhD at UQ, and now works as a Natural Capital Data Scientist at Bush Heritage Australia.\n\n\nCatherine Kim\nCatherine is a marine scientist at the Queensland University of Technology and passionate about upskilling students, researchers, and professionals with data science skills."
+  },
+  {
+    "objectID": "about.html#session-leads",
+    "href": "about.html#session-leads",
+    "title": "About",
+    "section": "Session Leads",
+    "text": "Session Leads\n\nJason Flower\nProject Researcher at the Environmental Market Solutions Lab (emLab) at the University of California, Santa Barbara working on marine spatial planning and coastal and fisheries management on islands in the Caribbean, Pacific, and Western Indian Ocean. His work has helped guide marine spatial planning in Montserrat and Bermuda, and inform fisheries management in Barbuda, Curacao, the Maldives, and Montserrat.\n\n\nRalph Trancoso\n(No description provided)\n\n\nSarah Chapman\n(No description provided)\n\n\nRohan Eccles\n(No description provided)\n\n\nCharlotte Patterson\n(No description provided)\n\n\nScott Forrest\n(No description provided)\n\n\nBrooke Williams\n(No description provided)\n\n\nCaite Kuemple\n(No description provided)\n\n\nEmma Hain\n(No description provided)"
+  },
+  {
+    "objectID": "workshop_overview.html#aim-of-the-workshop",
+    "href": "workshop_overview.html#aim-of-the-workshop",
+    "title": "Open Source Geospatial Tools for Conservation under Climate Change",
+    "section": "Aim of the workshop",
+    "text": "Aim of the workshop\nOver two days, this training workshop aims to equip participants with the core skills of conservation planning and management with open source geospatial tools - from the basics of R spatial, to climate modelling, species distribution modelling, spatial conservation planning, all the way to making beautiful maps with QGIS."
+  },
+  {
+    "objectID": "workshop_overview.html#key-case-study-question",
+    "href": "workshop_overview.html#key-case-study-question",
+    "title": "Open Source Geospatial Tools for Conservation under Climate Change",
+    "section": "Key case study question",
+    "text": "Key case study question\nKoalas (Phascolarctos cinereus) in South East Queensland (SEQ) inhabit fragmented eucalypt woodlands and rely heavily on Eucalyptus species for food and shelter. The population is already under pressure from habitat loss, disease (notably chlamydia), and vehicle collisions. Climate change poses additional threats through increased frequency of heatwaves, droughts, and bushfires, which reduce food quality, water availability, and suitable habitat. With this in mind, this workshop will seek to address the question: “How can we best conserve the koalas of south east Queensland under climate change?”."
+  },
+  {
+    "objectID": "workshop_overview.html#schedule",
+    "href": "workshop_overview.html#schedule",
+    "title": "Open Source Geospatial Tools for Conservation under Climate Change",
+    "section": "Schedule",
+    "text": "Schedule\nThe content will be delivered on the weekend prior to ICCB - the 14th and 15th of June 2025.\n\n\n\nSession\nLed by\nSupported by\nStart time\nEnd time\n\n\nIntroduction\nMitch Rudge and Catherine Kim\n\n9:00\n9:30\n\n\nGetting started with geospatial tools in R\nJason Flower (University of California, Santa Barbara)\nMitch Rudge and Catherine Kim\nSaturday 9:30\nSaturday 11:00\n\n\nMorning tea\n\n\n11:00\n11:15\n\n\nWorking with climate projection models part 1\nRalph Trancoso, Sarah Chapman, Rohan Eccles (Queensland Future Climate Science Program)\nMitch Rudge and Catherine Kim\nSaturday 11:15\nSaturday 12:30\n\n\nLunch day 1\n\n\nSaturday 12:30\nSaturday 13:30\n\n\nWorking with climate projection models part 2\n\n\n13:30\n14:00\n\n\nAfternoon tea\n\n\n14:00\n14:15\n\n\nModelling the future distribution of koalas\nScott Forrest and Charlotte Patterson (QUT)\nMitch Rudge and Catherine Kim\nSaturday 14:15\nSaturday 16:30\n\n\nKoala dinner\n\n\nTBC\nTBC\n\n\nPutting it all together with conservation spatial planning\nCaitie Kuempel (Griffith University) and Brooke Williams (The University of Newcastle)\nMitch Rudge and Catherine Kim\nSunday 10:00\nSunday 11:30\n\n\nLunch Day 2\n\n\nSunday 11:30\nSunday 12:30\n\n\nCreating beautiful maps with QGIS\nEmma Hain (North Road and QGIS Australia)\nMitch Rudge and Catherine Kim\nSunday 12:30\nSunday 14:30"
+  },
+  {
+    "objectID": "workshop_overview.html#before-the-workshop",
+    "href": "workshop_overview.html#before-the-workshop",
+    "title": "Open Source Geospatial Tools for Conservation under Climate Change",
+    "section": "Before the workshop",
+    "text": "Before the workshop\nPlease download and install R, R studio, and QGIS before the workshop. If you are not able to do this, that’s fine but please arrive early so we can get you started."
+  },
+  {
+    "objectID": "workshop_overview.html#location",
+    "href": "workshop_overview.html#location",
+    "title": "Open Source Geospatial Tools for Conservation under Climate Change",
+    "section": "Location",
+    "text": "Location\nThe University of Queensland St Lucia campus, Forgan Smith Building 01-E107."
+  },
+  {
+    "objectID": "workshop_overview.html#about-the-organisers-and-supporters",
+    "href": "workshop_overview.html#about-the-organisers-and-supporters",
+    "title": "Open Source Geospatial Tools for Conservation under Climate Change",
+    "section": "About the organisers and supporters",
+    "text": "About the organisers and supporters\n\nThis workshop was organised by Geospatial Share, a grassroots group of spatial enthusiasts whose mission is to build a supportive and inclusive community where students, researchers, and professionals can grow their geospatial skills together. See https://brisbane-geocommunity.netlify.app/ for more.\nThis workshop was made possible by generous contributions by members of the following organisations."
+  },
+  {
+    "objectID": "about.html#geospatial-share",
+    "href": "about.html#geospatial-share",
+    "title": "About",
+    "section": "",
+    "text": "This training course was organized by the Geospatial Share Community of Practice based in Australia.\nOur mission is to build a supportive and inclusive community where students, researchers, and professionals can grow their geospatial skills together. See the Geospatial Share website to see the other workshops and tutorials we have organized throughout the years."
+  },
+  {
+    "objectID": "index.html#about-the-organisers-and-supporters",
+    "href": "index.html#about-the-organisers-and-supporters",
+    "title": "ICCB - Open Source Geospatial Tools for Conservation under Climate Change",
+    "section": "About the organisers and supporters",
+    "text": "About the organisers and supporters\n\nThis workshop was organised by Geospatial Share, a grassroots group of spatial enthusiasts whose mission is to build a supportive and inclusive community where students, researchers, and professionals can grow their geospatial skills together. See https://brisbane-geocommunity.netlify.app/ for more.\nThis workshop was made possible by generous contributions by members of the following organisations."
+  },
+  {
+    "objectID": "about.html#about-the-organisers-and-supporters",
+    "href": "about.html#about-the-organisers-and-supporters",
+    "title": "About",
+    "section": "About the organisers and supporters",
+    "text": "About the organisers and supporters\n\nThis workshop was organised by Geospatial Share, a grassroots group of spatial enthusiasts whose mission is to build a supportive and inclusive community where students, researchers, and professionals can grow their geospatial skills together. See https://brisbane-geocommunity.netlify.app/ for more.\nThis workshop was made possible by generous contributions by members of the following organisations."
   }
 ]
