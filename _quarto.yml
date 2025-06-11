@@ -49,8 +49,8 @@ website:
     - title: "Session 3"
       contents: 
         - Session 3/session_3_home.qmd
-        - Session 3/ICCB_Species_data.qmd
-        - Session 3/ICCB_Environmental_data.qmd
+        # - Session 3/ICCB_Species_data.qmd
+        # - Session 3/ICCB_Environmental_data.qmd
         - Session 3/ICCB_Modelling_and_validation.qmd
         
     - title: "Session 4"
