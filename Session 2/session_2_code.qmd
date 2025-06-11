@@ -116,6 +116,22 @@ tas_fut = mean(tas[[91:120]])     # Calculating climatology for future (2071-210
 ## Q: Can you cut the historical data and future based on the dates?
 
 ```{r}
+# Add your code here!
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+```
+
+
+
+```{r}
 plot(tas_base)
 plot(tas_fut)
 ```
@@ -138,15 +154,17 @@ You can plot multiple figures in one plot using par (mfrow = c(nrows, ncols))
 Also check the instructions from Session 1!
 
 ```{r}
-
-
-
-
-
-
-
-
-
+# Add your code here!
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 ```
 
 Extracting out point data (timeseries)
@@ -184,9 +202,23 @@ ggplot(data = spat_ave, aes(y=mean, x=date))+
   theme_bw()
 ```
 
-Q. Can you add another model to this plot and compare the two?
+## Q. Can you add another model to this plot and compare the two?
 
 Hint: You'll need to prepare a dataframe with data for all models in it. One of the columns will need to be the values, and the other the model name.
+
+```{r}
+# Add your code here!
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+```
 
 # Part 2: Rainfall Data (multiple models)
 
@@ -223,7 +255,21 @@ pr_base = mean(pr_modavg[[1:30]])  # Converting from daily mean to annual mean
 pr_fut = mean(pr_modavg[[91:120]])  # Converting from daily mean to annual mean
 ```
 
-Q: Can you select the data based on the years instead?
+## Q: Can you select the data based on the years instead?
+
+```{r}
+# Add your code here!
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+```
 
 Plot historic and future rainfall
 
@@ -260,11 +306,39 @@ levelplot(pr_pdif_masked, margin = FALSE, at = my.at, cuts=11, pretty=T,
                 col.regions=((brewer.pal(11,"RdBu"))))
 ```
 
-Q. Can you modify this plot to show more infomation? Can you add a title and change the colours?
+## Q. Can you modify this plot to show more infomation? Can you add a title and change the colours?
 
 Would showing multiple models on this plot help?
 
-Q. Can we compare the results from SSP370 to another Scenario?
+```{r}
+# Add your code here!
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+```
+
+## Q. Can we compare the results from SSP370 to another Scenario?
+
+```{r}
+# Add your code here!
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+```
 
 # Part 3: Validating your data Calculating BioClim Indices
 
@@ -457,6 +531,34 @@ plot(bio_fut[[12]])
 
 Discussion Questions
 
-Q: Can you plot the bioclimatic indices in the past and present and compare the changes?
+## Q: Can you plot the bioclimatic indices in the past and present and compare the changes?
 
-Q: What does the bioclimatic indicators look like for a lower emissions scenario?
+```{r}
+# Add your code here!
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+```
+
+## Q: What does the bioclimatic indicators look like for a lower emissions scenario?
+
+```{r}
+# Add your code here!
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+```

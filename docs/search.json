@@ -293,11 +293,99 @@
     ]
   },
   {
+    "objectID": "Session 2/session_2_code.html#q-can-you-cut-the-historical-data-and-future-based-on-the-dates",
+    "href": "Session 2/session_2_code.html#q-can-you-cut-the-historical-data-and-future-based-on-the-dates",
+    "title": "Climate downscaling",
+    "section": "Q: Can you cut the historical data and future based on the dates?",
+    "text": "Q: Can you cut the historical data and future based on the dates?\n\n\nCode\n# Add your code here!\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n\n\n\n\nCode\nplot(tas_base)\n\n\n\n\n\n\n\n\n\nCode\nplot(tas_fut)\n\n\n\n\n\n\n\n\n\nChange in future temperature (future - base)\n\n\nCode\ntas_dif = tas_fut - tas_base\nplot(tas_dif)",
+    "crumbs": [
+      "Session 2",
+      "Climate downscaling"
+    ]
+  },
+  {
+    "objectID": "Session 2/session_2_code.html#q.-can-you-make-this-plot-nicer-add-a-title-and-change-the-colours",
+    "href": "Session 2/session_2_code.html#q.-can-you-make-this-plot-nicer-add-a-title-and-change-the-colours",
+    "title": "Climate downscaling",
+    "section": "Q. Can you make this plot nicer? Add a title and change the colours",
+    "text": "Q. Can you make this plot nicer? Add a title and change the colours\nHint: You can set plot titles using ‘main’\nControl the colours using col = brewer.pal(11, ‘PaletteName’) (see https://colorbrewer2.org/ for colour options)\nYou can plot multiple figures in one plot using par (mfrow = c(nrows, ncols))\nAlso check the instructions from Session 1!\n\n\nCode\n# Add your code here!\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n\n\nExtracting out point data (timeseries)\n\n\nCode\ntas[50,50]                  # extracts data from the 50th lat and 50th lon position\n\n\n\n  \n\n\n\nCode\ncells &lt;- cellFromRowCol(tas[[1]], 50, 50)\nxyFromCell(tas,cells)\n\n\n         x     y\n[1,] 142.4 -13.9\n\n\nCode\ndf = melt(tas[50,50])\n\n\nUsing  as id variables\n\n\nBasic plot\n\n\nCode\nplot(df, xlab = \"Year\", ylab = \"Temperature (degC)\")\n\n\n\n\n\n\n\n\n\nCalculating spatial average of all data\n\n\nCode\nspat_ave = global(tas, fun=mean, na.rm=TRUE)\nspat_ave$date = dates\n\n\nggplot\n\n\nCode\nggplot(data = spat_ave, aes(y=mean, x=date))+ \n  ylab('Temperature (degC)') + xlab('Year') +\n  geom_point() +\n  geom_line() +\n  geom_smooth(method = \"lm\") +\n  theme_bw()\n\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Session 2",
+      "Climate downscaling"
+    ]
+  },
+  {
+    "objectID": "Session 2/session_2_code.html#q.-can-you-add-another-model-to-this-plot-and-compare-the-two",
+    "href": "Session 2/session_2_code.html#q.-can-you-add-another-model-to-this-plot-and-compare-the-two",
+    "title": "Climate downscaling",
+    "section": "Q. Can you add another model to this plot and compare the two?",
+    "text": "Q. Can you add another model to this plot and compare the two?\nHint: You’ll need to prepare a dataframe with data for all models in it. One of the columns will need to be the values, and the other the model name.\n\n\nCode\n# Add your code here!\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#",
+    "crumbs": [
+      "Session 2",
+      "Climate downscaling"
+    ]
+  },
+  {
     "objectID": "Session 2/session_2_code.html#working-with-multiple-models",
     "href": "Session 2/session_2_code.html#working-with-multiple-models",
     "title": "Climate downscaling",
     "section": "Working with multiple Models",
-    "text": "Working with multiple Models\n\n\nCode\npr_files &lt;- list.files(path = \"data/annual/\", pattern = \"pr\", full.names = TRUE)            # Lists all files, including all scenarios\npr_files &lt;- list.files(path = \"data/annual/\", pattern = \"pr.*ssp370\", full.names = TRUE)    # Lists files with only ssp370\n\n\n\n\nCode\npr_data = rast(pr_files)*365  # daily mean to annual total. CCAM has a 365 day calendar.\npr_data\n\n\nclass       : SpatRaster \ndimensions  : 205, 176, 360  (nrow, ncol, nlyr)\nresolution  : 0.1, 0.1  (x, y)\nextent      : 137.45, 155.05, -29.45, -8.95  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84) \nsource(s)   : memory\nvarname     : pr_annual (Seasonal average of Precipitation (Annual)) \nnames       : pr_annual_1, pr_annual_2, pr_annual_3, pr_annual_4, pr_annual_5, pr_annual_6, ... \nmin values  :      52.196,    48.72456,    85.55378,    54.58001,    150.5908,    117.2378, ... \nmax values  :    6151.675,  7233.45194,  5595.35947,  6152.59279,   5482.5640,   5449.5375, ... \ntime (days) : 1981-01-01 to 2100-01-01 (2 steps) \n\n\nRepeating the year names multiple times to correspond with multiple models\n\n\nCode\nyears = seq(1981,2100)\nyears_rep = rep(years, times =3)\nnames(pr_data) = years_rep\n\n\nCalculating the model average\n\n\nCode\npr_modavg = tapp(pr_data, years, fun = mean)\n\n# Calculating climatology for baseline (1981-2010)\npr_base = mean(pr_modavg[[1:30]])  # Converting from daily mean to annual mean\n\n# Calculating climatology for future (2071-2100)\npr_fut = mean(pr_modavg[[91:120]])  # Converting from daily mean to annual mean\n\n\nQ: Can you select the data based on the years instead?\nPlot historic and future rainfall\n\n\nCode\nlevelplot(pr_base)\n\n\n\n\n\n\n\n\n\nCode\nlevelplot(pr_fut)\n\n\n\n\n\n\n\n\n\nCutting data to Queensland\n\n\nCode\nqld_shp = vect('data/shp/QLD_State_Mask.shp')\npr_dif = pr_fut - pr_base\npr_dif_masked &lt;- crop(pr_dif, qld_shp, mask = TRUE)\nlevelplot(pr_dif_masked, margin = FALSE)\n\n\n\n\n\n\n\n\n\nPlotting the percent change\n\n\nCode\npr_pdif = (pr_fut - pr_base ) / pr_base *100  #Percent difference\npr_pdif_masked &lt;- crop(pr_pdif, qld_shp, mask = TRUE)\nlevelplot(pr_pdif_masked, margin = FALSE)\n\n\n\n\n\n\n\n\n\nSpecifying plotting bins and colours\n\n\nCode\nmy.at &lt;- seq(-20, 20, length.out = 10)\nmy.at = c(-Inf, my.at, Inf)\nlevelplot(pr_pdif_masked, margin = FALSE, at = my.at, cuts=11, pretty=T,\n                col.regions=((brewer.pal(11,\"RdBu\"))))\n\n\n\n\n\n\n\n\n\nQ. Can you modify this plot to show more infomation? Can you add a title and change the colours?\nWould showing multiple models on this plot help?\nQ. Can we compare the results from SSP370 to another Scenario?",
+    "text": "Working with multiple Models\n\n\nCode\npr_files &lt;- list.files(path = \"data/annual/\", pattern = \"pr\", full.names = TRUE)            # Lists all files, including all scenarios\npr_files &lt;- list.files(path = \"data/annual/\", pattern = \"pr.*ssp370\", full.names = TRUE)    # Lists files with only ssp370\n\n\n\n\nCode\npr_data = rast(pr_files)*365  # daily mean to annual total. CCAM has a 365 day calendar.\npr_data\n\n\nclass       : SpatRaster \ndimensions  : 205, 176, 360  (nrow, ncol, nlyr)\nresolution  : 0.1, 0.1  (x, y)\nextent      : 137.45, 155.05, -29.45, -8.95  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84) \nsource(s)   : memory\nvarname     : pr_annual (Seasonal average of Precipitation (Annual)) \nnames       : pr_annual_1, pr_annual_2, pr_annual_3, pr_annual_4, pr_annual_5, pr_annual_6, ... \nmin values  :      52.196,    48.72456,    85.55378,    54.58001,    150.5908,    117.2378, ... \nmax values  :    6151.675,  7233.45194,  5595.35947,  6152.59279,   5482.5640,   5449.5375, ... \ntime (days) : 1981-01-01 to 2100-01-01 (2 steps) \n\n\nRepeating the year names multiple times to correspond with multiple models\n\n\nCode\nyears = seq(1981,2100)\nyears_rep = rep(years, times =3)\nnames(pr_data) = years_rep\n\n\nCalculating the model average\n\n\nCode\npr_modavg = tapp(pr_data, years, fun = mean)\n\n# Calculating climatology for baseline (1981-2010)\npr_base = mean(pr_modavg[[1:30]])  # Converting from daily mean to annual mean\n\n# Calculating climatology for future (2071-2100)\npr_fut = mean(pr_modavg[[91:120]])  # Converting from daily mean to annual mean",
+    "crumbs": [
+      "Session 2",
+      "Climate downscaling"
+    ]
+  },
+  {
+    "objectID": "Session 2/session_2_code.html#q-can-you-select-the-data-based-on-the-years-instead",
+    "href": "Session 2/session_2_code.html#q-can-you-select-the-data-based-on-the-years-instead",
+    "title": "Climate downscaling",
+    "section": "Q: Can you select the data based on the years instead?",
+    "text": "Q: Can you select the data based on the years instead?\n\n\nCode\n# Add your code here!\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#\n\n\nPlot historic and future rainfall\n\n\nCode\nlevelplot(pr_base)\n\n\n\n\n\n\n\n\n\nCode\nlevelplot(pr_fut)\n\n\n\n\n\n\n\n\n\nCutting data to Queensland\n\n\nCode\nqld_shp = vect('data/shp/QLD_State_Mask.shp')\npr_dif = pr_fut - pr_base\npr_dif_masked &lt;- crop(pr_dif, qld_shp, mask = TRUE)\nlevelplot(pr_dif_masked, margin = FALSE)\n\n\n\n\n\n\n\n\n\nPlotting the percent change\n\n\nCode\npr_pdif = (pr_fut - pr_base ) / pr_base *100  #Percent difference\npr_pdif_masked &lt;- crop(pr_pdif, qld_shp, mask = TRUE)\nlevelplot(pr_pdif_masked, margin = FALSE)\n\n\n\n\n\n\n\n\n\nSpecifying plotting bins and colours\n\n\nCode\nmy.at &lt;- seq(-20, 20, length.out = 10)\nmy.at = c(-Inf, my.at, Inf)\nlevelplot(pr_pdif_masked, margin = FALSE, at = my.at, cuts=11, pretty=T,\n                col.regions=((brewer.pal(11,\"RdBu\"))))",
+    "crumbs": [
+      "Session 2",
+      "Climate downscaling"
+    ]
+  },
+  {
+    "objectID": "Session 2/session_2_code.html#q.-can-you-modify-this-plot-to-show-more-infomation-can-you-add-a-title-and-change-the-colours",
+    "href": "Session 2/session_2_code.html#q.-can-you-modify-this-plot-to-show-more-infomation-can-you-add-a-title-and-change-the-colours",
+    "title": "Climate downscaling",
+    "section": "Q. Can you modify this plot to show more infomation? Can you add a title and change the colours?",
+    "text": "Q. Can you modify this plot to show more infomation? Can you add a title and change the colours?\nWould showing multiple models on this plot help?\n\n\nCode\n# Add your code here!\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#",
+    "crumbs": [
+      "Session 2",
+      "Climate downscaling"
+    ]
+  },
+  {
+    "objectID": "Session 2/session_2_code.html#q.-can-we-compare-the-results-from-ssp370-to-another-scenario",
+    "href": "Session 2/session_2_code.html#q.-can-we-compare-the-results-from-ssp370-to-another-scenario",
+    "title": "Climate downscaling",
+    "section": "Q. Can we compare the results from SSP370 to another Scenario?",
+    "text": "Q. Can we compare the results from SSP370 to another Scenario?\n\n\nCode\n# Add your code here!\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#",
+    "crumbs": [
+      "Session 2",
+      "Climate downscaling"
+    ]
+  },
+  {
+    "objectID": "Session 2/session_2_code.html#q-can-you-plot-the-bioclimatic-indices-in-the-past-and-present-and-compare-the-changes",
+    "href": "Session 2/session_2_code.html#q-can-you-plot-the-bioclimatic-indices-in-the-past-and-present-and-compare-the-changes",
+    "title": "Climate downscaling",
+    "section": "Q: Can you plot the bioclimatic indices in the past and present and compare the changes?",
+    "text": "Q: Can you plot the bioclimatic indices in the past and present and compare the changes?\n\n\nCode\n# Add your code here!\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#",
+    "crumbs": [
+      "Session 2",
+      "Climate downscaling"
+    ]
+  },
+  {
+    "objectID": "Session 2/session_2_code.html#q-what-does-the-bioclimatic-indicators-look-like-for-a-lower-emissions-scenario",
+    "href": "Session 2/session_2_code.html#q-what-does-the-bioclimatic-indicators-look-like-for-a-lower-emissions-scenario",
+    "title": "Climate downscaling",
+    "section": "Q: What does the bioclimatic indicators look like for a lower emissions scenario?",
+    "text": "Q: What does the bioclimatic indicators look like for a lower emissions scenario?\n\n\nCode\n# Add your code here!\n#\n#\n#\n#\n#\n#\n#\n#\n#\n#",
     "crumbs": [
       "Session 2",
       "Climate downscaling"
