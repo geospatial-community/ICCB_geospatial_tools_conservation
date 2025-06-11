@@ -1,0 +1,48 @@
+Title: Open Source Geospatial Tools for Conservation under Climate Change - a Koala Case Study
+
+Size: A3 Poster Landscape
+
+Other products: Atlas
+
+---context and study area---
+
+Data:
+QLD imagery
+SEQ LGA - inverter
+SEQ LGA - outline and labelled
+
+Caption:
+Study area - South East Queensland
+
+---Koala picture---
+Data: 
+koala_1.jpeg
+
+Caption:
+Koalas (Phascolarctos cinereus) in South East Queensland (SEQ) inhabit fragmented eucalypt woodlands and rely heavily on Eucalyptus species for food and shelter. The population is already under pressure from habitat loss, disease (notably chlamydia), and vehicle collisions. Climate change poses additional threats through increased frequency of heatwaves, droughts, and bushfires, which reduce food quality, water availability, and suitable habitat. This workshop set out to apply open source geospatial tools to better understanding how future climate may impact these populations, and how resources can be best directed towards conserving this iconic species. 
+
+---How will the climate change in SEQ---
+
+Data: 
+qld_tas_changes.png 
+qld_tas_fut.png 
+qld_tas_hist.png 
+
+Caption: 
+Change in average temperature over Queensland with end-of-century climate change (2080 – 2099 vs 1995 – 2014) and a high emissions scenario (SSP370) for the downscaled GFDL-ESM4 model.
+
+---How could the distribution of koalas change under this new climate---
+
+Data:
+current-distribution (raster to be styled)
+
+Caption:
+TBA
+
+---Where should we focus our efforts to conserve koalas?---
+
+Data:
+scenario 3 lock in (raster to be styled)
+
+Caption:
+TBA

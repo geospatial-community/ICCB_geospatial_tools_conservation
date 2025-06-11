@@ -30,7 +30,7 @@ You will need the `terra` and `sf` packages installed. We will also make an inte
 ```{r}
 #| eval: false
 
-install.packages(c("sf", "terra", "leaflet", "dplyr"))
+install.packages(c("sf", "terra", "leaflet", "dplyr", "tmap"))
 ```
 
 If you have problems, there are more details about installing `terra` [here](https://rspatial.github.io/terra/index.html) and `sf` [here](https://r-spatial.github.io/sf/#installing).
