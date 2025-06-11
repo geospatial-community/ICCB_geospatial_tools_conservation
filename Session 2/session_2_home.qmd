@@ -2,11 +2,11 @@
 title: "Session 2"
 author: "Ralph Trancoso, Sarah Chapman, Rohan Eccles"
 date: "`r Sys.Date()`"
-execute: 
+execute:
   cache: false
 toc: true
 number-sections: false
-format: 
+format:
   html:
     self-contained: true
     code-fold: show
@@ -17,7 +17,7 @@ format:
     fig-format: png
     fig-dpi: 300
   pdf:
-    geometry: 
+    geometry:
       - top=30mm
       - left=30mm
 editor:
@@ -32,9 +32,17 @@ This repository has all of the scripts and data for the ICCB 2025 workshop 'Usin
 
 We have provided data for three downscaled climate models. These models were downscaled from the CMIP6 GCMs (Global Climate Models) using the CCAM model to a 10km resolution over Australia. The model name refers to the CMIP6 GCM which acted as the host model and provided input to CCAM. Further information on the downscaling technique is available in Chapman et al. (2023) and information on the climate change impacts shown in these models is available in Chapman et al. (2024).
 
-We have selected three models which represent the span from the full ensemble (set of all downscaled climate models): - ACCESS-ESM1-5 r6i1p1f1 - dry model - EC-Earth3 r1i1p1f1 - wet model - GFDL-ESM4 r1i1p1f1 - this model is close to the ensemble average for both temperature and precipitation changes at the end of the century
+We have selected three models which represent the span from the full ensemble (set of all downscaled climate models): 
 
-We have provided data for three climate change scenarios: - SSP126 - a low emission pathway, with on average 2°C of global warming at the end of century compared to pre-industrial times. - SSP245 - a medium emission pathway, with on average 3°C of warming. - SSP370 - a high emission pathway, with on average 4°C of warming.
+- ACCESS-ESM1-5 r6i1p1f1 - dry model 
+- EC-Earth3 r1i1p1f1 - wet model 
+- GFDL-ESM4 r1i1p1f1 - this model is close to the ensemble average for both temperature and precipitation changes at the end of the century
+
+We have provided data for three climate change scenarios: 
+
+- SSP126 - a low emission pathway, with on average 2°C of global warming at the end of century compared to pre-industrial times. 
+- SSP245 - a medium emission pathway, with on average 3°C of warming. 
+- SSP370 - a high emission pathway, with on average 4°C of warming.
 
 Note that there can be a great deal of variation within a model ensemble, and for each scenario there will be models that are warmer or cooler than the ensemble average.
 
@@ -67,4 +75,4 @@ Jones, D. A., Wang, W., & Fawcett, R. (2009). High-quality spatial climate data-
 
 [Download a PDF of the slides](ICCB2025_Session2_ClimateProjections.pdf){target="_blank"}
 
-<iframe src="ICCB2025_Session2_ClimateProjections.pdf" width="100%" height="600px"></iframe>
+<object data="ICCB2025_Session2_ClimateProjections.pdf" type="application/pdf" width="100%" height="600px">
