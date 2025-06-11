@@ -4,4 +4,180 @@ author: "Mitch Rudge, Catherine Kim"
 date: today
 ---
 
-Maybe some info about contributors?
+```{=html}
+<style>
+#title-block-header{
+  display: none;
+}
+#all-posts h2 {
+  margin-top: 0px;
+}
+div.quarto-post {
+  margin-bottom: 0px;
+}
+
+</style>
+
+<!-- html code containing the turkey pin and page title -->
+
+<div style="padding-bottom: 2em;">
+  <div style="display: inline-block;width: 89px;">
+    <img src="turkeypin.svg" style="width: 4em; vertical-align: -50px;" class="GeoCommunity Turkey Pin Logo">
+  </div>
+
+  <div style="display: inline-block;width: 70%;">
+    <h1 class="title">Geospatial Share</h1>
+  </div>
+</div>
+```
+
+This training course was organized by the Geospatial Share Community of Practice based in Australia.
+
+Our mission is to build a **supportive** and **inclusive** community where students, researchers, and professionals can **grow their geospatial skills together**. See the Geospatial Share website to see the other [workshops](https://brisbane-geocommunity.netlify.app/) and tutorials we have organized throughout the years. 
+
+## Organizers
+
+::: columns
+::: {.column width="17%"}
+**Mitch Rudge**
+:::
+
+::: {.column width="3%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="80%"}
+Mitch created the GeoSpatial Share Community, completed his PhD at UQ, and now works as a Natural Capital Data Scientist at Bush Heritage Australia.
+:::
+
+::: columns
+::: {.column width="17%"}
+**Catherine Kim** 
+:::
+
+::: {.column width="3%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="80%"}
+Catherine is a marine scientist at the Queensland University of Technology and passionate about upskilling students, researchers, and professionals with data science skills.
+:::
+
+## Session Leads
+
+::: columns
+::: {.column width="17%"}
+**Jason Flower** 
+:::
+
+::: {.column width="3%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="80%"}
+Project Researcher at the Environmental Market Solutions Lab (emLab) at the University of California, Santa Barbara working on marine spatial planning and coastal and fisheries management on islands in the Caribbean, Pacific, and Western Indian Ocean. I work with emLab’s partners at the Waitt Institute on their work with the Blue Prosperity Coalition. My work has helped guide marine spatial planning in Montserrat and Bermuda, and inform fisheries management in Barbuda, Curacao, the Maldives, and Montserrat.
+:::
+
+::: columns
+::: {.column width="17%"}
+**Ralph Trancoso** 
+:::
+
+::: {.column width="3%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="80%"}
+
+:::
+
+::: columns
+::: {.column width="17%"}
+**Sarah Chapman** 
+:::
+
+::: {.column width="3%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="80%"}
+
+:::
+
+::: columns
+::: {.column width="17%"}
+**Rohan Eccles** 
+:::
+
+::: {.column width="3%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="80%"}
+
+:::
+
+::: columns
+::: {.column width="17%"}
+**Charlotte Patterson** 
+:::
+
+::: {.column width="3%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="80%"}
+
+:::
+
+::: columns
+::: {.column width="17%"}
+**Scott Forrest** 
+:::
+
+::: {.column width="3%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="80%"}
+
+:::
+
+::: columns
+::: {.column width="17%"}
+**Brooke Williams** 
+:::
+
+::: {.column width="3%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="80%"}
+
+:::
+
+::: columns
+::: {.column width="17%"}
+**Caite Kuemple** 
+:::
+
+::: {.column width="3%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="80%"}
+
+:::
+
+::: columns
+::: {.column width="17%"}
+**Emma Hain** 
+:::
+
+::: {.column width="3%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="80%"}
+
+:::
