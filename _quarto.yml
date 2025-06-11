@@ -3,6 +3,7 @@ project:
   output-dir: docs
   resources:
     - "*.pdf"
+    # - Session 5/media
     
 execute:
   freeze: auto
@@ -59,12 +60,12 @@ website:
     - title: "Session 5"
       contents: 
         - Session 5/index.md
-        - Session 5/get-ready.md
-        - Session 5/map-brief.md
-        - Session 5/part1-styling-data.md
-        - Session 5/part2-build-map.md
-        - Session 5/resources.md
-        - Session 5/part1a-add-data.md
+        - Session 5/docs/get-ready.md
+        - Session 5/docs/map-brief.md
+        - Session 5/docs/part1-styling-data.md
+        - Session 5/docs/part2-build-map.md
+        - Session 5/docs/resources.md
+        - Session 5/docs/part1a-add-data.md
     
   page-footer:
     background: light
