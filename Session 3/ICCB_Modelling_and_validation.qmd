@@ -1,7 +1,7 @@
 ---
-title: "ICCB Species distribution modelling"
+title: "Species distribution modelling"
 author: "Scott Forrest and Charlotte Patterson"
-date: "`r Sys.Date()`"
+date: today
 execute: 
   cache: false
   warning: false

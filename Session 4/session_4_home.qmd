@@ -1,7 +1,7 @@
 ---
-title: "Session 4"
+title: "Session 4 - Conservation planning"
 author: "Brooke Williams, Caitie Kuemple"
-date: "`r Sys.Date()`"
+date: today
 execute: 
   cache: false
 toc: true
@@ -26,16 +26,6 @@ abstract: |
   In this session we are using the prioritizr package to create a set of conservation scenarios for protecting the future distribution of koalas in the SEQ region. 
 ---
 
-## Install the rcbc package for the cbc optimization solver
-
-```{r}
-#| message: false
-#| warning: false
-if (!require(remotes))
-  install.packages("remotes")
-remotes::install_github("dirkschumacher/rcbc")
-```
-
 ## Install packages
 
 ```{r setup}
@@ -46,8 +36,6 @@ library(terra)
 library(viridisLite)
 library(prioritizr)
 library(raster)
-library(sf)
-library(rcbc)
 ```
 
 ## Load Spatial Data
@@ -66,19 +54,29 @@ spp.list <- list.files(path = "data/SpeciesDistributions/", full.names = TRUE, r
 ### Load current species distribution
 
 ```{r}
+# Load all files and rename them
 spp <- rast(spp.list[grep("current", spp.list)])
+# Get just the filenames (without full paths and extensions)
 new_names <- tools::file_path_sans_ext(basename(spp.list[grep("current", spp.list)]))
+# Load and assign names
+spp <- rast(spp.list[grep("current", spp.list)])
 names(spp) <- new_names
-plot(spp, axes = FALSE, col = viridisLite::mako(n = 100, direction = -1), main = names(spp))
+# Plot species distributions
+plot(spp, axes = F,col = viridisLite::mako(n = 100, direction = -1), main = c(names(spp)))
 ```
 
 ### Load future species distribution
 
 ```{r}
+# Do the same for "future" rasters
 spp <- rast(spp.list[grep("future", spp.list)])
+# Get just the filenames (without full paths and extensions)
 new_names <- tools::file_path_sans_ext(basename(spp.list[grep("future", spp.list)]))
+# Load and assign names
+spp <- rast(spp.list[grep("future", spp.list)])
 names(spp) <- new_names
-plot(spp, axes = FALSE, col = viridisLite::mako(n = 100, direction = -1), main = names(spp))
+# Plot first four species distributions
+plot(spp, axes = F,col = viridisLite::mako(n = 100, direction = -1), main = c(names(spp)))
 ```
 
 ### Load protected areas, urban centers, and cost layer
@@ -156,36 +154,43 @@ p <- problem(PU, spp) %>%
 
 s4 <- solve(p)
 plot(s4, main = "Scenario 4 - apply penalty")
+
+# Export to GeoTIFF
+writeRaster(s4, "scenario_4.tif", overwrite = TRUE)
 ```
 
 ## Plot All Scenarios Side by Side
 
 ```{r}
+# Set plotting area to 1 row, 4 columns
 par(mfrow = c(2, 2), mar = c(3, 3, 3, 1))
+
 plot(s1, main = "Scenario 1")
 plot(s2, main = "Scenario 2 - lock out")
 plot(s3, main = "Scenario 3 - lock in")
 plot(s4, main = "Scenario 4 - apply penalty")
+
+# Reset plotting layout to default (optional)
 par(mfrow = c(1, 1))
 ```
 
-## Evaluate Metrics
+## Calculate metrics
 
 ```{r}
-
+#Scenario 1
 rpz_target_spp_s1 <- eval_target_coverage_summary(p, s1) 
 mean(rpz_target_spp_s1$relative_held)
-mean(rpz_target_spp_s1$relative_shortfall)
-
+mean(rpz_target_spp_s1$relative_shortfall) 
+#Scenario 2
 rpz_target_spp_s2 <- eval_target_coverage_summary(p, s2) 
 mean(rpz_target_spp_s2$relative_held)
-mean(rpz_target_spp_s2$relative_shortfall)
-
+mean(rpz_target_spp_s2$relative_shortfall) 
+#Scenario 3
 rpz_target_spp_s3 <- eval_target_coverage_summary(p, s3) 
 mean(rpz_target_spp_s3$relative_held)
 mean(rpz_target_spp_s3$relative_shortfall)
-
+#Scenario 4
 rpz_target_spp_s4 <- eval_target_coverage_summary(p, s4) 
 mean(rpz_target_spp_s4$relative_held)
-mean(rpz_target_spp_s4$relative_shortfall)
+mean(rpz_target_spp_s4$relative_shortfall)  
 ```

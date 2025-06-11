@@ -1,5 +1,7 @@
 ---
 title: "About"
+author: "Mitch Rudge, Catherine Kim"
+date: today
 ---
 
 Maybe some info about contributors?

@@ -1,7 +1,9 @@
 project:
   type: website
   output-dir: docs
-  
+  resources:
+    - "*.pdf"
+    
 execute:
   freeze: auto
 

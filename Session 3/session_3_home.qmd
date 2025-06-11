@@ -1,7 +1,7 @@
 ---
 title: "Session 3"
 author: "Charlotte Patterson, Scott Forrest"
-date: "`r Sys.Date()`"
+date: today
 execute: 
   cache: false
 toc: true
@@ -28,4 +28,4 @@ editor:
 
 [Download a PDF of the slides](ICCB_koala_sdm_slides.pdf){target="_blank"}
 
-<object data="ICCB_koala_sdm_slides.pdf" type="application/pdf" width="100%" height="600px">
+<iframe src="ICCB_koala_sdm_slides.pdf" width="100%" height="600px"></iframe>

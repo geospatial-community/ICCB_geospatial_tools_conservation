@@ -1,7 +1,7 @@
 ---
 title: "Session 2"
 author: "Ralph Trancoso, Sarah Chapman, Rohan Eccles"
-date: "`r Sys.Date()`"
+date: today
 execute:
   cache: false
 toc: true
@@ -75,4 +75,4 @@ Jones, D. A., Wang, W., & Fawcett, R. (2009). High-quality spatial climate data-
 
 [Download a PDF of the slides](ICCB2025_Session2_ClimateProjections.pdf){target="_blank"}
 
-<object data="ICCB2025_Session2_ClimateProjections.pdf" type="application/pdf" width="100%" height="600px">
+<iframe src="ICCB2025_Session2_ClimateProjections.pdf" width="100%" height="600px"></iframe>
