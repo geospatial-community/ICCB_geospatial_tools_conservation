@@ -113,7 +113,7 @@ tas_base = mean(tas[[1:30]])      # Calculating climatology for baseline (1981-2
 tas_fut = mean(tas[[91:120]])     # Calculating climatology for future (2071-2100)
 ```
 
-Q: Can you cut the historical data and future based on the dates?
+## Q: Can you cut the historical data and future based on the dates?
 
 ```{r}
 plot(tas_base)
@@ -127,7 +127,7 @@ tas_dif = tas_fut - tas_base
 plot(tas_dif)
 ```
 
-Q. Can you make this plot nicer? Add a title and change the colours
+## Q. Can you make this plot nicer? Add a title and change the colours
 
 Hint: You can set plot titles using 'main'
 
@@ -136,6 +136,18 @@ Control the colours using col = brewer.pal(11, 'PaletteName') (see https://color
 You can plot multiple figures in one plot using par (mfrow = c(nrows, ncols))
 
 Also check the instructions from Session 1!
+
+```{r}
+
+
+
+
+
+
+
+
+
+```
 
 Extracting out point data (timeseries)
 

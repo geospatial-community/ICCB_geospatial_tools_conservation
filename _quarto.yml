@@ -27,7 +27,7 @@ website:
         text: Session 3
       - href: Session 4/session_4_home.qmd
         text: Session 4
-      - href: Session 5/session_5_home.qmd
+      - href: Session 5/index.md
         text: Session 5
       - about.qmd
       
@@ -40,7 +40,6 @@ website:
     
     - title: "Session 1"
       contents: 
-        # - Session 1/session_1_home.qmd
         - Session 1/session_1_code.qmd
         
     - title: "Session 2"
@@ -51,8 +50,6 @@ website:
     - title: "Session 3"
       contents: 
         - Session 3/session_3_home.qmd
-        # - Session 3/ICCB_Species_data.qmd
-        # - Session 3/ICCB_Environmental_data.qmd
         - Session 3/ICCB_Modelling_and_validation.qmd
         
     - title: "Session 4"
@@ -62,12 +59,12 @@ website:
     - title: "Session 5"
       contents: 
         - Session 5/index.md
-        - Session 5/docs/get-ready.md
-        - Session 5/docs/map-brief.md
-        - Session 5/docs/part1-styling-data.md
-        - Session 5/docs/part2-build-map.md
-        - Session 5/docs/resources.md
-        - Session 5/docs/part1a-add-data.md
+        - Session 5/get-ready.md
+        - Session 5/map-brief.md
+        - Session 5/part1-styling-data.md
+        - Session 5/part2-build-map.md
+        - Session 5/resources.md
+        - Session 5/part1a-add-data.md
     
   page-footer:
     background: light
