@@ -14,49 +14,49 @@ Our mission is to build a **supportive** and **inclusive** community where stude
 
 ### Mitch Rudge
 
-Mitch created the GeoSpatial Share Community, completed his PhD at UQ, and now works as a Natural Capital Data Scientist at Bush Heritage Australia.
+> Mitch created the GeoSpatial Share Community, completed his PhD at UQ, and now works as a Natural Capital Data Scientist at Bush Heritage Australia.
 
 ### Catherine Kim
 
-Catherine is a marine scientist at the Queensland University of Technology and passionate about upskilling students, researchers, and professionals with data science skills.
+> Catherine is a marine scientist at the Queensland University of Technology and passionate about upskilling students, researchers, and professionals with data science skills.
 
 ## Session Leads
 
 ### Jason Flower
 
-Project Researcher at the Environmental Market Solutions Lab (emLab) at the University of California, Santa Barbara working on marine spatial planning and coastal and fisheries management on islands in the Caribbean, Pacific, and Western Indian Ocean. His work has helped guide marine spatial planning in Montserrat and Bermuda, and inform fisheries management in Barbuda, Curacao, the Maldives, and Montserrat.
+> Project Researcher at the Environmental Market Solutions Lab (emLab) at the University of California, Santa Barbara working on marine spatial planning and coastal and fisheries management on islands in the Caribbean, Pacific, and Western Indian Ocean. His work has helped guide marine spatial planning in Montserrat and Bermuda, and inform fisheries management in Barbuda, Curacao, the Maldives, and Montserrat.
 
 ### Ralph Trancoso
 
-*(No description provided)*
+> Ralph Trancoso is a senior research scientist and adjunct associate professor with a strong track record of leading multidisciplinary projects that deliver impactful outcomes for science, policy, and natural resource management across Australia and Brazil. With deep expertise in climate change, natural hazards, risk assessment, hydrology, and spatial sciences, he excels at translating complex science into actionable knowledge and public-facing services using cutting-edge web technologies. Ralph is also a skilled scientific programmer, communicator, and writer, known for his leadership, mentoring, and creative problem-solving.
 
 ### Sarah Chapman
 
-*(No description provided)*
+> Sarah Chapman is a Principal Climate Data Scientist in the Climate Projections & Services team at Queensland Treasury and an Honorary Research Fellow at the University of Queensland. She brings extensive experience in climate change research, having previously worked at the University of Leeds on the impacts of climate change on heat stress and agriculture in Africa. Her PhD at the University of Queensland focused on urban heat island effects and heat stress driven by climate change and urban growth. Sarah holds a Master of Environmental Management from UQ and a Bachelor of Science in Environment and Economics from McGill University in Canada.
 
 ### Rohan Eccles
 
-*(No description provided)*
+> 
 
 ### Charlotte Patterson
 
-*(No description provided)*
+> Charlotte Patterson is a quantitative spatial ecologist and PhD candidate at Queensland University of Technology, specialising in conservation science and ecological modelling. Her current research explores how terrestrial ecosystems in Antarctica may respond to climate change, using spatial modelling approaches to address challenges in data-poor environments. With a strong foundation in fieldwork, statistical modelling, and conservation management, Charlotte has also contributed to invasive species research and large-scale restoration and predator control programs in Aotearoa New Zealand. She is passionate about applying ecological insight and clear communication to support effective conservation outcomes.
 
 ### Scott Forrest
 
-*(No description provided)*
+> Scott Forrest is a PhD researcher in animal movement ecology at Queensland University of Technology, with a background in both engineering and ecology. His research focuses on predicting the seasonal distribution of Asian water buffalo and feral cattle across Northern Australia’s monsoonal ecosystems to support effective management strategies. Scott is particularly interested in data-driven, stochastic simulations of individual animal movements to inform population-level inference and prediction.
 
 ### Brooke Williams
 
-*(No description provided)*
+> Brooke Williams is a lecturer in environmental management at the University of Newcastle and an applied ecologist and conservation scientist. Her work focuses on designing decision support frameworks and developing datasets that help guide conservation and forest restoration actions while accounting for human needs. By integrating considerations of ecosystem services and economic factors, her tools empower policymakers and land managers to make informed decisions in complex, real-world scenarios.
 
 ### Caite Kuemple
 
-*(No description provided)*
+> Caitie Kuempel is a conservation scientist and Lecturer in ecosystem modelling at Griffith University, working at the interface of science and policy. Her research focuses on integrated land-sea planning, sustainable food production, and conservation strategies that balance human needs with environmental protection, especially in marine ecosystems. She has previously worked with the University of Queensland and WWF on climate-resilient reef management, and held a postdoctoral position at NCEAS UC Santa Barbara examining the environmental impacts of global food systems. Caitie holds advanced degrees in marine biology, environmental science, and French.
 
 ### Emma Hain
 
-*(No description provided)*
+> Emma Hain is a GeoSpatial Product Manager and Cartographer with over 30 years of experience spanning geospatial systems, engineering, environment, heritage, sports management, and military sectors. At North Road, she supports the global QGIS community and delivers tailored open-source geospatial solutions to a wide range of organizations. Emma also coordinates the QGIS AU community and contributes to FOSS4G Oceania, promoting collaboration across the sector. Known for her creative, ethical approach and commitment to inclusivity, she blends a deep appreciation for art with technical expertise to solve complex spatial challenges.
 
 ## About the organisers and supporters
 
