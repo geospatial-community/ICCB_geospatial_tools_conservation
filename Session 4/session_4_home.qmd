@@ -28,11 +28,11 @@ abstract: |
 
 ## Optimiser installation
 
-The prioritizr package requires that you download and install an optimiser - a commonly used one is Gurobi. You can obtain a free academic license for Gurobi here: https://www.gurobi.com/features/academic-named-user-license/. 
+The prioritizr package requires that you download and install an optimiser - a commonly used one is Gurobi. You can obtain a free academic license for Gurobi here: [https://www.gurobi.com/features/academic-named-user-license/](https://www.gurobi.com/features/academic-named-user-license/). 
 
-Here is a guide to install Gurobi for R: https://docs.gurobi.com/projects/optimizer/en/current/reference/r/setup.html. 
+Here is a guide to install Gurobi for R: [https://docs.gurobi.com/projects/optimizer/en/current/reference/r/setup.html](https://docs.gurobi.com/projects/optimizer/en/current/reference/r/setup.html). 
 
-Alternatively, if you cannot obtain an academic licence there are other solvers available https://prioritizr.net/reference/solvers.html. We recommend installing the CBC solver: https://github.com/dirkschumacher/rcbc. 
+Alternatively, if you cannot obtain an academic licence there are other solvers available [https://prioritizr.net/reference/solvers.html](https://prioritizr.net/reference/solvers.html). We recommend installing the CBC solver: [https://github.com/dirkschumacher/rcbc](https://github.com/dirkschumacher/rcbc). 
 
 If you have issues with installing a solver, please let us know.
 

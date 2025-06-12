@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Brooke Williams, Caitie Kuemple">
-<meta name="dcterms.date" content="2025-06-11">
+<meta name="dcterms.date" content="2025-06-12">
 
 <title>Session 4 - Conservation planning – ICCB - Open Geospatial Tools</title>
 <style>
@@ -6112,7 +6112,8 @@ window.onload = function() {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#install-packages" id="toc-install-packages" class="nav-link active" data-scroll-target="#install-packages">Install packages</a></li>
+  <li><a href="#optimiser-installation" id="toc-optimiser-installation" class="nav-link active" data-scroll-target="#optimiser-installation">Optimiser installation</a></li>
+  <li><a href="#install-packages" id="toc-install-packages" class="nav-link" data-scroll-target="#install-packages">Install packages</a></li>
   <li><a href="#load-spatial-data" id="toc-load-spatial-data" class="nav-link" data-scroll-target="#load-spatial-data">Load Spatial Data</a>
   <ul class="collapse">
   <li><a href="#load-current-species-distribution" id="toc-load-current-species-distribution" class="nav-link" data-scroll-target="#load-current-species-distribution">Load current species distribution</a></li>
@@ -6151,7 +6152,7 @@ window.onload = function() {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 11, 2025</p>
+      <p class="date">June 12, 2025</p>
     </div>
   </div>
   
@@ -6169,6 +6170,13 @@ window.onload = function() {
 </header>
 
 
+<section id="optimiser-installation" class="level2">
+<h2 class="anchored" data-anchor-id="optimiser-installation">Optimiser installation</h2>
+<p>The prioritizr package requires that you download and install an optimiser - a commonly used one is Gurobi. You can obtain a free academic license for Gurobi here: <a href="https://www.gurobi.com/features/academic-named-user-license/">https://www.gurobi.com/features/academic-named-user-license/</a>.</p>
+<p>Here is a guide to install Gurobi for R: <a href="https://docs.gurobi.com/projects/optimizer/en/current/reference/r/setup.html">https://docs.gurobi.com/projects/optimizer/en/current/reference/r/setup.html</a>.</p>
+<p>Alternatively, if you cannot obtain an academic licence there are other solvers available <a href="https://prioritizr.net/reference/solvers.html">https://prioritizr.net/reference/solvers.html</a>. We recommend installing the CBC solver: <a href="https://github.com/dirkschumacher/rcbc">https://github.com/dirkschumacher/rcbc</a>.</p>
+<p>If you have issues with installing a solver, please let us know.</p>
+</section>
 <section id="install-packages" class="level2">
 <h2 class="anchored" data-anchor-id="install-packages">Install packages</h2>
 <div class="cell">
@@ -7009,174 +7017,184 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb33-26"><a href="#cb33-26"></a><span class="co">  In this session we are using the prioritizr package to create a set of conservation scenarios for protecting the future distribution of koalas in the SEQ region. </span></span>
 <span id="cb33-27"><a href="#cb33-27"></a><span class="co">---</span></span>
 <span id="cb33-28"><a href="#cb33-28"></a></span>
-<span id="cb33-29"><a href="#cb33-29"></a><span class="fu">## Install packages</span></span>
+<span id="cb33-29"><a href="#cb33-29"></a><span class="fu">## Optimiser installation</span></span>
 <span id="cb33-30"><a href="#cb33-30"></a></span>
-<span id="cb33-31"><a href="#cb33-31"></a><span class="in">```{r setup}</span></span>
-<span id="cb33-32"><a href="#cb33-32"></a><span class="in">#| message: false</span></span>
-<span id="cb33-33"><a href="#cb33-33"></a><span class="in">#| warning: false</span></span>
-<span id="cb33-34"><a href="#cb33-34"></a><span class="in"># Load required packages</span></span>
-<span id="cb33-35"><a href="#cb33-35"></a><span class="in">library(terra)</span></span>
-<span id="cb33-36"><a href="#cb33-36"></a><span class="in">library(viridisLite)</span></span>
-<span id="cb33-37"><a href="#cb33-37"></a><span class="in">library(prioritizr)</span></span>
-<span id="cb33-38"><a href="#cb33-38"></a><span class="in">library(raster)</span></span>
-<span id="cb33-39"><a href="#cb33-39"></a><span class="in">```</span></span>
+<span id="cb33-31"><a href="#cb33-31"></a>The prioritizr package requires that you download and install an optimiser - a commonly used one is Gurobi. You can obtain a free academic license for Gurobi here: <span class="co">[</span><span class="ot">https://www.gurobi.com/features/academic-named-user-license/</span><span class="co">](https://www.gurobi.com/features/academic-named-user-license/)</span>. </span>
+<span id="cb33-32"><a href="#cb33-32"></a></span>
+<span id="cb33-33"><a href="#cb33-33"></a>Here is a guide to install Gurobi for R: <span class="co">[</span><span class="ot">https://docs.gurobi.com/projects/optimizer/en/current/reference/r/setup.html</span><span class="co">](https://docs.gurobi.com/projects/optimizer/en/current/reference/r/setup.html)</span>. </span>
+<span id="cb33-34"><a href="#cb33-34"></a></span>
+<span id="cb33-35"><a href="#cb33-35"></a>Alternatively, if you cannot obtain an academic licence there are other solvers available <span class="co">[</span><span class="ot">https://prioritizr.net/reference/solvers.html</span><span class="co">](https://prioritizr.net/reference/solvers.html)</span>. We recommend installing the CBC solver: <span class="co">[</span><span class="ot">https://github.com/dirkschumacher/rcbc</span><span class="co">](https://github.com/dirkschumacher/rcbc)</span>. </span>
+<span id="cb33-36"><a href="#cb33-36"></a></span>
+<span id="cb33-37"><a href="#cb33-37"></a>If you have issues with installing a solver, please let us know.</span>
+<span id="cb33-38"><a href="#cb33-38"></a></span>
+<span id="cb33-39"><a href="#cb33-39"></a><span class="fu">## Install packages</span></span>
 <span id="cb33-40"><a href="#cb33-40"></a></span>
-<span id="cb33-41"><a href="#cb33-41"></a><span class="fu">## Load Spatial Data</span></span>
-<span id="cb33-42"><a href="#cb33-42"></a></span>
-<span id="cb33-45"><a href="#cb33-45"></a><span class="in">```{r}</span></span>
-<span id="cb33-46"><a href="#cb33-46"></a><span class="co"># Load the Planning unit</span></span>
-<span id="cb33-47"><a href="#cb33-47"></a>PU <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">&quot;data/otherdata/PlanningUnits.tif&quot;</span>)</span>
-<span id="cb33-48"><a href="#cb33-48"></a><span class="fu">plot</span>(PU, <span class="at">col =</span> viridisLite<span class="sc">::</span><span class="fu">mako</span>(<span class="at">n =</span> <span class="dv">1</span>))</span>
+<span id="cb33-41"><a href="#cb33-41"></a><span class="in">```{r setup}</span></span>
+<span id="cb33-42"><a href="#cb33-42"></a><span class="in">#| message: false</span></span>
+<span id="cb33-43"><a href="#cb33-43"></a><span class="in">#| warning: false</span></span>
+<span id="cb33-44"><a href="#cb33-44"></a><span class="in"># Load required packages</span></span>
+<span id="cb33-45"><a href="#cb33-45"></a><span class="in">library(terra)</span></span>
+<span id="cb33-46"><a href="#cb33-46"></a><span class="in">library(viridisLite)</span></span>
+<span id="cb33-47"><a href="#cb33-47"></a><span class="in">library(prioritizr)</span></span>
+<span id="cb33-48"><a href="#cb33-48"></a><span class="in">library(raster)</span></span>
 <span id="cb33-49"><a href="#cb33-49"></a><span class="in">```</span></span>
 <span id="cb33-50"><a href="#cb33-50"></a></span>
-<span id="cb33-53"><a href="#cb33-53"></a><span class="in">```{r}</span></span>
-<span id="cb33-54"><a href="#cb33-54"></a><span class="co"># Get the file names of the testing data</span></span>
-<span id="cb33-55"><a href="#cb33-55"></a>spp.list <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">&quot;data/SpeciesDistributions/&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">pattern =</span> <span class="st">&quot;.tif$&quot;</span>)</span>
-<span id="cb33-56"><a href="#cb33-56"></a><span class="in">```</span></span>
-<span id="cb33-57"><a href="#cb33-57"></a></span>
-<span id="cb33-58"><a href="#cb33-58"></a><span class="fu">### Load current species distribution</span></span>
-<span id="cb33-59"><a href="#cb33-59"></a></span>
-<span id="cb33-62"><a href="#cb33-62"></a><span class="in">```{r}</span></span>
-<span id="cb33-63"><a href="#cb33-63"></a><span class="co"># Load all files and rename them</span></span>
-<span id="cb33-64"><a href="#cb33-64"></a>spp <span class="ot">&lt;-</span> <span class="fu">rast</span>(spp.list[<span class="fu">grep</span>(<span class="st">&quot;current&quot;</span>, spp.list)])</span>
-<span id="cb33-65"><a href="#cb33-65"></a><span class="co"># Get just the filenames (without full paths and extensions)</span></span>
-<span id="cb33-66"><a href="#cb33-66"></a>new_names <span class="ot">&lt;-</span> tools<span class="sc">::</span><span class="fu">file_path_sans_ext</span>(<span class="fu">basename</span>(spp.list[<span class="fu">grep</span>(<span class="st">&quot;current&quot;</span>, spp.list)]))</span>
-<span id="cb33-67"><a href="#cb33-67"></a><span class="co"># Load and assign names</span></span>
-<span id="cb33-68"><a href="#cb33-68"></a>spp <span class="ot">&lt;-</span> <span class="fu">rast</span>(spp.list[<span class="fu">grep</span>(<span class="st">&quot;current&quot;</span>, spp.list)])</span>
-<span id="cb33-69"><a href="#cb33-69"></a><span class="fu">names</span>(spp) <span class="ot">&lt;-</span> new_names</span>
-<span id="cb33-70"><a href="#cb33-70"></a><span class="co"># Plot species distributions</span></span>
-<span id="cb33-71"><a href="#cb33-71"></a><span class="fu">plot</span>(spp, <span class="at">axes =</span> F,<span class="at">col =</span> viridisLite<span class="sc">::</span><span class="fu">mako</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>), <span class="at">main =</span> <span class="fu">c</span>(<span class="fu">names</span>(spp)))</span>
-<span id="cb33-72"><a href="#cb33-72"></a><span class="in">```</span></span>
-<span id="cb33-73"><a href="#cb33-73"></a></span>
-<span id="cb33-74"><a href="#cb33-74"></a><span class="fu">### Load future species distribution</span></span>
-<span id="cb33-75"><a href="#cb33-75"></a></span>
-<span id="cb33-78"><a href="#cb33-78"></a><span class="in">```{r}</span></span>
-<span id="cb33-79"><a href="#cb33-79"></a><span class="co"># Do the same for &quot;future&quot; rasters</span></span>
-<span id="cb33-80"><a href="#cb33-80"></a>spp <span class="ot">&lt;-</span> <span class="fu">rast</span>(spp.list[<span class="fu">grep</span>(<span class="st">&quot;future&quot;</span>, spp.list)])</span>
-<span id="cb33-81"><a href="#cb33-81"></a><span class="co"># Get just the filenames (without full paths and extensions)</span></span>
-<span id="cb33-82"><a href="#cb33-82"></a>new_names <span class="ot">&lt;-</span> tools<span class="sc">::</span><span class="fu">file_path_sans_ext</span>(<span class="fu">basename</span>(spp.list[<span class="fu">grep</span>(<span class="st">&quot;future&quot;</span>, spp.list)]))</span>
-<span id="cb33-83"><a href="#cb33-83"></a><span class="co"># Load and assign names</span></span>
-<span id="cb33-84"><a href="#cb33-84"></a>spp <span class="ot">&lt;-</span> <span class="fu">rast</span>(spp.list[<span class="fu">grep</span>(<span class="st">&quot;future&quot;</span>, spp.list)])</span>
-<span id="cb33-85"><a href="#cb33-85"></a><span class="fu">names</span>(spp) <span class="ot">&lt;-</span> new_names</span>
-<span id="cb33-86"><a href="#cb33-86"></a><span class="co"># Plot first four species distributions</span></span>
-<span id="cb33-87"><a href="#cb33-87"></a><span class="fu">plot</span>(spp, <span class="at">axes =</span> F,<span class="at">col =</span> viridisLite<span class="sc">::</span><span class="fu">mako</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>), <span class="at">main =</span> <span class="fu">c</span>(<span class="fu">names</span>(spp)))</span>
-<span id="cb33-88"><a href="#cb33-88"></a><span class="in">```</span></span>
-<span id="cb33-89"><a href="#cb33-89"></a></span>
-<span id="cb33-90"><a href="#cb33-90"></a><span class="fu">### Load protected areas, urban centers, and cost layer</span></span>
-<span id="cb33-91"><a href="#cb33-91"></a></span>
-<span id="cb33-94"><a href="#cb33-94"></a><span class="in">```{r}</span></span>
-<span id="cb33-95"><a href="#cb33-95"></a>PA <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">&quot;data/otherdata/protected_areas.tif&quot;</span>)</span>
-<span id="cb33-96"><a href="#cb33-96"></a><span class="fu">plot</span>(PA, <span class="at">axes =</span> <span class="cn">FALSE</span>, <span class="at">col =</span> viridisLite<span class="sc">::</span><span class="fu">mako</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>), <span class="at">main =</span> <span class="st">&quot;Protected Areas (I &amp; II)&quot;</span>)</span>
-<span id="cb33-97"><a href="#cb33-97"></a></span>
-<span id="cb33-98"><a href="#cb33-98"></a>urban <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">&quot;data/otherdata/urban_centers.tif&quot;</span>)</span>
-<span id="cb33-99"><a href="#cb33-99"></a><span class="fu">plot</span>(urban, <span class="at">axes =</span> <span class="cn">FALSE</span>, <span class="at">col =</span> viridisLite<span class="sc">::</span><span class="fu">mako</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>), <span class="at">main =</span> <span class="st">&quot;Urban Centers&quot;</span>)</span>
-<span id="cb33-100"><a href="#cb33-100"></a></span>
-<span id="cb33-101"><a href="#cb33-101"></a>hfp <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">&quot;data/otherdata/cost_hfp2013.tif&quot;</span>)</span>
-<span id="cb33-102"><a href="#cb33-102"></a><span class="fu">plot</span>(hfp, <span class="at">axes =</span> <span class="cn">FALSE</span>, <span class="at">col =</span> viridisLite<span class="sc">::</span><span class="fu">mako</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>), <span class="at">main =</span> <span class="st">&quot;Global human footprint&quot;</span>)</span>
-<span id="cb33-103"><a href="#cb33-103"></a><span class="in">```</span></span>
-<span id="cb33-104"><a href="#cb33-104"></a></span>
-<span id="cb33-105"><a href="#cb33-105"></a><span class="fu">## Define Budget</span></span>
-<span id="cb33-106"><a href="#cb33-106"></a></span>
-<span id="cb33-109"><a href="#cb33-109"></a><span class="in">```{r}</span></span>
-<span id="cb33-110"><a href="#cb33-110"></a>budget.area <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fl">0.3</span> <span class="sc">*</span> <span class="fu">length</span>(<span class="fu">cells</span>(PU)))</span>
-<span id="cb33-111"><a href="#cb33-111"></a><span class="in">```</span></span>
-<span id="cb33-112"><a href="#cb33-112"></a></span>
-<span id="cb33-113"><a href="#cb33-113"></a><span class="fu">## Scenario 1: Basic Shortfall Objective</span></span>
+<span id="cb33-51"><a href="#cb33-51"></a><span class="fu">## Load Spatial Data</span></span>
+<span id="cb33-52"><a href="#cb33-52"></a></span>
+<span id="cb33-55"><a href="#cb33-55"></a><span class="in">```{r}</span></span>
+<span id="cb33-56"><a href="#cb33-56"></a><span class="co"># Load the Planning unit</span></span>
+<span id="cb33-57"><a href="#cb33-57"></a>PU <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">&quot;data/otherdata/PlanningUnits.tif&quot;</span>)</span>
+<span id="cb33-58"><a href="#cb33-58"></a><span class="fu">plot</span>(PU, <span class="at">col =</span> viridisLite<span class="sc">::</span><span class="fu">mako</span>(<span class="at">n =</span> <span class="dv">1</span>))</span>
+<span id="cb33-59"><a href="#cb33-59"></a><span class="in">```</span></span>
+<span id="cb33-60"><a href="#cb33-60"></a></span>
+<span id="cb33-63"><a href="#cb33-63"></a><span class="in">```{r}</span></span>
+<span id="cb33-64"><a href="#cb33-64"></a><span class="co"># Get the file names of the testing data</span></span>
+<span id="cb33-65"><a href="#cb33-65"></a>spp.list <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">&quot;data/SpeciesDistributions/&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">pattern =</span> <span class="st">&quot;.tif$&quot;</span>)</span>
+<span id="cb33-66"><a href="#cb33-66"></a><span class="in">```</span></span>
+<span id="cb33-67"><a href="#cb33-67"></a></span>
+<span id="cb33-68"><a href="#cb33-68"></a><span class="fu">### Load current species distribution</span></span>
+<span id="cb33-69"><a href="#cb33-69"></a></span>
+<span id="cb33-72"><a href="#cb33-72"></a><span class="in">```{r}</span></span>
+<span id="cb33-73"><a href="#cb33-73"></a><span class="co"># Load all files and rename them</span></span>
+<span id="cb33-74"><a href="#cb33-74"></a>spp <span class="ot">&lt;-</span> <span class="fu">rast</span>(spp.list[<span class="fu">grep</span>(<span class="st">&quot;current&quot;</span>, spp.list)])</span>
+<span id="cb33-75"><a href="#cb33-75"></a><span class="co"># Get just the filenames (without full paths and extensions)</span></span>
+<span id="cb33-76"><a href="#cb33-76"></a>new_names <span class="ot">&lt;-</span> tools<span class="sc">::</span><span class="fu">file_path_sans_ext</span>(<span class="fu">basename</span>(spp.list[<span class="fu">grep</span>(<span class="st">&quot;current&quot;</span>, spp.list)]))</span>
+<span id="cb33-77"><a href="#cb33-77"></a><span class="co"># Load and assign names</span></span>
+<span id="cb33-78"><a href="#cb33-78"></a>spp <span class="ot">&lt;-</span> <span class="fu">rast</span>(spp.list[<span class="fu">grep</span>(<span class="st">&quot;current&quot;</span>, spp.list)])</span>
+<span id="cb33-79"><a href="#cb33-79"></a><span class="fu">names</span>(spp) <span class="ot">&lt;-</span> new_names</span>
+<span id="cb33-80"><a href="#cb33-80"></a><span class="co"># Plot species distributions</span></span>
+<span id="cb33-81"><a href="#cb33-81"></a><span class="fu">plot</span>(spp, <span class="at">axes =</span> F,<span class="at">col =</span> viridisLite<span class="sc">::</span><span class="fu">mako</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>), <span class="at">main =</span> <span class="fu">c</span>(<span class="fu">names</span>(spp)))</span>
+<span id="cb33-82"><a href="#cb33-82"></a><span class="in">```</span></span>
+<span id="cb33-83"><a href="#cb33-83"></a></span>
+<span id="cb33-84"><a href="#cb33-84"></a><span class="fu">### Load future species distribution</span></span>
+<span id="cb33-85"><a href="#cb33-85"></a></span>
+<span id="cb33-88"><a href="#cb33-88"></a><span class="in">```{r}</span></span>
+<span id="cb33-89"><a href="#cb33-89"></a><span class="co"># Do the same for &quot;future&quot; rasters</span></span>
+<span id="cb33-90"><a href="#cb33-90"></a>spp <span class="ot">&lt;-</span> <span class="fu">rast</span>(spp.list[<span class="fu">grep</span>(<span class="st">&quot;future&quot;</span>, spp.list)])</span>
+<span id="cb33-91"><a href="#cb33-91"></a><span class="co"># Get just the filenames (without full paths and extensions)</span></span>
+<span id="cb33-92"><a href="#cb33-92"></a>new_names <span class="ot">&lt;-</span> tools<span class="sc">::</span><span class="fu">file_path_sans_ext</span>(<span class="fu">basename</span>(spp.list[<span class="fu">grep</span>(<span class="st">&quot;future&quot;</span>, spp.list)]))</span>
+<span id="cb33-93"><a href="#cb33-93"></a><span class="co"># Load and assign names</span></span>
+<span id="cb33-94"><a href="#cb33-94"></a>spp <span class="ot">&lt;-</span> <span class="fu">rast</span>(spp.list[<span class="fu">grep</span>(<span class="st">&quot;future&quot;</span>, spp.list)])</span>
+<span id="cb33-95"><a href="#cb33-95"></a><span class="fu">names</span>(spp) <span class="ot">&lt;-</span> new_names</span>
+<span id="cb33-96"><a href="#cb33-96"></a><span class="co"># Plot first four species distributions</span></span>
+<span id="cb33-97"><a href="#cb33-97"></a><span class="fu">plot</span>(spp, <span class="at">axes =</span> F,<span class="at">col =</span> viridisLite<span class="sc">::</span><span class="fu">mako</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>), <span class="at">main =</span> <span class="fu">c</span>(<span class="fu">names</span>(spp)))</span>
+<span id="cb33-98"><a href="#cb33-98"></a><span class="in">```</span></span>
+<span id="cb33-99"><a href="#cb33-99"></a></span>
+<span id="cb33-100"><a href="#cb33-100"></a><span class="fu">### Load protected areas, urban centers, and cost layer</span></span>
+<span id="cb33-101"><a href="#cb33-101"></a></span>
+<span id="cb33-104"><a href="#cb33-104"></a><span class="in">```{r}</span></span>
+<span id="cb33-105"><a href="#cb33-105"></a>PA <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">&quot;data/otherdata/protected_areas.tif&quot;</span>)</span>
+<span id="cb33-106"><a href="#cb33-106"></a><span class="fu">plot</span>(PA, <span class="at">axes =</span> <span class="cn">FALSE</span>, <span class="at">col =</span> viridisLite<span class="sc">::</span><span class="fu">mako</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>), <span class="at">main =</span> <span class="st">&quot;Protected Areas (I &amp; II)&quot;</span>)</span>
+<span id="cb33-107"><a href="#cb33-107"></a></span>
+<span id="cb33-108"><a href="#cb33-108"></a>urban <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">&quot;data/otherdata/urban_centers.tif&quot;</span>)</span>
+<span id="cb33-109"><a href="#cb33-109"></a><span class="fu">plot</span>(urban, <span class="at">axes =</span> <span class="cn">FALSE</span>, <span class="at">col =</span> viridisLite<span class="sc">::</span><span class="fu">mako</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>), <span class="at">main =</span> <span class="st">&quot;Urban Centers&quot;</span>)</span>
+<span id="cb33-110"><a href="#cb33-110"></a></span>
+<span id="cb33-111"><a href="#cb33-111"></a>hfp <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">&quot;data/otherdata/cost_hfp2013.tif&quot;</span>)</span>
+<span id="cb33-112"><a href="#cb33-112"></a><span class="fu">plot</span>(hfp, <span class="at">axes =</span> <span class="cn">FALSE</span>, <span class="at">col =</span> viridisLite<span class="sc">::</span><span class="fu">mako</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>), <span class="at">main =</span> <span class="st">&quot;Global human footprint&quot;</span>)</span>
+<span id="cb33-113"><a href="#cb33-113"></a><span class="in">```</span></span>
 <span id="cb33-114"><a href="#cb33-114"></a></span>
-<span id="cb33-117"><a href="#cb33-117"></a><span class="in">```{r}</span></span>
-<span id="cb33-118"><a href="#cb33-118"></a>p <span class="ot">&lt;-</span> <span class="fu">problem</span>(PU, spp) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-119"><a href="#cb33-119"></a>  <span class="fu">add_min_shortfall_objective</span>(<span class="at">budget =</span> budget.area) <span class="sc">%&gt;%</span></span>
-<span id="cb33-120"><a href="#cb33-120"></a>  <span class="fu">add_relative_targets</span>(<span class="at">targets =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-121"><a href="#cb33-121"></a>  <span class="fu">add_default_solver</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb33-122"><a href="#cb33-122"></a>  <span class="fu">add_proportion_decisions</span>()</span>
-<span id="cb33-123"><a href="#cb33-123"></a></span>
-<span id="cb33-124"><a href="#cb33-124"></a>s1 <span class="ot">&lt;-</span> <span class="fu">solve</span>(p)</span>
-<span id="cb33-125"><a href="#cb33-125"></a><span class="fu">plot</span>(s1, <span class="at">main =</span> <span class="st">&quot;Scenario 1&quot;</span>)</span>
-<span id="cb33-126"><a href="#cb33-126"></a><span class="in">```</span></span>
-<span id="cb33-127"><a href="#cb33-127"></a></span>
-<span id="cb33-128"><a href="#cb33-128"></a><span class="fu">## Scenario 2: Lock Out Urban Areas</span></span>
-<span id="cb33-129"><a href="#cb33-129"></a></span>
-<span id="cb33-132"><a href="#cb33-132"></a><span class="in">```{r}</span></span>
-<span id="cb33-133"><a href="#cb33-133"></a>p <span class="ot">&lt;-</span> <span class="fu">problem</span>(PU, spp) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-134"><a href="#cb33-134"></a>  <span class="fu">add_min_shortfall_objective</span>(<span class="at">budget =</span> budget.area) <span class="sc">%&gt;%</span></span>
-<span id="cb33-135"><a href="#cb33-135"></a>  <span class="fu">add_relative_targets</span>(<span class="at">targets =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb33-136"><a href="#cb33-136"></a>  <span class="fu">add_proportion_decisions</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb33-137"><a href="#cb33-137"></a>  <span class="fu">add_locked_out_constraints</span>(urban) <span class="sc">%&gt;%</span></span>
-<span id="cb33-138"><a href="#cb33-138"></a>  <span class="fu">add_default_solver</span>()</span>
+<span id="cb33-115"><a href="#cb33-115"></a><span class="fu">## Define Budget</span></span>
+<span id="cb33-116"><a href="#cb33-116"></a></span>
+<span id="cb33-119"><a href="#cb33-119"></a><span class="in">```{r}</span></span>
+<span id="cb33-120"><a href="#cb33-120"></a>budget.area <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fl">0.3</span> <span class="sc">*</span> <span class="fu">length</span>(<span class="fu">cells</span>(PU)))</span>
+<span id="cb33-121"><a href="#cb33-121"></a><span class="in">```</span></span>
+<span id="cb33-122"><a href="#cb33-122"></a></span>
+<span id="cb33-123"><a href="#cb33-123"></a><span class="fu">## Scenario 1: Basic Shortfall Objective</span></span>
+<span id="cb33-124"><a href="#cb33-124"></a></span>
+<span id="cb33-127"><a href="#cb33-127"></a><span class="in">```{r}</span></span>
+<span id="cb33-128"><a href="#cb33-128"></a>p <span class="ot">&lt;-</span> <span class="fu">problem</span>(PU, spp) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-129"><a href="#cb33-129"></a>  <span class="fu">add_min_shortfall_objective</span>(<span class="at">budget =</span> budget.area) <span class="sc">%&gt;%</span></span>
+<span id="cb33-130"><a href="#cb33-130"></a>  <span class="fu">add_relative_targets</span>(<span class="at">targets =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-131"><a href="#cb33-131"></a>  <span class="fu">add_default_solver</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb33-132"><a href="#cb33-132"></a>  <span class="fu">add_proportion_decisions</span>()</span>
+<span id="cb33-133"><a href="#cb33-133"></a></span>
+<span id="cb33-134"><a href="#cb33-134"></a>s1 <span class="ot">&lt;-</span> <span class="fu">solve</span>(p)</span>
+<span id="cb33-135"><a href="#cb33-135"></a><span class="fu">plot</span>(s1, <span class="at">main =</span> <span class="st">&quot;Scenario 1&quot;</span>)</span>
+<span id="cb33-136"><a href="#cb33-136"></a><span class="in">```</span></span>
+<span id="cb33-137"><a href="#cb33-137"></a></span>
+<span id="cb33-138"><a href="#cb33-138"></a><span class="fu">## Scenario 2: Lock Out Urban Areas</span></span>
 <span id="cb33-139"><a href="#cb33-139"></a></span>
-<span id="cb33-140"><a href="#cb33-140"></a>s2 <span class="ot">&lt;-</span> <span class="fu">solve</span>(p)</span>
-<span id="cb33-141"><a href="#cb33-141"></a><span class="fu">plot</span>(s2, <span class="at">main =</span> <span class="st">&quot;Scenario 2 - lock out&quot;</span>)</span>
-<span id="cb33-142"><a href="#cb33-142"></a><span class="in">```</span></span>
-<span id="cb33-143"><a href="#cb33-143"></a></span>
-<span id="cb33-144"><a href="#cb33-144"></a><span class="fu">## Scenario 3: Lock In Protected Areas</span></span>
-<span id="cb33-145"><a href="#cb33-145"></a></span>
-<span id="cb33-148"><a href="#cb33-148"></a><span class="in">```{r}</span></span>
-<span id="cb33-149"><a href="#cb33-149"></a>p <span class="ot">&lt;-</span> <span class="fu">problem</span>(PU, spp) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-150"><a href="#cb33-150"></a>  <span class="fu">add_min_shortfall_objective</span>(<span class="at">budget =</span> budget.area) <span class="sc">%&gt;%</span></span>
-<span id="cb33-151"><a href="#cb33-151"></a>  <span class="fu">add_relative_targets</span>(<span class="at">targets =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb33-152"><a href="#cb33-152"></a>  <span class="fu">add_proportion_decisions</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb33-153"><a href="#cb33-153"></a>  <span class="fu">add_locked_in_constraints</span>(PA) <span class="sc">%&gt;%</span></span>
-<span id="cb33-154"><a href="#cb33-154"></a>  <span class="fu">add_locked_out_constraints</span>(urban) <span class="sc">%&gt;%</span></span>
-<span id="cb33-155"><a href="#cb33-155"></a>  <span class="fu">add_default_solver</span>()</span>
-<span id="cb33-156"><a href="#cb33-156"></a></span>
-<span id="cb33-157"><a href="#cb33-157"></a>s3 <span class="ot">&lt;-</span> <span class="fu">solve</span>(p)</span>
-<span id="cb33-158"><a href="#cb33-158"></a><span class="fu">plot</span>(s3, <span class="at">main =</span> <span class="st">&quot;Scenario 3 - lock in&quot;</span>)</span>
-<span id="cb33-159"><a href="#cb33-159"></a><span class="in">```</span></span>
-<span id="cb33-160"><a href="#cb33-160"></a></span>
-<span id="cb33-161"><a href="#cb33-161"></a><span class="fu">## Scenario 4: Penalize Human Footprint</span></span>
-<span id="cb33-162"><a href="#cb33-162"></a></span>
-<span id="cb33-165"><a href="#cb33-165"></a><span class="in">```{r}</span></span>
-<span id="cb33-166"><a href="#cb33-166"></a>p <span class="ot">&lt;-</span> <span class="fu">problem</span>(PU, spp) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-167"><a href="#cb33-167"></a>  <span class="fu">add_min_shortfall_objective</span>(<span class="at">budget =</span> budget.area) <span class="sc">%&gt;%</span></span>
-<span id="cb33-168"><a href="#cb33-168"></a>  <span class="fu">add_relative_targets</span>(<span class="at">targets =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb33-169"><a href="#cb33-169"></a>  <span class="fu">add_linear_penalties</span>(<span class="at">penalty =</span> <span class="dv">1</span>, <span class="at">data =</span> hfp) <span class="sc">%&gt;%</span></span>
-<span id="cb33-170"><a href="#cb33-170"></a>  <span class="fu">add_proportion_decisions</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb33-171"><a href="#cb33-171"></a>  <span class="fu">add_locked_in_constraints</span>(PA) <span class="sc">%&gt;%</span></span>
-<span id="cb33-172"><a href="#cb33-172"></a>  <span class="fu">add_locked_out_constraints</span>(urban) <span class="sc">%&gt;%</span></span>
-<span id="cb33-173"><a href="#cb33-173"></a>  <span class="fu">add_default_solver</span>()</span>
-<span id="cb33-174"><a href="#cb33-174"></a></span>
-<span id="cb33-175"><a href="#cb33-175"></a>s4 <span class="ot">&lt;-</span> <span class="fu">solve</span>(p)</span>
-<span id="cb33-176"><a href="#cb33-176"></a><span class="fu">plot</span>(s4, <span class="at">main =</span> <span class="st">&quot;Scenario 4 - apply penalty&quot;</span>)</span>
-<span id="cb33-177"><a href="#cb33-177"></a></span>
-<span id="cb33-178"><a href="#cb33-178"></a><span class="co"># Export to GeoTIFF</span></span>
-<span id="cb33-179"><a href="#cb33-179"></a><span class="fu">writeRaster</span>(s4, <span class="st">&quot;scenario_4.tif&quot;</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb33-180"><a href="#cb33-180"></a><span class="in">```</span></span>
-<span id="cb33-181"><a href="#cb33-181"></a></span>
-<span id="cb33-182"><a href="#cb33-182"></a><span class="fu">## Plot All Scenarios Side by Side</span></span>
-<span id="cb33-183"><a href="#cb33-183"></a></span>
-<span id="cb33-186"><a href="#cb33-186"></a><span class="in">```{r}</span></span>
-<span id="cb33-187"><a href="#cb33-187"></a><span class="co"># Set plotting area to 1 row, 4 columns</span></span>
-<span id="cb33-188"><a href="#cb33-188"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
-<span id="cb33-189"><a href="#cb33-189"></a></span>
-<span id="cb33-190"><a href="#cb33-190"></a><span class="fu">plot</span>(s1, <span class="at">main =</span> <span class="st">&quot;Scenario 1&quot;</span>)</span>
-<span id="cb33-191"><a href="#cb33-191"></a><span class="fu">plot</span>(s2, <span class="at">main =</span> <span class="st">&quot;Scenario 2 - lock out&quot;</span>)</span>
-<span id="cb33-192"><a href="#cb33-192"></a><span class="fu">plot</span>(s3, <span class="at">main =</span> <span class="st">&quot;Scenario 3 - lock in&quot;</span>)</span>
-<span id="cb33-193"><a href="#cb33-193"></a><span class="fu">plot</span>(s4, <span class="at">main =</span> <span class="st">&quot;Scenario 4 - apply penalty&quot;</span>)</span>
-<span id="cb33-194"><a href="#cb33-194"></a></span>
-<span id="cb33-195"><a href="#cb33-195"></a><span class="co"># Reset plotting layout to default (optional)</span></span>
-<span id="cb33-196"><a href="#cb33-196"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb33-197"><a href="#cb33-197"></a><span class="in">```</span></span>
-<span id="cb33-198"><a href="#cb33-198"></a></span>
-<span id="cb33-199"><a href="#cb33-199"></a><span class="fu">## Calculate metrics</span></span>
-<span id="cb33-200"><a href="#cb33-200"></a></span>
-<span id="cb33-203"><a href="#cb33-203"></a><span class="in">```{r}</span></span>
-<span id="cb33-204"><a href="#cb33-204"></a><span class="co">#Scenario 1</span></span>
-<span id="cb33-205"><a href="#cb33-205"></a>rpz_target_spp_s1 <span class="ot">&lt;-</span> <span class="fu">eval_target_coverage_summary</span>(p, s1) </span>
-<span id="cb33-206"><a href="#cb33-206"></a><span class="fu">mean</span>(rpz_target_spp_s1<span class="sc">$</span>relative_held)</span>
-<span id="cb33-207"><a href="#cb33-207"></a><span class="fu">mean</span>(rpz_target_spp_s1<span class="sc">$</span>relative_shortfall) </span>
-<span id="cb33-208"><a href="#cb33-208"></a><span class="co">#Scenario 2</span></span>
-<span id="cb33-209"><a href="#cb33-209"></a>rpz_target_spp_s2 <span class="ot">&lt;-</span> <span class="fu">eval_target_coverage_summary</span>(p, s2) </span>
-<span id="cb33-210"><a href="#cb33-210"></a><span class="fu">mean</span>(rpz_target_spp_s2<span class="sc">$</span>relative_held)</span>
-<span id="cb33-211"><a href="#cb33-211"></a><span class="fu">mean</span>(rpz_target_spp_s2<span class="sc">$</span>relative_shortfall) </span>
-<span id="cb33-212"><a href="#cb33-212"></a><span class="co">#Scenario 3</span></span>
-<span id="cb33-213"><a href="#cb33-213"></a>rpz_target_spp_s3 <span class="ot">&lt;-</span> <span class="fu">eval_target_coverage_summary</span>(p, s3) </span>
-<span id="cb33-214"><a href="#cb33-214"></a><span class="fu">mean</span>(rpz_target_spp_s3<span class="sc">$</span>relative_held)</span>
-<span id="cb33-215"><a href="#cb33-215"></a><span class="fu">mean</span>(rpz_target_spp_s3<span class="sc">$</span>relative_shortfall)</span>
-<span id="cb33-216"><a href="#cb33-216"></a><span class="co">#Scenario 4</span></span>
-<span id="cb33-217"><a href="#cb33-217"></a>rpz_target_spp_s4 <span class="ot">&lt;-</span> <span class="fu">eval_target_coverage_summary</span>(p, s4) </span>
-<span id="cb33-218"><a href="#cb33-218"></a><span class="fu">mean</span>(rpz_target_spp_s4<span class="sc">$</span>relative_held)</span>
-<span id="cb33-219"><a href="#cb33-219"></a><span class="fu">mean</span>(rpz_target_spp_s4<span class="sc">$</span>relative_shortfall)  </span>
-<span id="cb33-220"><a href="#cb33-220"></a><span class="in">```</span></span>
+<span id="cb33-142"><a href="#cb33-142"></a><span class="in">```{r}</span></span>
+<span id="cb33-143"><a href="#cb33-143"></a>p <span class="ot">&lt;-</span> <span class="fu">problem</span>(PU, spp) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-144"><a href="#cb33-144"></a>  <span class="fu">add_min_shortfall_objective</span>(<span class="at">budget =</span> budget.area) <span class="sc">%&gt;%</span></span>
+<span id="cb33-145"><a href="#cb33-145"></a>  <span class="fu">add_relative_targets</span>(<span class="at">targets =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-146"><a href="#cb33-146"></a>  <span class="fu">add_proportion_decisions</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb33-147"><a href="#cb33-147"></a>  <span class="fu">add_locked_out_constraints</span>(urban) <span class="sc">%&gt;%</span></span>
+<span id="cb33-148"><a href="#cb33-148"></a>  <span class="fu">add_default_solver</span>()</span>
+<span id="cb33-149"><a href="#cb33-149"></a></span>
+<span id="cb33-150"><a href="#cb33-150"></a>s2 <span class="ot">&lt;-</span> <span class="fu">solve</span>(p)</span>
+<span id="cb33-151"><a href="#cb33-151"></a><span class="fu">plot</span>(s2, <span class="at">main =</span> <span class="st">&quot;Scenario 2 - lock out&quot;</span>)</span>
+<span id="cb33-152"><a href="#cb33-152"></a><span class="in">```</span></span>
+<span id="cb33-153"><a href="#cb33-153"></a></span>
+<span id="cb33-154"><a href="#cb33-154"></a><span class="fu">## Scenario 3: Lock In Protected Areas</span></span>
+<span id="cb33-155"><a href="#cb33-155"></a></span>
+<span id="cb33-158"><a href="#cb33-158"></a><span class="in">```{r}</span></span>
+<span id="cb33-159"><a href="#cb33-159"></a>p <span class="ot">&lt;-</span> <span class="fu">problem</span>(PU, spp) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-160"><a href="#cb33-160"></a>  <span class="fu">add_min_shortfall_objective</span>(<span class="at">budget =</span> budget.area) <span class="sc">%&gt;%</span></span>
+<span id="cb33-161"><a href="#cb33-161"></a>  <span class="fu">add_relative_targets</span>(<span class="at">targets =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-162"><a href="#cb33-162"></a>  <span class="fu">add_proportion_decisions</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb33-163"><a href="#cb33-163"></a>  <span class="fu">add_locked_in_constraints</span>(PA) <span class="sc">%&gt;%</span></span>
+<span id="cb33-164"><a href="#cb33-164"></a>  <span class="fu">add_locked_out_constraints</span>(urban) <span class="sc">%&gt;%</span></span>
+<span id="cb33-165"><a href="#cb33-165"></a>  <span class="fu">add_default_solver</span>()</span>
+<span id="cb33-166"><a href="#cb33-166"></a></span>
+<span id="cb33-167"><a href="#cb33-167"></a>s3 <span class="ot">&lt;-</span> <span class="fu">solve</span>(p)</span>
+<span id="cb33-168"><a href="#cb33-168"></a><span class="fu">plot</span>(s3, <span class="at">main =</span> <span class="st">&quot;Scenario 3 - lock in&quot;</span>)</span>
+<span id="cb33-169"><a href="#cb33-169"></a><span class="in">```</span></span>
+<span id="cb33-170"><a href="#cb33-170"></a></span>
+<span id="cb33-171"><a href="#cb33-171"></a><span class="fu">## Scenario 4: Penalize Human Footprint</span></span>
+<span id="cb33-172"><a href="#cb33-172"></a></span>
+<span id="cb33-175"><a href="#cb33-175"></a><span class="in">```{r}</span></span>
+<span id="cb33-176"><a href="#cb33-176"></a>p <span class="ot">&lt;-</span> <span class="fu">problem</span>(PU, spp) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-177"><a href="#cb33-177"></a>  <span class="fu">add_min_shortfall_objective</span>(<span class="at">budget =</span> budget.area) <span class="sc">%&gt;%</span></span>
+<span id="cb33-178"><a href="#cb33-178"></a>  <span class="fu">add_relative_targets</span>(<span class="at">targets =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-179"><a href="#cb33-179"></a>  <span class="fu">add_linear_penalties</span>(<span class="at">penalty =</span> <span class="dv">1</span>, <span class="at">data =</span> hfp) <span class="sc">%&gt;%</span></span>
+<span id="cb33-180"><a href="#cb33-180"></a>  <span class="fu">add_proportion_decisions</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb33-181"><a href="#cb33-181"></a>  <span class="fu">add_locked_in_constraints</span>(PA) <span class="sc">%&gt;%</span></span>
+<span id="cb33-182"><a href="#cb33-182"></a>  <span class="fu">add_locked_out_constraints</span>(urban) <span class="sc">%&gt;%</span></span>
+<span id="cb33-183"><a href="#cb33-183"></a>  <span class="fu">add_default_solver</span>()</span>
+<span id="cb33-184"><a href="#cb33-184"></a></span>
+<span id="cb33-185"><a href="#cb33-185"></a>s4 <span class="ot">&lt;-</span> <span class="fu">solve</span>(p)</span>
+<span id="cb33-186"><a href="#cb33-186"></a><span class="fu">plot</span>(s4, <span class="at">main =</span> <span class="st">&quot;Scenario 4 - apply penalty&quot;</span>)</span>
+<span id="cb33-187"><a href="#cb33-187"></a></span>
+<span id="cb33-188"><a href="#cb33-188"></a><span class="co"># Export to GeoTIFF</span></span>
+<span id="cb33-189"><a href="#cb33-189"></a><span class="fu">writeRaster</span>(s4, <span class="st">&quot;scenario_4.tif&quot;</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb33-190"><a href="#cb33-190"></a><span class="in">```</span></span>
+<span id="cb33-191"><a href="#cb33-191"></a></span>
+<span id="cb33-192"><a href="#cb33-192"></a><span class="fu">## Plot All Scenarios Side by Side</span></span>
+<span id="cb33-193"><a href="#cb33-193"></a></span>
+<span id="cb33-196"><a href="#cb33-196"></a><span class="in">```{r}</span></span>
+<span id="cb33-197"><a href="#cb33-197"></a><span class="co"># Set plotting area to 1 row, 4 columns</span></span>
+<span id="cb33-198"><a href="#cb33-198"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb33-199"><a href="#cb33-199"></a></span>
+<span id="cb33-200"><a href="#cb33-200"></a><span class="fu">plot</span>(s1, <span class="at">main =</span> <span class="st">&quot;Scenario 1&quot;</span>)</span>
+<span id="cb33-201"><a href="#cb33-201"></a><span class="fu">plot</span>(s2, <span class="at">main =</span> <span class="st">&quot;Scenario 2 - lock out&quot;</span>)</span>
+<span id="cb33-202"><a href="#cb33-202"></a><span class="fu">plot</span>(s3, <span class="at">main =</span> <span class="st">&quot;Scenario 3 - lock in&quot;</span>)</span>
+<span id="cb33-203"><a href="#cb33-203"></a><span class="fu">plot</span>(s4, <span class="at">main =</span> <span class="st">&quot;Scenario 4 - apply penalty&quot;</span>)</span>
+<span id="cb33-204"><a href="#cb33-204"></a></span>
+<span id="cb33-205"><a href="#cb33-205"></a><span class="co"># Reset plotting layout to default (optional)</span></span>
+<span id="cb33-206"><a href="#cb33-206"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb33-207"><a href="#cb33-207"></a><span class="in">```</span></span>
+<span id="cb33-208"><a href="#cb33-208"></a></span>
+<span id="cb33-209"><a href="#cb33-209"></a><span class="fu">## Calculate metrics</span></span>
+<span id="cb33-210"><a href="#cb33-210"></a></span>
+<span id="cb33-213"><a href="#cb33-213"></a><span class="in">```{r}</span></span>
+<span id="cb33-214"><a href="#cb33-214"></a><span class="co">#Scenario 1</span></span>
+<span id="cb33-215"><a href="#cb33-215"></a>rpz_target_spp_s1 <span class="ot">&lt;-</span> <span class="fu">eval_target_coverage_summary</span>(p, s1) </span>
+<span id="cb33-216"><a href="#cb33-216"></a><span class="fu">mean</span>(rpz_target_spp_s1<span class="sc">$</span>relative_held)</span>
+<span id="cb33-217"><a href="#cb33-217"></a><span class="fu">mean</span>(rpz_target_spp_s1<span class="sc">$</span>relative_shortfall) </span>
+<span id="cb33-218"><a href="#cb33-218"></a><span class="co">#Scenario 2</span></span>
+<span id="cb33-219"><a href="#cb33-219"></a>rpz_target_spp_s2 <span class="ot">&lt;-</span> <span class="fu">eval_target_coverage_summary</span>(p, s2) </span>
+<span id="cb33-220"><a href="#cb33-220"></a><span class="fu">mean</span>(rpz_target_spp_s2<span class="sc">$</span>relative_held)</span>
+<span id="cb33-221"><a href="#cb33-221"></a><span class="fu">mean</span>(rpz_target_spp_s2<span class="sc">$</span>relative_shortfall) </span>
+<span id="cb33-222"><a href="#cb33-222"></a><span class="co">#Scenario 3</span></span>
+<span id="cb33-223"><a href="#cb33-223"></a>rpz_target_spp_s3 <span class="ot">&lt;-</span> <span class="fu">eval_target_coverage_summary</span>(p, s3) </span>
+<span id="cb33-224"><a href="#cb33-224"></a><span class="fu">mean</span>(rpz_target_spp_s3<span class="sc">$</span>relative_held)</span>
+<span id="cb33-225"><a href="#cb33-225"></a><span class="fu">mean</span>(rpz_target_spp_s3<span class="sc">$</span>relative_shortfall)</span>
+<span id="cb33-226"><a href="#cb33-226"></a><span class="co">#Scenario 4</span></span>
+<span id="cb33-227"><a href="#cb33-227"></a>rpz_target_spp_s4 <span class="ot">&lt;-</span> <span class="fu">eval_target_coverage_summary</span>(p, s4) </span>
+<span id="cb33-228"><a href="#cb33-228"></a><span class="fu">mean</span>(rpz_target_spp_s4<span class="sc">$</span>relative_held)</span>
+<span id="cb33-229"><a href="#cb33-229"></a><span class="fu">mean</span>(rpz_target_spp_s4<span class="sc">$</span>relative_shortfall)  </span>
+<span id="cb33-230"><a href="#cb33-230"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
