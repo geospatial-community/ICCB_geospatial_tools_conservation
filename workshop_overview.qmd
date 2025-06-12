@@ -1,10 +1,55 @@
 ---
-title: "Workshop overview"
-author: "Mitch Rudge and Catherine Kim"
+title: "Open Source Geospatial Tools for Conservation under Climate Change"
+format: html
+editor: visual
 ---
 
-Overview of the workshop
+![](iccb_banner.png)
 
-- How it will run
-- Accessing the repo
-- etc... 
+This repo contains the materials for the ICCB workshop titled "Open Source Geospatial Tools for Conservation under Climate Change".
+
+## Aim of the workshop
+
+Over two days, this training workshop aims to equip participants with the core skills of conservation planning and management with open source geospatial tools - from the basics of R spatial, to climate modelling, species distribution modelling, spatial conservation planning, all the way to making beautiful maps with QGIS.
+
+## Key case study question
+
+Koalas (*Phascolarctos cinereus*) in South East Queensland (SEQ) inhabit fragmented eucalypt woodlands and rely heavily on Eucalyptus species for food and shelter. The population is already under pressure from habitat loss, disease (notably chlamydia), and vehicle collisions. Climate change poses additional threats through increased frequency of heatwaves, droughts, and bushfires, which reduce food quality, water availability, and suitable habitat. With this in mind, this workshop will seek to address the question: "How can we best conserve the koalas of south east Queensland under climate change?".
+
+## Schedule
+
+The content will be delivered on the weekend prior to ICCB - the 14th and 15th of June 2025.
+
+|  |  |  |  |  |
+|----|----|----|:--:|:--:|
+| **Session** | **Led by** | **Supported by** | **Start time** | **End time** |
+| **Introduction** | Mitch Rudge and Catherine Kim |  | 9:00 | 9:30 |
+| **Getting started with geospatial tools in R** | [Jason Flower](https://aus01.safelinks.protection.outlook.com/?url=https%3A%2F%2Femlab.ucsb.edu%2Fabout%2Four-team%2Fjason-flower&data=05%7C02%7Cmitch.rudge%40bushheritage.org.au%7Ceee1dc0ba7b34cf7325508dda4a3c6b1%7Cff65b7df6527409da945661d0fadea3c%7C0%7C0%7C638847745531129053%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=zvCl0hu4CyDlyA%2Bqw9xcGVWLueRgAzvXRx06CZYIyIs%3D&reserved=0) (University of California, Santa Barbara) | Mitch Rudge and Catherine Kim | Saturday 9:30 | Saturday 11:00 |
+| **Morning tea** |  |  | 11:00 | 11:15 |
+| **Working with climate projection models part 1** | [Ralph Trancoso](https://aus01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fralph-trancoso-21546929%2F&data=05%7C02%7Cmitch.rudge%40bushheritage.org.au%7Ceee1dc0ba7b34cf7325508dda4a3c6b1%7Cff65b7df6527409da945661d0fadea3c%7C0%7C0%7C638847745531156309%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=otU87UMW%2BoDk8bL1sLMTghJMbUR7gGFYAkTRVUJ8WzI%3D&reserved=0), [Sarah Chapman](https://aus01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fsarah-chapman-78338a6b%2F&data=05%7C02%7Cmitch.rudge%40bushheritage.org.au%7Ceee1dc0ba7b34cf7325508dda4a3c6b1%7Cff65b7df6527409da945661d0fadea3c%7C0%7C0%7C638847745531164925%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=0TvIu6zEnWZHmNd4dFem3uJpm7nhofZRHi8U6zWyPNQ%3D&reserved=0), [Rohan Eccles](https://aus01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.linkedin.com%2Fin%2Frohan-eccles-410737135%2F&data=05%7C02%7Cmitch.rudge%40bushheritage.org.au%7Ceee1dc0ba7b34cf7325508dda4a3c6b1%7Cff65b7df6527409da945661d0fadea3c%7C0%7C0%7C638847745531173718%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=5w%2FTVDYwn6BbKKxSopNNxolikqfPiTP03gXDTYDI3tI%3D&reserved=0) (Queensland Future Climate Science Program) | Mitch Rudge and Catherine Kim | Saturday 11:15 | Saturday 12:30 |
+| **Lunch day 1** |  |  | Saturday 12:30 | Saturday 13:30 |
+| **Working with climate projection models part 2** |  |  | 13:30 | 14:00 |
+| **Afternoon tea** |  |  | 14:00 | 14:15 |
+| **Modelling the future distribution of koalas** | [Scott Forrest](https://aus01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fswforrest%2F&data=05%7C02%7Cmitch.rudge%40bushheritage.org.au%7Ceee1dc0ba7b34cf7325508dda4a3c6b1%7Cff65b7df6527409da945661d0fadea3c%7C0%7C0%7C638847745531182802%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=y0zzk6OlNimRH3I%2FyMFqID%2Fozq29QAvKYh7c8JCMeAU%3D&reserved=0) and [Charlotte Patterson](https://aus01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fcharlotterubyp%2F&data=05%7C02%7Cmitch.rudge%40bushheritage.org.au%7Ceee1dc0ba7b34cf7325508dda4a3c6b1%7Cff65b7df6527409da945661d0fadea3c%7C0%7C0%7C638847745531191663%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=gD5ZGVZnnBVsB7qiUByu%2FckHtUdnTNQ6oFhTrTgfH1o%3D&reserved=0) (QUT) | Mitch Rudge and Catherine Kim | Saturday 14:15 | Saturday 16:30 |
+| Koala dinner |  |  | TBC | TBC |
+| **Putting it all together with conservation spatial planning** | [Caitie Kuempel](https://aus01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fcaitie-kuempel-b86905110%2F&data=05%7C02%7Cmitch.rudge%40bushheritage.org.au%7Ceee1dc0ba7b34cf7325508dda4a3c6b1%7Cff65b7df6527409da945661d0fadea3c%7C0%7C0%7C638847745531200235%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=KEKg79f8f%2FydiYqaChnj1rpREFPx7V0G1PYMWK3UaBs%3D&reserved=0) (Griffith University) and [Brooke Williams](https://aus01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fbrooke-williams-141772114%2F&data=05%7C02%7Cmitch.rudge%40bushheritage.org.au%7Ceee1dc0ba7b34cf7325508dda4a3c6b1%7Cff65b7df6527409da945661d0fadea3c%7C0%7C0%7C638847745531208694%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=iB0wyPN8mp9YDGFF3d9ao7zTR0vL6gA9ajY5FkhxvdI%3D&reserved=0) (The University of Newcastle) | Mitch Rudge and Catherine Kim | Sunday 10:00 | Sunday 11:30 |
+| **Lunch Day 2** |  |  | Sunday 11:30 | Sunday 12:30 |
+| **Creating beautiful maps with QGIS** | [Emma Hain](https://aus01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.linkedin.com%2Fin%2Femma-hain-9a47b12a%2F&data=05%7C02%7Cmitch.rudge%40bushheritage.org.au%7Ceee1dc0ba7b34cf7325508dda4a3c6b1%7Cff65b7df6527409da945661d0fadea3c%7C0%7C0%7C638847745531216889%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=JGo%2FKtjmXJT85V%2Fyr9Bpcka8QQ5AtxgsGseaJlBOU7Y%3D&reserved=0) (North Road and QGIS Australia) | Mitch Rudge and Catherine Kim | Sunday 12:30 | Sunday 14:30 |
+
+## Before the workshop
+
+Please download and install R, R studio, and QGIS before the workshop. If you are not able to do this, that's fine but please arrive early so we can get you started.
+
+## Location
+
+The University of Queensland St Lucia campus, Forgan Smith Building 01-E107.
+
+## About the organisers and supporters
+
+![](geospatial_share_logo.png){width="272"}
+
+This workshop was organised by Geospatial Share, a grassroots group of spatial enthusiasts whose mission is to build a supportive and inclusive community where students, researchers, and professionals can grow their geospatial skills together. See <https://brisbane-geocommunity.netlify.app/> for more.
+
+This workshop was made possible by generous contributions by members of the following organisations.
+
+![](banner.png)
