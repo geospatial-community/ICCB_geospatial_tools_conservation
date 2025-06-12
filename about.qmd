@@ -4,7 +4,7 @@ author: "Mitch Rudge, Catherine Kim"
 date: today
 ---
 
-![](geospatial_share_logo.png){width="239"}
+![](geospatial_share_logo.png){fig-align="center" width="242"}
 
 This training course was organized by the Geospatial Share Community of Practice based in Australia.
 
@@ -60,10 +60,8 @@ Project Researcher at the Environmental Market Solutions Lab (emLab) at the Univ
 
 ## About the organisers and supporters
 
-![](geospatial_share_logo.png){width="272"}
-
 This workshop was organised by Geospatial Share, a grassroots group of spatial enthusiasts whose mission is to build a supportive and inclusive community where students, researchers, and professionals can grow their geospatial skills together. See <https://brisbane-geocommunity.netlify.app/> for more.
 
 This workshop was made possible by generous contributions by members of the following organisations.
 
-![](banner.png)
+![](banner.png){fig-align="center"}
