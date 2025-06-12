@@ -3,6 +3,7 @@ project:
   output-dir: docs
   resources:
     - "*.pdf"
+    # - Session 5/media
     
 execute:
   freeze: auto
@@ -27,7 +28,7 @@ website:
         text: Session 3
       - href: Session 4/session_4_home.qmd
         text: Session 4
-      - href: Session 5/session_5_home.qmd
+      - href: Session 5/index.md
         text: Session 5
       - about.qmd
       
@@ -40,7 +41,6 @@ website:
     
     - title: "Session 1"
       contents: 
-        # - Session 1/session_1_home.qmd
         - Session 1/session_1_code.qmd
         
     - title: "Session 2"
@@ -51,8 +51,6 @@ website:
     - title: "Session 3"
       contents: 
         - Session 3/session_3_home.qmd
-        # - Session 3/ICCB_Species_data.qmd
-        # - Session 3/ICCB_Environmental_data.qmd
         - Session 3/ICCB_Modelling_and_validation.qmd
         
     - title: "Session 4"

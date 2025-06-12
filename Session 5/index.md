@@ -9,9 +9,11 @@ nav_order: 0
 
 Welcome to the QGIS Cartography componment of this course
 
-In this course, we will endeavour to learn about: 
-- Establishing efficient workflows for repetitive work using: styles, layouts, templates 
-- Cartographic hints and tips
+In this course, we will endeavour to learn about:
+
+-   Establishing efficient workflows for repetitive work using: styles, layouts, templates
+
+-   Cartographic hints and tips
 
 Producing a cartographic product is important to effectively display the results of your investigation. It’s incredible that ALL of that work can be simply represented, but then, that shows a element of success in your work.
 
