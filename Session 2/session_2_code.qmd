@@ -340,7 +340,7 @@ Would showing multiple models on this plot help?
 #
 ```
 
-# Part 3: Validating your data Calculating BioClim Indices
+# Part 3: Validating your data and calculating BioClim Indices
 
 List monthly climate files
 
