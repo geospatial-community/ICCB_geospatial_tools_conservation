@@ -574,7 +574,7 @@ We've been working with just one raster, but what if we want to do the same thin
 
 In the `data/Current_climate_QLD` folder, there are 19 raster files. It would be painful to have to load, crop, mask and project each file individually. A very useful feature of rasters is that they can have many layers. These layers often represent different time periods, such as days or months, or different variables, such as temperature maximum, minimum and mean.
 
-First we need the file paths of all those 19 rasters, which we can get using `list.files()`. We can then read them all into one multi-layer raster using the same `rast()` command that we used to load our single raster! 
+First we need the file paths of all those 19 rasters, which we can get using `list.files()`. We can then read them all into one multi-layer raster using the same `rast()` command that we used to load our single raster!
 
 ```{r}
 bioclim_list <- list.files("data/Current_climate_QLD", full.names = TRUE) |> 
@@ -608,7 +608,7 @@ rotate_data <- function(data, y_add) {
 }
 
 #aggregate and polygonize data
-temp_poly <- aggregate(bioclim_ras, fact = 4) |> 
+temp_poly <- aggregate(bioclim_list, fact = 4) |> 
   as.polygons(aggregate = FALSE) |> 
   st_as_sf()
   
@@ -628,7 +628,7 @@ ggplot2::ggplot() +
 We can use functions on our new multi-layer raster in the same way as we did for just one raster layer. We can map the rasters using the `plot()` function as normal:
 
 ```{r}
-plot(bioclim_ras)
+plot(bioclim_list)
 ```
 
 Not all the rasters fit in the window, so only the first 16 are show.
@@ -638,7 +638,7 @@ It's important to remember that if you want to put rasters into a multi-layer ra
 Now, we want to crop, mask and project our raster, same as we did with our single raster before. We can use exactly the same commands:
 
 ```{r}
-bioclim_seq <- bioclim_ras |> 
+bioclim_seq <- bioclim_list |> 
   crop(seq_vect, mask = TRUE) |> 
   project(crs(climate_seq_projected))
 ```
