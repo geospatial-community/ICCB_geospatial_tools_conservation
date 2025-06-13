@@ -73,6 +73,6 @@ Jones, D. A., Wang, W., & Fawcett, R. (2009). High-quality spatial climate data-
 
 ## Slides
 
-[Download a PDF of the slides](ICCB2025_Session2_ClimateProjections.pdf){target="_blank"}
+[Download a PDF of the slides](ICCB2025_Session2_ClimateProjections_20250613.pdf){target="_blank"}
 
-<iframe src="ICCB2025_Session2_ClimateProjections.pdf" width="100%" height="600px"></iframe>
+<iframe src="ICCB2025_Session2_ClimateProjections_20250613.pdf" width="100%" height="700px"></iframe>

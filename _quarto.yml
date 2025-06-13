@@ -56,6 +56,7 @@ website:
     - title: "Session 4"
       contents: 
         - Session 4/session_4_home.qmd
+        - Session 4/session_4_code.qmd
         
     - title: "Session 5"
       contents: 

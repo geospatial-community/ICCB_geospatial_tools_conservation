@@ -26,10 +26,16 @@ editor:
 
 In this session we are fitting species distribution models to the data of koalas (*Phascolarctos cinereus*) in the South-East Queensland (SEQ) region under current climatic conditions, which we will predict into future climatic conditions.
 
-![](session_3_timeline.png)
+![Koala (*Phascolarctos cinereus*)](koala_pic.png){fig-align="center"}
+
+::: {layout-ncol=2}
+![Current climatic suitability of koalas in SEQ](outputs/GLM_outputs/predicted_current.png)
+
+![Projected change of climatic suitability for koalas in SEQ](outputs/GLM_outputs/future370-current.png)
+:::
 
 ## Slides
 
-[Download a PDF of the slides](ICCB_koala_sdm_slides.pdf){target="_blank"}
+[Download a PDF of the slides](ICCB_koala_sdm_slides_20250613.pdf){target="_blank"}
 
-<iframe src="ICCB_koala_sdm_slides.pdf" width="100%" height="600px"></iframe>
+<iframe src="ICCB_koala_sdm_slides_20250613.pdf" width="100%" height="700px"></iframe>
