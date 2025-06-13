@@ -21,7 +21,7 @@ Koalas (*Phascolarctos cinereus*) in South East Queensland (SEQ) inhabit fragmen
 The content will be delivered on the weekend prior to ICCB - the 14th and 15th of June 2025.
 
 |  |  |  |  |  |
-|---------------|---------------|---------------|:-------------:|:-------------:|
+|----|----|----|:--:|:--:|
 | **Session** | **Led by** | **Supported by** | **Start time** | **End time** |
 | **Introduction** | Mitch Rudge and Catherine Kim |  | 9:00 | 9:30 |
 | **Getting started with geospatial tools in R** | [Jason Flower](https://aus01.safelinks.protection.outlook.com/?url=https%3A%2F%2Femlab.ucsb.edu%2Fabout%2Four-team%2Fjason-flower&data=05%7C02%7Cmitch.rudge%40bushheritage.org.au%7Ceee1dc0ba7b34cf7325508dda4a3c6b1%7Cff65b7df6527409da945661d0fadea3c%7C0%7C0%7C638847745531129053%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=zvCl0hu4CyDlyA%2Bqw9xcGVWLueRgAzvXRx06CZYIyIs%3D&reserved=0) (University of California, Santa Barbara) | Mitch Rudge and Catherine Kim | Saturday 9:30 | Saturday 11:00 |
@@ -39,6 +39,10 @@ The content will be delivered on the weekend prior to ICCB - the 14th and 15th o
 ## Before the workshop
 
 Please download and install R, R studio, and QGIS before the workshop. If you are not able to do this, that's fine but please arrive early so we can get you started.
+
+## **Workshop GitHub Repository**
+
+<https://github.com/geospatial-community/ICCB_geospatial_tools_conservation>
 
 ## Location
 
