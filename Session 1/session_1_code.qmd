@@ -408,7 +408,7 @@ Remember that each cell in our raster has a value. We might want to examine some
 hist(climate_seq)
 ```
 
-There is a tail of low values, which are mostly from the south-east of Australia (Tasmania is chilly!). What is the mean value for the whole of Australia?
+There is a tail of low values; cooler temperatures in higher elevation areas mainly. What is the mean value for the whole of south-east Queensland?
 
 ```{r}
 global(climate_seq, "mean", na.rm = TRUE)
@@ -436,7 +436,7 @@ plot(climate_seq_fahrenheit)
 
 ### Coordinate reference systems and projection
 
-Remember that the CRS of our data is WGS 84. What does this mean? We can get some more information using `st_crs()`:
+Remember that the CRS of our data is WGS 84. What does this mean? We can get some more information using `crs()`:
 
 ```{r}
 crs(climate_seq)
@@ -574,35 +574,14 @@ We've been working with just one raster, but what if we want to do the same thin
 
 In the `data/Current_climate_QLD` folder, there are 19 raster files. It would be painful to have to load, crop, mask and project each file individually. A very useful feature of rasters is that they can have many layers. These layers often represent different time periods, such as days or months, or different variables, such as temperature maximum, minimum and mean.
 
-First we need to load all 19 rasters. We can do this by getting the file names and then reading those file into a list.
+First we need the file paths of all those 19 rasters, which we can get using `list.files()`. We can then read them all into one multi-layer raster using the same `rast()` command that we used to load our single raster! 
 
 ```{r}
 bioclim_list <- list.files("data/Current_climate_QLD", full.names = TRUE) |> 
-  lapply(FUN = rast)
+  rast()
 ```
 
-The `lapply()` applies the `rast()` function to each file name, i.e. loads each raster, and places them into a list. If you haven't encountered lists before, they can be a little confusing, but they are very helpful for holding any type of data. In our case, each element in the list is a raster. We can access each list element using the index. For example, to get the first object (in our case, raster), we do:
-
-```{r}
-bioclim_list[[1]]
-```
-
-We can find out how long our list is using `length()`:
-
-```{r}
-length(bioclim_list)
-```
-
-This is the same number of files that we read in: each raster is 1 element in the list.
-
-We can manipulate the rasters in the list, but it is a little easier if we can just create a single raster object to work with. Happily we can create a multi-layer raster, with each of our rasters as one layer.
-
-```{r}
-bioclim_ras <- rast(bioclim_list)
-bioclim_ras
-```
-
-We can see that we have many raster names, and the `nlyr` (number of layers) variable is now 19.
+Amazing! We can see that we have many raster names, and the `nlyr` (number of layers) variable is now 19.
 
 We can think of a multi-layer raster as a data sandwich (as my colleague likes to say!):
 
