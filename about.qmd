@@ -1,6 +1,5 @@
 ---
 title: "About"
-author: "Mitch Rudge, Catherine Kim"
 date: today
 ---
 
@@ -36,7 +35,7 @@ Our mission is to build a **supportive** and **inclusive** community where stude
 
 ### Rohan Eccles
 
-> 
+> Rohan Eccles is a Principal Climate Data Scientist in the Climate Projections & Services team at Queensland Treasury. He brings extensive experience in climate change research, particularly on understanding climate change impacts for hydrology. His PhD at Griffith University focussed on determining how climate change would affect future flooding and water quality in the Logan-Albert, Queensland. 
 
 ### Charlotte Patterson
 
@@ -50,13 +49,18 @@ Our mission is to build a **supportive** and **inclusive** community where stude
 
 > Brooke Williams is a lecturer in environmental management at the University of Newcastle and an applied ecologist and conservation scientist. Her work focuses on designing decision support frameworks and developing datasets that help guide conservation and forest restoration actions while accounting for human needs. By integrating considerations of ecosystem services and economic factors, her tools empower policymakers and land managers to make informed decisions in complex, real-world scenarios.
 
-### Caite Kuemple
+### Caitie Kuemple
 
 > Caitie Kuempel is a conservation scientist and Lecturer in ecosystem modelling at Griffith University, working at the interface of science and policy. Her research focuses on integrated land-sea planning, sustainable food production, and conservation strategies that balance human needs with environmental protection, especially in marine ecosystems. She has previously worked with the University of Queensland and WWF on climate-resilient reef management, and held a postdoctoral position at NCEAS UC Santa Barbara examining the environmental impacts of global food systems. Caitie holds advanced degrees in marine biology, environmental science, and French.
 
 ### Emma Hain
 
 > Emma Hain is a GeoSpatial Product Manager and Cartographer with over 30 years of experience spanning geospatial systems, engineering, environment, heritage, sports management, and military sectors. At North Road, she supports the global QGIS community and delivers tailored open-source geospatial solutions to a wide range of organizations. Emma also coordinates the QGIS AU community and contributes to FOSS4G Oceania, promoting collaboration across the sector. Known for her creative, ethical approach and commitment to inclusivity, she blends a deep appreciation for art with technical expertise to solve complex spatial challenges.
+
+
+### Zhao Xiang
+
+> Zhao is a software developer, eResearcher, and conservation scientist with expertise in R programming, ecological modeling, and spatial analysis. He joined QCIF in 2024 as a Software Developer and R Specialist, contributing to the EcoCommons Platform. Zhao completed his MPhil at QUT, where he applied spatial and statistical modeling to biodiversity research in Antarctica. He has also taught GIS and environmental planning, and previously worked on a panda conservation project in China, earning the BirdLife International Young Conservation Leaders Award.
 
 ## About the organisers and supporters
 
