@@ -22,6 +22,10 @@ This repo contains the materials for the ICCB workshop titled "Open Source Geosp
 
 This workshop was organised by Geospatial Share, a grassroots group of spatial enthusiasts whose mission is to build a supportive and inclusive community where students, researchers, and professionals can grow their geospatial skills together. See <https://brisbane-geocommunity.netlify.app/> for more.
 
+This workshop was generously sponsored by [the Centre for Environment and Society](https://research.qut.edu.au/centre-for-environment-and-society/)**, QUT**.
+
+![](images/clipboard-3677791164.png){fig-align="center"}
+
 This workshop was made possible by generous contributions by members of the following organisations.
 
 ![](banner.png){fig-align="center"}

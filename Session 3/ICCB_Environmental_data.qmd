@@ -258,6 +258,30 @@ hist(future_bioclim[[5]], breaks = 100)
 
 ```
 
+We can see there are a couple raster cells that have artifacts, but we can filter by the difference between the current and future layers to remove these. Unfortunately, temperature is only going to increase, so we can filter by values where the difference is negative for the BIOCLIM 5 layer, which is the max temperature of the warmest month.
+
+```{r}
+
+# have a look at the difference between current and future
+plot(future_bioclim[[5]] - current_bioclim[[5]])
+
+min(values(future_bioclim[[5]] - current_bioclim[[5]]), na.rm = TRUE)
+
+# save that and create a mask for the artifact cells
+temp_diff <- future_bioclim[[5]] - current_bioclim[[5]]
+temp_diff_mask <- temp_diff > 1 # there is one remaining artifact cell that's about 0.7, so we'll remove that
+
+# have a look at the mask
+plot(temp_diff_mask)
+
+# these values look much better without the artifacts
+plot(mask(future_bioclim[[5]], temp_diff_mask, maskvalues = 0), main = "Future BIO5 - masked by difference")
+
+# we'll apply that mask to all layers
+future_bioclim <- mask(future_bioclim, temp_diff_mask, maskvalues = 0)
+
+```
+
 Now that we have applied the artifact mask across all layers, they look better.
 
 ```{r}
@@ -321,6 +345,7 @@ future_bioclim <- terra::crop(future_bioclim, SEQ_extent.vect)
 
 # set all artifact values to NA
 future_bioclim <- terra::mask(future_bioclim, artifact_mask, maskvalues = 0) # Set all values of 0 to NA
+future_bioclim <- terra::mask(future_bioclim, temp_diff_mask, maskvalues = 0) # also use the temp difference mask
 plot(future_bioclim[[5]])
 
 plot(future_bioclim)

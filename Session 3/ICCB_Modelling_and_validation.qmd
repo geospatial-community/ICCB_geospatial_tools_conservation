@@ -32,7 +32,7 @@ abstract: |
   5. Fit a Generalised Linear Model (GLM) to the data based on current climatic conditions.
   7. Evaluate the model performance with spatial block cross validation. 
   8. Predict the model into future environmental conditions.
-  9. Summarise model uncertainty. 
+  9. Plot model uncertainty. 
 ---
 
 We wrote this script drawing on some of the following resources:
@@ -64,6 +64,9 @@ library(ecospat)
 library(usdm)
 library(precrec)
 library(corrplot)
+
+# Set the random seed for reproducibility
+set.seed(123)
 
 ```
 
@@ -249,11 +252,11 @@ A few other approaches include:
 
 -   **Buffering**: Create a buffer around the presence points and sample points within that buffer. Figure from [Velazco et al.](https://sjevelazco.github.io/flexsdm/articles/v01_pre_modeling.html#background-and-pseudo-absence-sampling).
 
-[Buffered background locations](Figures/Buffered_Background.png)
+![Buffered background locations](Figures/Buffered_Background.png)
 
 -   **Minimum convex hull**: Create a minimum convex hull around the presence points and sample points within that hull. Figure from [Velazco et al.](https://sjevelazco.github.io/flexsdm/articles/v01_pre_modeling.html#background-and-pseudo-absence-sampling).
 
-[Minimum convex hull background locations](Figures/Minimum_convex_polygon_Background.png)
+![Minimum convex hull background locations](Figures/Minimum_convex_polygon_Background.png)
 
 ## Random background sampling
 
