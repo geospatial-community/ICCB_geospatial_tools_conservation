@@ -10,7 +10,11 @@ nav_order: 1
 
 ## Download data
 
-[📁 Download ZIP: Course materials](https://raw.githubusercontent.com/EmHain8/QGIS-Cartography-ICCB/main/data/data.zip)
+[📁 Download ZIP: Course materials](https://github.com/EmHain8/QGIS-Cartography-ICCB/blob/main/data/ICCB_QGIS_Products.zip)
+
+## Link to website
+
+[Coursework Website](https://emhain8.github.io./QGIS-Cartography-ICCB/)
 
 ## For those new to QGIS
 

@@ -341,7 +341,6 @@ Toombs, N., and Ma S., 2025, A High-Resolution Dataset of 19 Bioclimatic Indices
 
 covs_current <- rast("Data/Environmental_variables/SEQ_current_bioclim.tif")
 
-
 # Define the BIOCLIM names for the raster layers
 layer_names <- c(
   "BIO1_Annual_Mean_Temp",
@@ -365,6 +364,8 @@ layer_names <- c(
   "BIO19_Precip_Coldest_Quarter")
 
 names(covs_current) <- layer_names
+
+covs_current
 
 ```
 
@@ -1192,6 +1193,15 @@ dev.off()
 # Write the raster to file
 writeRaster(predicted_future370 - predicted_current, 
             "Outputs/GLM_outputs/future370-current.tif", overwrite = TRUE)
+
+```
+
+### Plot the response curves again to interpret what is causing the change between the predictions.
+
+```{r}
+
+# Plot the response curves for the predictors in the model
+plot_species_response(glm_model, predictors, train_PB_covs_thinned_scaled)
 
 ```
 

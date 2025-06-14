@@ -146,14 +146,25 @@
     "href": "about.html#about-the-organisers-and-supporters",
     "title": "About",
     "section": "About the organisers and supporters",
-    "text": "About the organisers and supporters\nThis workshop was organised by Geospatial Share, a grassroots group of spatial enthusiasts whose mission is to build a supportive and inclusive community where students, researchers, and professionals can grow their geospatial skills together. See https://brisbane-geocommunity.netlify.app/ for more.\nThis workshop was made possible by generous contributions by members of the following organisations."
+    "text": "About the organisers and supporters\nThis workshop was organised by Geospatial Share, a grassroots group of spatial enthusiasts whose mission is to build a supportive and inclusive community where students, researchers, and professionals can grow their geospatial skills together. See https://brisbane-geocommunity.netlify.app/ for more.\nThis workshop was generously sponsored by the Centre for Environment and Society, QUT.\n\n\n\n\n\nThis workshop was made possible by generous contributions by members of the following organisations."
+  },
+  {
+    "objectID": "Session 5/index.html#link-to-website",
+    "href": "Session 5/index.html#link-to-website",
+    "title": "Home",
+    "section": "Link to website",
+    "text": "Link to website\nCoursework Website",
+    "crumbs": [
+      "Session 5",
+      "Home"
+    ]
   },
   {
     "objectID": "Session 5/docs/get-ready.html",
     "href": "Session 5/docs/get-ready.html",
     "title": "Get Ready",
     "section": "",
-    "text": "Download QGIS 3.40.7 (current Long Term Release) using the OSGeo4W installer\n\n\n📁 Download ZIP: Course materials\n\n\n\nPrior to the conference, you can undertake the freely available Introduction to QGIS from Spatial Thoughts.\nWe will be using the following facets of QGIS, so familiarise yourself with them:\n- Load layers\n- Navigating around the map\n- Status bar information\n- Panels: Layers, Browser, Layer Styling, Identify Results, Processsing\n- Working with project files\n- Attributes toolbar\n- Print layout\n- Atlas",
+    "text": "Download QGIS 3.40.7 (current Long Term Release) using the OSGeo4W installer\n\n\n📁 Download ZIP: Course materials\n\n\n\nCoursework Website\n\n\n\nPrior to the conference, you can undertake the freely available Introduction to QGIS from Spatial Thoughts.\nWe will be using the following facets of QGIS, so familiarise yourself with them:\n- Load layers\n- Navigating around the map\n- Status bar information\n- Panels: Layers, Browser, Layer Styling, Identify Results, Processsing\n- Working with project files\n- Attributes toolbar\n- Print layout\n- Atlas",
     "crumbs": [
       "Session 5",
       "Get Ready"
@@ -165,6 +176,17 @@
     "title": "Get Ready",
     "section": "",
     "text": "📁 Download ZIP: Course materials",
+    "crumbs": [
+      "Session 5",
+      "Get Ready"
+    ]
+  },
+  {
+    "objectID": "Session 5/docs/get-ready.html#link-to-website",
+    "href": "Session 5/docs/get-ready.html#link-to-website",
+    "title": "Get Ready",
+    "section": "",
+    "text": "Coursework Website",
     "crumbs": [
       "Session 5",
       "Get Ready"
@@ -457,7 +479,7 @@
     "href": "workshop_overview.html#about-the-organisers-and-supporters",
     "title": "Open Source Geospatial Tools for Conservation under Climate Change",
     "section": "About the organisers and supporters",
-    "text": "About the organisers and supporters\n\n\n\n\n\nThis workshop was organised by Geospatial Share, a grassroots group of spatial enthusiasts whose mission is to build a supportive and inclusive community where students, researchers, and professionals can grow their geospatial skills together. See https://brisbane-geocommunity.netlify.app/ for more.\nThis workshop was made possible by generous contributions by members of the following organisations."
+    "text": "About the organisers and supporters\n\n\n\n\n\nThis workshop was organised by Geospatial Share, a grassroots group of spatial enthusiasts whose mission is to build a supportive and inclusive community where students, researchers, and professionals can grow their geospatial skills together. See https://brisbane-geocommunity.netlify.app/ for more.\nThis workshop was generously sponsored by the Centre for Environment and Society, QUT.\n\n\n\n\n\nThis workshop was made possible by generous contributions by members of the following organisations."
   },
   {
     "objectID": "Session 4/session_4_code.html",
@@ -904,7 +926,7 @@
     "href": "Session 3/ICCB_Modelling_and_validation.html#plot-the-different-between-current-and-future",
     "title": "ICCB Species distribution modelling",
     "section": "Plot the different between current and future",
-    "text": "Plot the different between current and future\nRed is less suitable in the Future SSP370 scenario, and blue is more suitable in the Future SSP370 scenario.\n\n\nCode\n# return to single plotting\npar(mfrow = c(1, 1))\n\n# Create symmetric breaks centered at 0\nbreaks &lt;- seq(-1, 1, length.out = 101)\n\n# Create the color palette\ncols &lt;- colorRampPalette(c(\"red\", \"white\", \"blue\"))(100)\n\n\nplot(predicted_future370 - predicted_current,\n     main = \"Future (SSP370) - Current Predictions \",\n     col = cols,\n     range = c(-1, 1))\n\n\n\n\n\n\n\n\n\nCode\n# Save the plot as a png\npng(filename=\"Outputs/GLM_outputs/future370-current.png\",\n    width = 150, height = 130, units = \"mm\", res = 600)\nplot(predicted_future370 - predicted_current,\n     main = \"Future (SSP370) - Current Predictions \",\n     col = cols,\n     range = c(-1, 1))\ndev.off()\n\n\nquartz_off_screen \n                2 \n\n\nCode\n# Write the raster to file\nwriteRaster(predicted_future370 - predicted_current, \n            \"Outputs/GLM_outputs/future370-current.tif\", overwrite = TRUE)",
+    "text": "Plot the different between current and future\nRed is less suitable in the Future SSP370 scenario, and blue is more suitable in the Future SSP370 scenario.\n\n\nCode\n# return to single plotting\npar(mfrow = c(1, 1))\n\n# Create symmetric breaks centered at 0\nbreaks &lt;- seq(-1, 1, length.out = 101)\n\n# Create the color palette\ncols &lt;- colorRampPalette(c(\"red\", \"white\", \"blue\"))(100)\n\n\nplot(predicted_future370 - predicted_current,\n     main = \"Future (SSP370) - Current Predictions \",\n     col = cols,\n     range = c(-1, 1))\n\n\n\n\n\n\n\n\n\nCode\n# Save the plot as a png\npng(filename=\"Outputs/GLM_outputs/future370-current.png\",\n    width = 150, height = 130, units = \"mm\", res = 600)\nplot(predicted_future370 - predicted_current,\n     main = \"Future (SSP370) - Current Predictions \",\n     col = cols,\n     range = c(-1, 1))\ndev.off()\n\n\nquartz_off_screen \n                2 \n\n\nCode\n# Write the raster to file\nwriteRaster(predicted_future370 - predicted_current, \n            \"Outputs/GLM_outputs/future370-current.tif\", overwrite = TRUE)\n\n\n\nPlot the response curves again to interpret what is causing the change between the predictions.\n\n\nCode\n# Plot the response curves for the predictors in the model\nplot_species_response(glm_model, predictors, train_PB_covs_thinned_scaled)",
     "crumbs": [
       "Session 3",
       "ICCB Species distribution modelling"
@@ -1216,7 +1238,7 @@
     "href": "index.html#about-the-organisers-and-supporters",
     "title": "ICCB - Open Source Geospatial Tools for Conservation under Climate Change",
     "section": "About the organisers and supporters",
-    "text": "About the organisers and supporters\n\n\n\n\n\nThis workshop was organised by Geospatial Share, a grassroots group of spatial enthusiasts whose mission is to build a supportive and inclusive community where students, researchers, and professionals can grow their geospatial skills together. See https://brisbane-geocommunity.netlify.app/ for more.\nThis workshop was made possible by generous contributions by members of the following organisations."
+    "text": "About the organisers and supporters\n\n\n\n\n\nThis workshop was organised by Geospatial Share, a grassroots group of spatial enthusiasts whose mission is to build a supportive and inclusive community where students, researchers, and professionals can grow their geospatial skills together. See https://brisbane-geocommunity.netlify.app/ for more.\nThis workshop was generously sponsored by the Centre for Environment and Society, QUT.\n\n\n\n\n\nThis workshop was made possible by generous contributions by members of the following organisations."
   },
   {
     "objectID": "Session 1/session_1_home.html",
