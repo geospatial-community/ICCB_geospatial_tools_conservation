@@ -35,7 +35,7 @@ Our mission is to build a **supportive** and **inclusive** community where stude
 
 ### Rohan Eccles
 
-> Rohan Eccles is a Principal Climate Data Scientist in the Climate Projections & Services team at Queensland Treasury. He brings extensive experience in climate change research, particularly on understanding climate change impacts for hydrology. His PhD at Griffith University focussed on determining how climate change would affect future flooding and water quality in the Logan-Albert, Queensland. 
+> Rohan Eccles is a Principal Climate Data Scientist in the Climate Projections & Services team at Queensland Treasury. He brings extensive experience in climate change research, particularly on understanding climate change impacts for hydrology. His PhD at Griffith University focussed on determining how climate change would affect future flooding and water quality in the Logan-Albert, Queensland.
 
 ### Charlotte Patterson
 
@@ -57,7 +57,6 @@ Our mission is to build a **supportive** and **inclusive** community where stude
 
 > Emma Hain is a GeoSpatial Product Manager and Cartographer with over 30 years of experience spanning geospatial systems, engineering, environment, heritage, sports management, and military sectors. At North Road, she supports the global QGIS community and delivers tailored open-source geospatial solutions to a wide range of organizations. Emma also coordinates the QGIS AU community and contributes to FOSS4G Oceania, promoting collaboration across the sector. Known for her creative, ethical approach and commitment to inclusivity, she blends a deep appreciation for art with technical expertise to solve complex spatial challenges.
 
-
 ### Zhao Xiang
 
 > Zhao is a software developer, eResearcher, and conservation scientist with expertise in R programming, ecological modeling, and spatial analysis. He joined QCIF in 2024 as a Software Developer and R Specialist, contributing to the EcoCommons Platform. Zhao completed his MPhil at QUT, where he applied spatial and statistical modeling to biodiversity research in Antarctica. He has also taught GIS and environmental planning, and previously worked on a panda conservation project in China, earning the BirdLife International Young Conservation Leaders Award.
@@ -65,6 +64,10 @@ Our mission is to build a **supportive** and **inclusive** community where stude
 ## About the organisers and supporters
 
 This workshop was organised by Geospatial Share, a grassroots group of spatial enthusiasts whose mission is to build a supportive and inclusive community where students, researchers, and professionals can grow their geospatial skills together. See <https://brisbane-geocommunity.netlify.app/> for more.
+
+This workshop was generously sponsored by [the Centre for Environment and Society](https://research.qut.edu.au/centre-for-environment-and-society/)**, QUT**.
+
+![](images/clipboard-3677791164.png){fig-align="center"}
 
 This workshop was made possible by generous contributions by members of the following organisations.
 
